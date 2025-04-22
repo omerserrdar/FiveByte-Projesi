@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DermaSkin - Cilt Asistanı</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>DermaSkin</h1>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Anasayfa</a></li>
+                    <li><a href="products.html">Ürünler</a></li>
+                    <li><a href="skintest.html">Cilt Tipi Testi</a></li>
+                    <li><a href="chatbot.html" class="active">Cilt Asistanı</a></li>
+                    <li><a href="about.html">Hakkımızda</a></li>
+                </ul>
+                <div class="auth-buttons">
+                    <a href="login.html" class="btn btn-outline">Giriş Yap</a>
+                    <a href="login.html#register" class="btn btn-primary">Kayıt Ol</a>
+                </div>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Chatbot Hero Section -->
+    <section class="chatbot-hero">
+        <div class="container">
+            <div class="chatbot-hero-content">
+                <h2>DermaSkin Cilt Asistanı</h2>
+                <p>Cilt bakımı konusunda sorularınızı yanıtlayan yapay zeka destekli asistanımız ile tanışın. Cilt tipinize özel ürün önerileri, cilt sorunları için çözümler ve daha fazlası için hemen sohbete başlayın.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chatbot Section -->
+    <section class="chatbot-section">
+        <div class="container">
+            <div class="chatbot-container">
+                <div class="chatbot-header">
+                    <div class="chatbot-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="chatbot-info">
+                        <h3>DermaSkin Asistanı</h3>
+                        <span class="status online">Çevrimiçi</span>
+                    </div>
+                </div>
+                
+                <div class="chat-messages" id="chat-messages">
+                    <!-- Bot welcome message -->
+                    <div class="message bot-message">
+                        <div class="message-content">
+                            <p>Merhaba! Ben DermaSkin Cilt Asistanı. Size cilt bakımı konusunda nasıl yardımcı olabilirim?</p>
+                        </div>
+                        <div class="message-time">Şimdi</div>
+                    </div>
+                    
+                    <!-- Bot suggestions -->
+                    <div class="message bot-message">
+                        <div class="message-content">
+                            <p>Aşağıdaki konularda yardımcı olabilirim:</p>
+                            <div class="suggestion-chips">
+                                <button class="suggestion-chip" data-query="Cilt tipimi nasıl belirlerim?">Cilt tipimi nasıl belirlerim?</button>
+                                <button class="suggestion-chip" data-query="Yağlı cilt için ürün önerileri">Yağlı cilt için ürün önerileri</button>
+                                <button class="suggestion-chip" data-query="Akne sorunu için ne yapmalıyım?">Akne sorunu için ne yapmalıyım?</button>
+                                <button class="suggestion-chip" data-query="Güneş koruyucu nasıl seçilir?">Güneş koruyucu nasıl seçilir?</button>
+                            </div>
+                        </div>
+                        <div class="message-time">Şimdi</div>
+                    </div>
+                </div>
+                
+                <div class="chat-input">
+                    <form id="chat-form">
+                        <div class="input-group">
+                            <input type="text" id="user-input" placeholder="Sorunuzu yazın..." autocomplete="off">
+                            <button type="submit" class="send-btn">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
+                    <div class="input-features">
+                        <button class="feature-btn" title="Ses ile konuşun">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                        <button class="feature-btn" title="Fotoğraf yükleyin">
+                            <i class="fas fa-camera"></i>
+                        </button>
+                        <button class="feature-btn" title="Cilt tipi testini başlatın">
+                            <i class="fas fa-clipboard-list"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chatbot-info-cards">
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <h3>Nasıl Çalışır?</h3>
+                    <p>Cilt Asistanımız, cilt bakımı konusunda uzmanlaşmış yapay zeka teknolojisi kullanır. Sorularınızı doğal dilde yanıtlar ve kişiselleştirilmiş öneriler sunar.</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>Neler Sorabilirsiniz?</h3>
+                    <p>Cilt tipiniz, cilt sorunları, ürün önerileri, günlük cilt bakım rutini, içerik analizleri ve daha birçok konuda sorular sorabilirsiniz.</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>Gizlilik</h3>
+                    <p>Sohbetleriniz ve paylaştığınız bilgiler güvenle saklanır. Kişisel verileriniz, size daha iyi hizmet sunmak dışında kullanılmaz.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Sık Sorulan Sorular</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Cilt Asistanı tamamen ücretsiz mi?</h3>
+                        <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Evet, Cilt Asistanımız tüm kullanıcılarımız için tamamen ücretsizdir. Ancak, daha kişiselleştirilmiş öneriler için üye olmanızı öneririz.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Asistan gerçek bir dermatoloğun yerini tutar mı?</h3>
+                        <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Hayır, Cilt Asistanımız genel bilgi ve öneriler sunmak için tasarlanmıştır. Ciddi cilt sorunları için mutlaka bir dermatoloğa başvurmanızı öneririz.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Asistana fotoğraf yükleyebilir miyim?</h3>
+                        <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Evet, cilt durumunuzu daha iyi analiz etmek için fotoğraf yükleyebilirsiniz. Ancak bu özellik şu anda beta aşamasındadır ve sonuçlar kesin teşhis amaçlı kullanılmamalıdır.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Asistan hangi dilleri destekliyor?</h3>
+                        <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Şu anda Cilt Asistanımız sadece Türkçe dilini desteklemektedir. Yakın zamanda İngilizce desteği de eklenecektir.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Sohbet geçmişim kaydediliyor mu?</h3>
+                        <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Üye iseniz, daha iyi hizmet sunabilmek için sohbet geçmişiniz kaydedilir. Misafir olarak kullanıyorsanız, tarayıcınızı kapattığınızda sohbet geçmişiniz silinir.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Cilt Tipinizi Öğrenerek Başlayın</h2>
+            <p>Daha kişiselleştirilmiş öneriler için önce cilt tipinizi belirleyin.</p>
+            <a href="skintest.html" class="btn btn-primary">Cilt Tipi Testini Yap</a>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>DermaSkin</h2>
+                    <p>Cilt sağlığı uzmanınız</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Hızlı Erişim</h3>
+                    <ul>
+                        <li><a href="index.html">Anasayfa</a></li>
+                        <li><a href="products.html">Ürünler</a></li>
+                        <li><a href="skintest.html">Cilt Tipi Testi</a></li>
+                        <li><a href="chatbot.html">Cilt Asistanı</a></li>
+                        <li><a href="about.html">Hakkımızda</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>İletişim</h3>
+                    <p><i class="fas fa-envelope"></i> info@dermaskin.com</p>
+                    <p><i class="fas fa-phone"></i> +90 212 123 45 67</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 DermaSkin. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/chatbot.js"></script>
+</body>
+</html>

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DermaSkin - Ürünler</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>DermaSkin</h1>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Anasayfa</a></li>
+                    <li><a href="products.html" class="active">Ürünler</a></li>
+                    <li><a href="skintest.html">Cilt Tipi Testi</a></li>
+                    <li><a href="chatbot.html">Cilt Asistanı</a></li>
+                    <li><a href="about.html">Hakkımızda</a></li>
+                </ul>
+                <div class="auth-buttons">
+                    <a href="login.html" class="btn btn-outline">Giriş Yap</a>
+                    <a href="login.html#register" class="btn btn-primary">Kayıt Ol</a>
+                </div>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Products Hero Section -->
+    <section class="products-hero">
+        <div class="container">
+            <div class="products-hero-content">
+                <h2>Cilt Tipinize Özel Ürünler</h2>
+                <p>Cildinizin ihtiyaçlarına göre özel olarak seçilmiş ürünlerimizi keşfedin. Tüm ürünlerimiz dermatolojik olarak test edilmiştir ve cildinize en iyi bakımı sağlamak için formüle edilmiştir.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <div class="container">
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="skinTypeFilter">Cilt Tipi</label>
+                    <select id="skinTypeFilter" class="filter-select">
+                        <option value="all">Tümü</option>
+                        <option value="dry">Kuru Cilt</option>
+                        <option value="oily">Yağlı Cilt</option>
+                        <option value="combination">Karma Cilt</option>
+                        <option value="sensitive">Hassas Cilt</option>
+                        <option value="normal">Normal Cilt</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="productTypeFilter">Ürün Tipi</label>
+                    <select id="productTypeFilter" class="filter-select">
+                        <option value="all">Tümü</option>
+                        <option value="cleanser">Temizleyici</option>
+                        <option value="moisturizer">Nemlendirici</option>
+                        <option value="serum">Serum</option>
+                        <option value="mask">Maske</option>
+                        <option value="sunscreen">Güneş Koruyucu</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="priceFilter">Fiyat Aralığı</label>
+                    <select id="priceFilter" class="filter-select">
+                        <option value="all">Tümü</option>
+                        <option value="low">0 - 100 TL</option>
+                        <option value="medium">100 - 250 TL</option>
+                        <option value="high">250 TL ve üzeri</option>
+                    </select>
+                </div>
+                <div class="filter-group search-group">
+                    <label for="searchProducts">Ara</label>
+                    <div class="search-input">
+                        <input type="text" id="searchProducts" placeholder="Ürün ara...">
+                        <button type="button" class="search-btn"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section">
+        <div class="container">
+            <div class="products-grid" id="products-container">
+                <!-- Product 1 -->
+                <div class="product-card" data-skin-type="dry" data-product-type="moisturizer" data-price="medium">
+                    <div class="product-badge">Çok Satan</div>
+                    <div class="product-image">
+                        <img src="images/product1.jpg" alt="Hydra Boost Nemlendirici" class="placeholder-image">
+                    </div>
+                    <div class="product-info">
+                        <h3>Hydra Boost Nemlendirici</h3>
+                        <p class="product-type">Kuru Cilt</p>
+                        <p class="product-description">Hyaluronik asit içeren yoğun nemlendirici, 24 saat kalıcı nem sağlar.</p>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>4.5/5 (120 yorum)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="price">189.90 TL</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary">Detaylar</button>
+                            <button class="btn btn-outline add-favorite"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card" data-skin-type="oily" data-product-type="cleanser" data-price="low">
+                    <div class="product-image">
+                        <img src="images/product2.jpg" alt="Pure Clean Yüz Temizleyici" class="placeholder-image">
+                    </div>
+                    <div class="product-info">
+                        <h3>Pure Clean Yüz Temizleyici</h3>
+                        <p class="product-type">Yağlı Cilt</p>
+                        <p class="product-description">Salisilik asit içeren jel formülü ile gözenekleri derinlemesine temizler.</p>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span>4.0/5 (85 yorum)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="price">79.90 TL</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary">Detaylar</button>
+                            <button class="btn btn-outline add-favorite"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card" data-skin-type="sensitive" data-product-type="serum" data-price="high">
+                    <div class="product-badge">Yeni</div>
+                    <div class="product-image">
+                        <img src="images/product3.jpg" alt="Calm Skin Serumu" class="placeholder-image">
+                    </div>
+                    <div class="product-info">
+                        <h3>Calm Skin Serumu</h3>
+                        <p class="product-type">Hassas Cilt</p>
+                        <p class="product-description">Niacinamide ve panthenol içeren hassas ciltler için yatıştırıcı serum.</p>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>5.0/5 (42 yorum)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="price">299.90 TL</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary">Detaylar</button>
+                            <button class="btn btn-outline add-favorite"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card" data-skin-type="combination" data-product-type="mask" data-price="medium">
+                    <div class="product-image">
+                        <img src="images/product4.jpg" alt="Balance Clay Mask" class="placeholder-image">
+                    </div>
+                    <div class="product-info">
+                        <h3>Balance Clay Mask</h3>
+                        <p class="product-type">Karma Cilt</p>
+                        <p class="product-description">Kil ve aktif kömür içeren, T bölgesini matlaştırıp yanaklara nem veren maske.</p>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span>4.2/5 (68 yorum)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="price">149.90 TL</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary">Detaylar</button>
+                            <button class="btn btn-outline add-favorite"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card" data-skin-type="normal" data-product-type="sunscreen" data-price="medium">
+                    <div class="product-image">
+                        <img src="images/product5.jpg" alt="Daily Defense SPF 50" class="placeholder-image">
+                    </div>
+                    <div class="product-info">
+                        <h3>Daily Defense SPF 50</h3>
+                        <p class="product-type">Tüm Cilt Tipleri</p>
+                        <p class="product-description">Hafif dokulu, iz bırakmayan, geniş spektrumlu güneş koruyucu.</p>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>4.7/5 (93 yorum)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="price">169.90 TL</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary">Detaylar</button>
+                            <button class="btn btn-outline add-favorite"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="product-card" data-skin-type="dry" data-product-type="serum" data-price="high">
+                    <div class="product-image">
+                        <img src="images/product6.jpg" alt="Hydra Intense Serum" class="placeholder-image">
+                    </div>
+                    <div class="product-info">
+                        <h3>Hydra Intense Serum</h3>
+                        <p class="product-type">Kuru Cilt</p>
+                        <p class="product-description">Ceramide ve peptit kompleksi içeren yoğun nemlendirici serum.</p>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span>4.3/5 (56 yorum)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="price">259.90 TL</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary">Detaylar</button>
+                            <button class="btn btn-outline add-favorite"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Detail Modal (Hidden by default) -->
+            <div class="product-modal" id="product-modal">
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <div class="modal-body">
+                        <div class="product-detail-image">
+                            <img src="images/product1.jpg" alt="Ürün Detayı" id="modal-product-image" class="placeholder-image">
+                        </div>
+                        <div class="product-detail-info">
+                            <h2 id="modal-product-title">Ürün Adı</h2>
+                            <p class="product-type" id="modal-product-type">Cilt Tipi</p>
+                            <div class="product-rating" id="modal-product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>4.5/5 (120 yorum)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="price" id="modal-product-price">189.90 TL</span>
+                            </div>
+                            <div class="product-description">
+                                <h3>Ürün Açıklaması</h3>
+                                <p id="modal-product-description">Ürün açıklaması burada yer alacak.</p>
+                            </div>
+                            <div class="product-ingredients">
+                                <h3>İçindekiler</h3>
+                                <p id="modal-product-ingredients">İçindekiler listesi burada yer alacak.</p>
+                            </div>
+                            <div class="product-usage">
+                                <h3>Kullanım Önerisi</h3>
+                                <p id="modal-product-usage">Kullanım önerisi burada yer alacak.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-reviews">
+                        <h3>Kullanıcı Yorumları</h3>
+                        <div class="reviews-container" id="modal-product-reviews">
+                            <!-- Reviews will be loaded dynamically -->
+                            <div class="review">
+                                <div class="review-header">
+                                    <div class="reviewer-info">
+                                        <span class="reviewer-name">Ayşe Y.</span>
+                                        <span class="review-date">15.03.2025</span>
+                                    </div>
+                                    <div class="review-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                                <div class="review-content">
+                                    <p>Harika bir ürün! Cildim çok daha nemli ve yumuşak hissediyor. Kesinlikle tavsiye ederim.</p>
+                                </div>
+                            </div>
+                            <div class="review">
+                                <div class="review-header">
+                                    <div class="reviewer-info">
+                                        <span class="reviewer-name">Mehmet K.</span>
+                                        <span class="review-date">02.04.2025</span>
+                                    </div>
+                                    <div class="review-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                </div>
+                                <div class="review-content">
+                                    <p>Ürün iyi ama biraz daha uygun fiyatlı olabilirdi. Yine de etkisinden memnunum.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Add Review Form (Only for logged in users) -->
+                        <div class="add-review-form">
+                            <h4>Yorum Ekle</h4>
+                            <p class="login-required">Yorum yapabilmek için <a href="login.html">giriş yapmalısınız</a>.</p>
+                            <form id="review-form" style="display: none;">
+                                <div class="form-group">
+                                    <label>Puanınız</label>
+                                    <div class="rating-select">
+                                        <i class="far fa-star" data-rating="1"></i>
+                                        <i class="far fa-star" data-rating="2"></i>
+                                        <i class="far fa-star" data-rating="3"></i>
+                                        <i class="far fa-star" data-rating="4"></i>
+                                        <i class="far fa-star" data-rating="5"></i>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="review-text">Yorumunuz</label>
+                                    <textarea id="review-text" rows="4" placeholder="Bu ürün hakkında düşüncelerinizi paylaşın..."></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Yorum Gönder</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="pagination-btn active">1</button>
+                <button class="pagination-btn">2</button>
+                <button class="pagination-btn">3</button>
+                <button class="pagination-btn next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>DermaSkin</h2>
+                    <p>Cilt sağlığı uzmanınız</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Hızlı Erişim</h3>
+                    <ul>
+                        <li><a href="index.html">Anasayfa</a></li>
+                        <li><a href="products.html">Ürünler</a></li>
+                        <li><a href="skintest.html">Cilt Tipi Testi</a></li>
+                        <li><a href="chatbot.html">Cilt Asistanı</a></li>
+                        <li><a href="about.html">Hakkımızda</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>İletişim</h3>
+                    <p><i class="fas fa-envelope"></i> info@dermaskin.com</p>
+                    <p><i class="fas fa-phone"></i> +90 212 123 45 67</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 DermaSkin. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/products.js"></script>
+</body>
+</html>

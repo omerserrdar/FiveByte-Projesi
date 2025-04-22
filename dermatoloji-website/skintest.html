@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DermaSkin - Cilt Tipi Testi</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>DermaSkin</h1>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Anasayfa</a></li>
+                    <li><a href="products.html">Ürünler</a></li>
+                    <li><a href="skintest.html" class="active">Cilt Tipi Testi</a></li>
+                    <li><a href="chatbot.html">Cilt Asistanı</a></li>
+                    <li><a href="about.html">Hakkımızda</a></li>
+                </ul>
+                <div class="auth-buttons">
+                    <a href="login.html" class="btn btn-outline">Giriş Yap</a>
+                    <a href="login.html#register" class="btn btn-primary">Kayıt Ol</a>
+                </div>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Skin Test Intro Section -->
+    <section class="skin-test-intro">
+        <div class="container">
+            <div class="intro-content">
+                <h2>Cilt Tipi Testi</h2>
+                <p>Cildinizin ihtiyaçlarını anlamak ve doğru ürünleri seçmek için ilk adım, cilt tipinizi belirlemektir. Aşağıdaki testi tamamlayarak cilt tipinizi öğrenin ve size özel ürün önerilerimizi keşfedin.</p>
+                <div class="skin-types-overview">
+                    <div class="skin-type">
+                        <div class="skin-icon">
+                            <i class="fas fa-tint"></i>
+                        </div>
+                        <h3>Yağlı Cilt</h3>
+                    </div>
+                    <div class="skin-type">
+                        <div class="skin-icon">
+                            <i class="fas fa-snowflake"></i>
+                        </div>
+                        <h3>Kuru Cilt</h3>
+                    </div>
+                    <div class="skin-type">
+                        <div class="skin-icon">
+                            <i class="fas fa-adjust"></i>
+                        </div>
+                        <h3>Karma Cilt</h3>
+                    </div>
+                    <div class="skin-type">
+                        <div class="skin-icon">
+                            <i class="fas fa-feather-alt"></i>
+                        </div>
+                        <h3>Hassas Cilt</h3>
+                    </div>
+                    <div class="skin-type">
+                        <div class="skin-icon">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <h3>Normal Cilt</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skin Test Form Section -->
+    <section class="skin-test-form">
+        <div class="container">
+            <div class="test-container">
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress" id="test-progress"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span id="current-question">1</span>/<span id="total-questions">10</span>
+                    </div>
+                </div>
+                
+                <form id="skinTestForm">
+                    <!-- Question 1 -->
+                    <div class="question-slide active" data-question="1">
+                        <h3>Yüzünüzü yıkadıktan sonra, herhangi bir ürün kullanmadan önce cildiniz nasıl hissediyor?</h3>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q1-a" name="q1" value="dry">
+                                <label for="q1-a">Gergin ve kurumuş hissediyorum</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q1-b" name="q1" value="normal">
+                                <label for="q1-b">Rahat ve normal hissediyorum</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q1-c" name="q1" value="combination">
+                                <label for="q1-c">T bölgem (alın, burun, çene) yağlı, yanaklar normal veya kuru</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q1-d" name="q1" value="oily">
+                                <label for="q1-d">Yüzüm parlak ve yağlı hissediyor</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q1-e" name="q1" value="sensitive">
+                                <label for="q1-e">Ciltte gerginlik ve kızarıklık hissediyorum</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Question 2 -->
+                    <div class="question-slide" data-question="2">
+                        <h3>Gün ortasında cildiniz nasıl görünüyor?</h3>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q2-a" name="q2" value="dry">
+                                <label for="q2-a">Kuru ve mat, bazen pullanma olabiliyor</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q2-b" name="q2" value="normal">
+                                <label for="q2-b">Dengeli, ne çok yağlı ne çok kuru</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q2-c" name="q2" value="combination">
+                                <label for="q2-c">T bölgesi parlak, yanaklar normal</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q2-d" name="q2" value="oily">
+                                <label for="q2-d">Tüm yüz parlak ve yağlı</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q2-e" name="q2" value="sensitive">
+                                <label for="q2-e">Kızarıklık ve hassasiyet var</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Question 3 -->
+                    <div class="question-slide" data-question="3">
+                        <h3>Gözenekleriniz nasıl görünüyor?</h3>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q3-a" name="q3" value="dry">
+                                <label for="q3-a">Gözenekler neredeyse görünmez</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q3-b" name="q3" value="normal">
+                                <label for="q3-b">Küçük, gözle zor görülür gözenekler</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q3-c" name="q3" value="combination">
+                                <label for="q3-c">T bölgesinde belirgin, yanaklarda küçük gözenekler</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q3-d" name="q3" value="oily">
+                                <label for="q3-d">Tüm yüzde belirgin ve geniş gözenekler</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q3-e" name="q3" value="sensitive">
+                                <label for="q3-e">Değişken, bazen kızarıklık nedeniyle daha belirgin</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Question 4 -->
+                    <div class="question-slide" data-question="4">
+                        <h3>Sivilce ve akne probleminiz var mı?</h3>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q4-a" name="q4" value="dry">
+                                <label for="q4-a">Nadiren veya hiç yok</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q4-b" name="q4" value="normal">
+                                <label for="q4-b">Ara sıra, genellikle hormonal dönemlerde</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q4-c" name="q4" value="combination">
+                                <label for="q4-c">T bölgesinde düzenli olarak</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q4-d" name="q4" value="oily">
+                                <label for="q4-d">Sık sık, tüm yüzde</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q4-e" name="q4" value="sensitive">
+                                <label for="q4-e">Bazen, genellikle cilt reaksiyonları ile birlikte</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Question 5 -->
+                    <div class="question-slide" data-question="5">
+                        <h3>Makyaj ürünleri cildinizde nasıl durur?</h3>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q5-a" name="q5" value="dry">
+                                <label for="q5-a">Kuru alanlarda pul pul olur, çizgilerde birikir</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q5-b" name="q5" value="normal">
+                                <label for="q5-b">Gün boyu düzgün kalır</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q5-c" name="q5" value="combination">
+                                <label for="q5-c">T bölgesinde kayar, diğer alanlarda iyi durur</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q5-d" name="q5" value="oily">
+                                <label for="q5-d">Hızla dağılır ve kayar</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q5-e" name="q5" value="sensitive">
+                                <label for="q5-e">Bazen tahriş eder, kızarıklık yapar</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Navigation Buttons -->
+                    <div class="test-navigation">
+                        <button type="button" id="prevBtn" class="btn btn-outline">Önceki</button>
+                        <button type="button" id="nextBtn" class="btn btn-primary">Sonraki</button>
+                        <button type="button" id="submitBtn" class="btn btn-primary" style="display: none;">Sonuçları Gör</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Results Section (Initially Hidden) -->
+    <section class="test-results" id="results-section" style="display: none;">
+        <div class="container">
+            <div class="results-container">
+                <h2>Cilt Tipi Analiz Sonuçları</h2>
+                <div class="result-content">
+                    <div class="result-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="skin-type-result">
+                        <h3>Cilt Tipiniz: <span id="skin-type-result">Karma Cilt</span></h3>
+                        <div class="skin-description" id="skin-description">
+                            <!-- Description will be filled by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="recommendations">
+                    <h3>Size Özel Ürün Önerileri</h3>
+                    <div class="recommended-products" id="recommended-products">
+                        <!-- Products will be filled by JavaScript -->
+                    </div>
+                    <div class="action-buttons">
+                        <a href="products.html" class="btn btn-primary">Tüm Ürünleri Gör</a>
+                        <a href="#" id="retake-test" class="btn btn-outline">Testi Tekrarla</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>DermaSkin</h2>
+                    <p>Cilt sağlığı uzmanınız</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Hızlı Erişim</h3>
+                    <ul>
+                        <li><a href="index.html">Anasayfa</a></li>
+                        <li><a href="products.html">Ürünler</a></li>
+                        <li><a href="skintest.html">Cilt Tipi Testi</a></li>
+                        <li><a href="chatbot.html">Cilt Asistanı</a></li>
+                        <li><a href="about.html">Hakkımızda</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>İletişim</h3>
+                    <p><i class="fas fa-envelope"></i> info@dermaskin.com</p>
+                    <p><i class="fas fa-phone"></i> +90 212 123 45 67</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 DermaSkin. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/skintest.js"></script>
+</body>
+</html>
