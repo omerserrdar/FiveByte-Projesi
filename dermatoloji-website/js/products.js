@@ -36,7 +36,6 @@ function initProductsPage() {
 function initFilters() {
     const skinTypeFilter = document.getElementById('skinTypeFilter');
     const productTypeFilter = document.getElementById('productTypeFilter');
-    const priceFilter = document.getElementById('priceFilter');
     const searchInput = document.getElementById('searchProducts');
     const searchBtn = document.querySelector('.search-btn');
     const productsContainer = document.getElementById('products-container');
@@ -46,7 +45,6 @@ function initFilters() {
     function applyFilters() {
         const skinType = skinTypeFilter ? skinTypeFilter.value : 'all';
         const productType = productTypeFilter ? productTypeFilter.value : 'all';
-        const priceRange = priceFilter ? priceFilter.value : 'all';
         const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
         
         let visibleCount = 0;
@@ -56,7 +54,6 @@ function initFilters() {
             // Get data attributes
             const cardSkinType = card.getAttribute('data-skin-type');
             const cardProductType = card.getAttribute('data-product-type');
-            const cardPrice = card.getAttribute('data-price');
             
             // Get product name and description for search
             const productName = card.querySelector('h3').textContent.toLowerCase();
@@ -66,13 +63,12 @@ function initFilters() {
             // Check if card matches all filters
             const matchesSkinType = skinType === 'all' || cardSkinType === skinType;
             const matchesProductType = productType === 'all' || cardProductType === productType;
-            const matchesPrice = priceRange === 'all' || cardPrice === priceRange;
             const matchesSearch = searchTerm === '' || 
                                  productName.includes(searchTerm) || 
                                  productDesc.includes(searchTerm);
             
             // Show or hide card based on filters
-            if (matchesSkinType && matchesProductType && matchesPrice && matchesSearch) {
+            if (matchesSkinType && matchesProductType && matchesSearch) {
                 card.style.display = 'block';
                 visibleCount++;
             } else {
@@ -105,7 +101,6 @@ function initFilters() {
     function resetFilters() {
         if (skinTypeFilter) skinTypeFilter.value = 'all';
         if (productTypeFilter) productTypeFilter.value = 'all';
-        if (priceFilter) priceFilter.value = 'all';
         if (searchInput) searchInput.value = '';
         
         applyFilters();
@@ -118,10 +113,6 @@ function initFilters() {
     
     if (productTypeFilter) {
         productTypeFilter.addEventListener('change', applyFilters);
-    }
-    
-    if (priceFilter) {
-        priceFilter.addEventListener('change', applyFilters);
     }
     
     // Add event listener to search button
@@ -160,7 +151,6 @@ function initProductModal() {
             const productTitle = productCard.querySelector('h3').textContent;
             const productType = productCard.querySelector('.product-type').textContent;
             const productRating = productCard.querySelector('.product-rating').innerHTML;
-            const productPrice = productCard.querySelector('.price').textContent;
             const productDescription = productCard.querySelector('.product-description').textContent;
             
             // Set modal content
@@ -168,7 +158,6 @@ function initProductModal() {
             document.getElementById('modal-product-title').textContent = productTitle;
             document.getElementById('modal-product-type').textContent = productType;
             document.getElementById('modal-product-rating').innerHTML = productRating;
-            document.getElementById('modal-product-price').textContent = productPrice;
             document.getElementById('modal-product-description').textContent = productDescription;
             
             // Sample data for ingredients and usage (would come from database in real app)
