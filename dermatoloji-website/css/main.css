@@ -1892,41 +1892,40 @@ textarea:focus {
 }
 
 .contact-info {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--spacing-md);
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
 }
 
 .info-item {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    min-width: 250px;
 }
 
 .info-icon {
-    width: 50px;
-    height: 50px;
-    background-color: var(--primary-light);
-    border-radius: var(--border-radius-circle);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: var(--spacing-md);
-    flex-shrink: 0;
+    font-size: 1.5rem;
+    color: #4a90e2;
 }
 
-.info-icon i {
-    font-size: 1.25rem;
-    color: var(--primary-dark);
+.info-content {
+    flex: 1;
 }
 
 .info-content h3 {
-    margin-bottom: var(--spacing-xs);
-    font-size: 1.125rem;
+    margin: 0;
+    font-size: 1.1rem;
+    color: #333;
 }
 
 .info-content p {
-    margin-bottom: 0;
-    color: var(--dark-gray);
+    margin: 0.5rem 0 0;
+    color: #666;
 }
 
 .contact-form {
