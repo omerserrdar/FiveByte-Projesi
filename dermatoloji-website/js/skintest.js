@@ -308,11 +308,20 @@ function initSkinTest() {
                         productsHTML = `
                             <div class="product-card">
                                 <div class="product-image">
-                                    <img src="images/product4.jpg" alt="Balance Clay Mask" class="placeholder-image">
+                                    <img src="images/product2.jpg" alt="Pure Clean Yüz Temizleyici" class="placeholder-image">
                                 </div>
                                 <div class="product-info">
-                                    <h3>Balance Clay Mask</h3>
-                                    <p>T bölgesini matlaştırıp yanaklara nem veren maske</p>
+                                    <h3>Pure Clean Yüz Temizleyici</h3>
+                                    <p>Salisilik asit içeren jel formülü</p>
+                                </div>
+                            </div>
+                            <div class="product-card">
+                                <div class="product-image">
+                                    <img src="images/product1.jpg" alt="Hydra Boost Nemlendirici" class="placeholder-image">
+                                </div>
+                                <div class="product-info">
+                                    <h3>Hydra Boost Nemlendirici</h3>
+                                    <p>Hyaluronik asit içeren hafif nemlendirici</p>
                                 </div>
                             </div>
                             <div class="product-card">
@@ -322,6 +331,24 @@ function initSkinTest() {
                                 <div class="product-info">
                                     <h3>Daily Defense SPF 50</h3>
                                     <p>Hafif dokulu güneş koruyucu</p>
+                                </div>
+                            </div>
+                            <div class="product-card">
+                                <div class="product-image">
+                                    <img src="images/product3.jpg" alt="Calm Skin Serumu" class="placeholder-image">
+                                </div>
+                                <div class="product-info">
+                                    <h3>Calm Skin Serumu</h3>
+                                    <p>Niacinamide ve panthenol içeren yatıştırıcı serum</p>
+                                </div>
+                            </div>
+                            <div class="product-card">
+                                <div class="product-image">
+                                    <img src="images/product4.jpg" alt="Balance Clay Mask" class="placeholder-image">
+                                </div>
+                                <div class="product-info">
+                                    <h3>Balance Clay Mask</h3>
+                                    <p>Kil ve aktif kömür içeren dengeleyici maske</p>
                                 </div>
                             </div>
                         `;
