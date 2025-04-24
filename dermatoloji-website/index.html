@@ -45,10 +45,34 @@
                 <div class="hero-buttons">
                     <a href="skintest.html" class="btn btn-primary">Cilt Tipimi Öğren</a>
                     <a href="products.html" class="btn btn-secondary">Ürünleri Keşfet</a>
+                    <button id="complaintBtn" class="btn btn-outline">Şikayet Bildir</button>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Şikayet Modal -->
+    <div id="complaintModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Şikayet Bildir</h2>
+            <form id="complaintForm">
+                <div class="form-group">
+                    <label for="name">Adınız Soyadınız:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">E-posta Adresiniz:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="complaint">Şikayetiniz:</label>
+                    <textarea id="complaint" name="complaint" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Gönder</button>
+            </form>
+        </div>
+    </div>
 
     <!-- Kullanıcı Karşılama -->
     <section class="user-welcome">

@@ -17,6 +17,48 @@ document.addEventListener('DOMContentLoaded', function() {
     if (document.querySelector('.faq-item')) {
         initFaqAccordions();
     }
+
+    // Şikayet Modal İşlevselliği
+    const complaintBtn = document.getElementById('complaintBtn');
+    const complaintModal = document.getElementById('complaintModal');
+    const closeBtn = document.querySelector('.close');
+    const complaintForm = document.getElementById('complaintForm');
+
+    if (complaintBtn && complaintModal) {
+        complaintBtn.addEventListener('click', () => {
+            complaintModal.style.display = 'block';
+        });
+
+        closeBtn.addEventListener('click', () => {
+            complaintModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === complaintModal) {
+                complaintModal.style.display = 'none';
+            }
+        });
+
+        complaintForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                complaint: document.getElementById('complaint').value
+            };
+
+            // Burada form verilerini backend'e gönderme işlemi yapılabilir
+            console.log('Şikayet gönderildi:', formData);
+            
+            // Başarılı gönderim mesajı
+            alert('Şikayetiniz başarıyla gönderildi. En kısa sürede size dönüş yapacağız.');
+            
+            // Formu temizle ve modalı kapat
+            complaintForm.reset();
+            complaintModal.style.display = 'none';
+        });
+    }
 });
 
 /**
