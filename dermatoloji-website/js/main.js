@@ -59,6 +59,55 @@ document.addEventListener('DOMContentLoaded', function() {
             complaintModal.style.display = 'none';
         });
     }
+
+    // Daha Fazla Yorum Göster Butonu İşlevselliği
+    initShowMoreReviews();
+    
+    // Mobil menü işlevselliği
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+    }
+    
+    // Favori butonları işlevselliği
+    const favoriteButtons = document.querySelectorAll('.add-favorite');
+    
+    favoriteButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const icon = this.querySelector('i');
+            
+            if (icon.classList.contains('far')) {
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                icon.style.color = '#e74c3c';
+                showNotification('Ürün favorilere eklendi!', 'success');
+            } else {
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                icon.style.color = '';
+                showNotification('Ürün favorilerden çıkarıldı!', 'info');
+            }
+        });
+    });
+
+    // Yorumları gösterme/gizleme işlevselliği
+    const showMoreButton = document.querySelector('.show-more-reviews');
+    const hiddenReviews = document.querySelectorAll('.review.hidden');
+    
+    if (showMoreButton && hiddenReviews.length > 0) {
+        showMoreButton.addEventListener('click', function() {
+            hiddenReviews.forEach(review => {
+                review.classList.remove('hidden');
+            });
+            showMoreButton.style.display = 'none';
+        });
+    }
 });
 
 /**
@@ -342,4 +391,37 @@ function togglePasswordVisibility(inputId, toggleId) {
             }
         });
     }
+}
+
+// Daha Fazla Yorum Göster Butonu İşlevselliği
+function initShowMoreReviews() {
+    const showMoreButtons = document.querySelectorAll('.show-more-reviews');
+    
+    showMoreButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const productCard = this.closest('.product-card');
+            const reviewsContainer = productCard.querySelector('.product-reviews');
+            const reviews = reviewsContainer.querySelectorAll('.review');
+            const hiddenReviews = Array.from(reviews).filter(review => review.classList.contains('hidden'));
+            
+            // Eğer gizli yorum varsa göster
+            if (hiddenReviews.length > 0) {
+                // İlk 2 gizli yorumu göster
+                hiddenReviews.slice(0, 2).forEach(review => {
+                    review.classList.remove('hidden');
+                });
+                
+                // Eğer hala gizli yorum kaldıysa butonu güncelle
+                if (hiddenReviews.length > 2) {
+                    this.textContent = `Daha Fazla Yorum Göster (${hiddenReviews.length - 2} kaldı)`;
+                } else {
+                    // Tüm yorumlar gösterildiyse butonu gizle
+                    this.style.display = 'none';
+                }
+            } else {
+                // Gizli yorum kalmadıysa butonu gizle
+                this.style.display = 'none';
+            }
+        });
+    });
 }
