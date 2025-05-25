@@ -1,0 +1,11 @@
+com/skinai/controller/AuthController.class
+com/skinai/controller/ProductController.class
+com/skinai/controller/RegisterResponse.class
+com/skinai/repository/ProductRepository.class
+com/skinai/SkinAIApplication.class
+com/skinai/model/Product.class
+com/skinai/controller/RegisterRequest.class
+com/skinai/config/SecurityConfig.class
+com/skinai/controller/LoginRequest.class
+com/skinai/service/ProductService.class
+com/skinai/controller/LoginResponse.class

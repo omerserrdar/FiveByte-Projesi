@@ -5,6 +5,9 @@
  * Date: April 22, 2025
  */
 
+// API endpoint'leri
+const API_BASE_URL = 'http://localhost:8080/api/products';
+
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize products functionality if on the products page
@@ -328,3 +331,132 @@ function initFavorites() {
         });
     });
 }
+
+// Ürünleri getir
+async function fetchProducts(skinType = null, productType = null) {
+    try {
+        let url = API_BASE_URL;
+        if (skinType && productType) {
+            url = `${API_BASE_URL}/filter?skinType=${skinType}&productType=${productType}`;
+        } else if (skinType) {
+            url = `${API_BASE_URL}/skin-type/${skinType}`;
+        } else if (productType) {
+            url = `${API_BASE_URL}/product-type/${productType}`;
+        }
+
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const products = await response.json();
+        displayProducts(products);
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        // Hata durumunda kullanıcıya bilgi ver
+        document.getElementById('products-container').innerHTML = 
+            '<div class="error-message">Ürünler yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.</div>';
+    }
+}
+
+// Ürünleri görüntüle
+function displayProducts(products) {
+    const container = document.getElementById('products-container');
+    container.innerHTML = '';
+
+    if (products.length === 0) {
+        container.innerHTML = '<div class="no-products">Ürün bulunamadı.</div>';
+        return;
+    }
+
+    products.forEach(product => {
+        const productCard = `
+            <div class="product-card">
+                <img src="${product.imageUrl}" alt="${product.name}">
+                <h3>${product.name}</h3>
+                <p class="brand">${product.brand}</p>
+                <p class="description">${product.description}</p>
+                <div class="product-tags">
+                    <span class="tag skin-type">${product.skinType}</span>
+                    <span class="tag product-type">${product.productType}</span>
+                </div>
+                <button class="details-btn" onclick="showProductDetails('${product.id}')">
+                    Detayları Gör
+                </button>
+            </div>
+        `;
+        container.innerHTML += productCard;
+    });
+}
+
+// Ürün detaylarını göster
+async function showProductDetails(productId) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/${productId}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const product = await response.json();
+        
+        // Modal içeriğini oluştur
+        const modalContent = `
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="product-details">
+                    <img src="${product.imageUrl}" alt="${product.name}">
+                    <h2>${product.name}</h2>
+                    <p class="brand">${product.brand}</p>
+                    <p class="description">${product.description}</p>
+                    <div class="product-tags">
+                        <span class="tag skin-type">${product.skinType}</span>
+                        <span class="tag product-type">${product.productType}</span>
+                    </div>
+                    <div class="ingredients">
+                        <h3>İçerikler</h3>
+                        <p>${product.ingredients}</p>
+                    </div>
+                    <div class="usage">
+                        <h3>Kullanım</h3>
+                        <p>${product.usageInstructions}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Modal'ı göster
+        const modal = document.getElementById('product-modal');
+        modal.innerHTML = modalContent;
+        modal.style.display = 'block';
+
+        // Kapatma işlevi
+        const closeBtn = modal.querySelector('.close');
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+        };
+
+        // Modal dışına tıklandığında kapat
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        };
+    } catch (error) {
+        console.error('Error fetching product details:', error);
+        alert('Ürün detayları yüklenirken bir hata oluştu.');
+    }
+}
+
+// Filtreleme işlevleri
+function filterProducts() {
+    const skinType = document.getElementById('skin-type-filter').value;
+    const productType = document.getElementById('product-type-filter').value;
+    fetchProducts(skinType, productType);
+}
+
+// Sayfa yüklendiğinde tüm ürünleri getir
+document.addEventListener('DOMContentLoaded', () => {
+    fetchProducts();
+    
+    // Filtre değişikliklerini dinle
+    document.getElementById('skin-type-filter').addEventListener('change', filterProducts);
+    document.getElementById('product-type-filter').addEventListener('change', filterProducts);
+});
