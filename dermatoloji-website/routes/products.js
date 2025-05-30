@@ -7,10 +7,10 @@ const router = express.Router();
 // Tüm ürünleri getir
 router.get('/', async (req, res) => {
     try {
-        const products = await Product.find().sort({ createdAt: -1 });
-        res.json(products);
+        const products = await Product.find();
+        res.json({ success: true, data: products });
     } catch (err) {
-        console.error(err.message);
+        console.error('Ürünleri getirme hatası:', err);
         res.status(500).json({ success: false, message: 'Sunucu hatası' });
     }
 });
@@ -22,9 +22,9 @@ router.get('/:id', async (req, res) => {
         if (!product) {
             return res.status(404).json({ success: false, message: 'Ürün bulunamadı' });
         }
-        res.json(product);
+        res.json({ success: true, data: product });
     } catch (err) {
-        console.error(err.message);
+        console.error('Ürün getirme hatası:', err);
         res.status(500).json({ success: false, message: 'Sunucu hatası' });
     }
 });

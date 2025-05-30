@@ -1,11 +1,6 @@
 import mongoose from 'mongoose';
 
 const complaintSchema = new mongoose.Schema({
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
     subject: {
         type: String,
         required: true
@@ -25,4 +20,6 @@ const complaintSchema = new mongoose.Schema({
     }
 });
 
-export default mongoose.model('Complaint', complaintSchema); 
+const Complaint = mongoose.model('Complaint', complaintSchema);
+
+export default Complaint; 

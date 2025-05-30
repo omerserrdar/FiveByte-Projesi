@@ -5,7 +5,7 @@
  * Date: April 22, 2025
  */
 
-import api from './api.js';
+import { authAPI, productAPI, reviewAPI, complaintAPI } from './api.js';
 
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
@@ -45,23 +45,22 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             
             const formData = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                complaint: document.getElementById('complaint').value
+                subject: document.getElementById('name').value,
+                message: document.getElementById('complaint').value
             };
 
             try {
-                const response = await api.submitComplaint(formData);
+                const response = await complaintAPI.submitComplaint(formData);
                 if (response.success) {
                     alert('Şikayetiniz başarıyla gönderildi.');
                     complaintForm.reset();
                     complaintModal.style.display = 'none';
                 } else {
-                    alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+                    alert('Şikayet gönderilirken bir hata oluştu.');
                 }
             } catch (error) {
-                console.error('Şikayet gönderilirken hata:', error);
-                alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+                console.error('Şikayet gönderme hatası:', error);
+                alert('Şikayet gönderilirken bir hata oluştu.');
             }
         });
     }
@@ -87,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', async () => {
             const productId = button.closest('.product-card').dataset.productId;
             try {
-                const response = await api.addToFavorites(productId);
+                const response = await productAPI.addToFavorites(productId);
                 if (response.success) {
                     button.querySelector('i').classList.toggle('far');
                     button.querySelector('i').classList.toggle('fas');
@@ -431,7 +430,7 @@ function initShowMoreReviews() {
 // Sayfa yüklendiğinde ürünleri getir
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        const products = await api.getProducts();
+        const products = await productAPI.getAllProducts();
         // Ürünleri DOM'a ekle
         updateProductCards(products);
     } catch (error) {

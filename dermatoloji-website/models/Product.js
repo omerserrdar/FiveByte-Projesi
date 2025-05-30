@@ -5,22 +5,16 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    type: {
-        type: String,
-        required: true
-    },
     description: {
         type: String,
         required: true
     },
-    price: {
-        type: Number,
+    type: {
+        type: String,
         required: true
     },
     badge: {
-        type: String,
-        enum: ['Yeni', 'Popüler', 'İndirimli', ''],
-        default: ''
+        type: String
     },
     rating: {
         type: Number,
@@ -36,4 +30,6 @@ const productSchema = new mongoose.Schema({
     }
 });
 
-export default mongoose.model('Product', productSchema); 
+const Product = mongoose.model('Product', productSchema);
+
+export default Product; 

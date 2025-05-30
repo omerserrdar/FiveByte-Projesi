@@ -6,7 +6,7 @@ import Product from '../models/Product.js';
 const router = express.Router();
 
 // Ürüne yorum ekle
-router.post('/:productId', auth, async (req, res) => {
+router.post('/:productId', async (req, res) => {
     try {
         const { rating, comment } = req.body;
         const productId = req.params.productId;
@@ -17,42 +17,37 @@ router.post('/:productId', auth, async (req, res) => {
             return res.status(404).json({ success: false, message: 'Ürün bulunamadı' });
         }
 
-        // Yeni yorum oluştur
-        const newReview = new Review({
-            user: req.user.id,
+        // Yorumu oluştur
+        const review = new Review({
             product: productId,
             rating,
             comment
         });
 
-        const review = await newReview.save();
+        await review.save();
 
         // Ürünün ortalama puanını güncelle
         const reviews = await Review.find({ product: productId });
-        const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
-        const averageRating = totalRating / reviews.length;
+        const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+        product.rating = totalRating / reviews.length;
+        product.reviewCount = reviews.length;
+        await product.save();
 
-        await Product.findByIdAndUpdate(productId, {
-            rating: averageRating,
-            reviewCount: reviews.length
-        });
-
-        res.json(review);
+        res.json({ success: true, data: review });
     } catch (err) {
-        console.error(err.message);
+        console.error('Yorum ekleme hatası:', err);
         res.status(500).json({ success: false, message: 'Sunucu hatası' });
     }
 });
 
-// Ürünün yorumlarını getir
+// Ürün yorumlarını getir
 router.get('/:productId', async (req, res) => {
     try {
         const reviews = await Review.find({ product: req.params.productId })
-            .populate('user', 'name')
             .sort({ createdAt: -1 });
-        res.json(reviews);
+        res.json({ success: true, data: reviews });
     } catch (err) {
-        console.error(err.message);
+        console.error('Yorumları getirme hatası:', err);
         res.status(500).json({ success: false, message: 'Sunucu hatası' });
     }
 });
