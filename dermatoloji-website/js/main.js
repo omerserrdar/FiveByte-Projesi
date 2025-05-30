@@ -5,6 +5,8 @@
  * Date: April 22, 2025
  */
 
+import api from './api.js';
+
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize mobile navigation
@@ -39,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        complaintForm.addEventListener('submit', (e) => {
+        complaintForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const formData = {
@@ -48,15 +50,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 complaint: document.getElementById('complaint').value
             };
 
-            // Burada form verilerini backend'e gönderme işlemi yapılabilir
-            console.log('Şikayet gönderildi:', formData);
-            
-            // Başarılı gönderim mesajı
-            alert('Şikayetiniz başarıyla gönderildi. En kısa sürede size dönüş yapacağız.');
-            
-            // Formu temizle ve modalı kapat
-            complaintForm.reset();
-            complaintModal.style.display = 'none';
+            try {
+                const response = await api.submitComplaint(formData);
+                if (response.success) {
+                    alert('Şikayetiniz başarıyla gönderildi.');
+                    complaintForm.reset();
+                    complaintModal.style.display = 'none';
+                } else {
+                    alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+                }
+            } catch (error) {
+                console.error('Şikayet gönderilirken hata:', error);
+                alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+            }
         });
     }
 
@@ -78,20 +84,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const favoriteButtons = document.querySelectorAll('.add-favorite');
     
     favoriteButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            const icon = this.querySelector('i');
-            
-            if (icon.classList.contains('far')) {
-                icon.classList.remove('far');
-                icon.classList.add('fas');
-                icon.style.color = '#e74c3c';
-                showNotification('Ürün favorilere eklendi!', 'success');
-            } else {
-                icon.classList.remove('fas');
-                icon.classList.add('far');
-                icon.style.color = '';
-                showNotification('Ürün favorilerden çıkarıldı!', 'info');
+        button.addEventListener('click', async () => {
+            const productId = button.closest('.product-card').dataset.productId;
+            try {
+                const response = await api.addToFavorites(productId);
+                if (response.success) {
+                    button.querySelector('i').classList.toggle('far');
+                    button.querySelector('i').classList.toggle('fas');
+                }
+            } catch (error) {
+                console.error('Favorilere eklenirken hata:', error);
             }
         });
     });
@@ -424,4 +426,73 @@ function initShowMoreReviews() {
             }
         });
     });
+}
+
+// Sayfa yüklendiğinde ürünleri getir
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const products = await api.getProducts();
+        // Ürünleri DOM'a ekle
+        updateProductCards(products);
+    } catch (error) {
+        console.error('Ürünler yüklenirken hata:', error);
+    }
+});
+
+// Ürün kartlarını güncelle
+function updateProductCards(products) {
+    const productCards = document.querySelector('.product-cards');
+    if (!productCards) return;
+
+    products.forEach(product => {
+        const card = createProductCard(product);
+        productCards.appendChild(card);
+    });
+}
+
+// Ürün kartı oluştur
+function createProductCard(product) {
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    card.dataset.productId = product._id;
+
+    card.innerHTML = `
+        <div class="product-badge">${product.badge || ''}</div>
+        <div class="product-info">
+            <h3>${product.name}</h3>
+            <p class="product-type">${product.type}</p>
+            <p class="product-description">${product.description}</p>
+            <div class="product-rating">
+                ${createRatingStars(product.rating)}
+                <span>(${product.reviewCount})</span>
+            </div>
+            <div class="product-actions">
+                <button class="btn btn-outline add-favorite">
+                    <i class="far fa-heart"></i>
+                </button>
+            </div>
+        </div>
+    `;
+
+    return card;
+}
+
+// Yıldız derecelendirmesi oluştur
+function createRatingStars(rating) {
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 >= 0.5;
+    let stars = '';
+
+    for (let i = 0; i < fullStars; i++) {
+        stars += '<i class="fas fa-star"></i>';
+    }
+    if (hasHalfStar) {
+        stars += '<i class="fas fa-star-half-alt"></i>';
+    }
+    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+    for (let i = 0; i < emptyStars; i++) {
+        stars += '<i class="far fa-star"></i>';
+    }
+
+    return stars;
 }
