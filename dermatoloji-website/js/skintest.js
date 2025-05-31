@@ -263,114 +263,33 @@ function initSkinTest() {
                     case 'dry':
                         productsHTML = `
                             <div class="product-card">
-                                <div class="product-image">
-                                    <img src="images/product1.jpg" alt="Hydra Boost Nemlendirici" class="placeholder-image">
-                                </div>
                                 <div class="product-info">
                                     <h3>Hydra Boost Nemlendirici</h3>
-                                    <p>Hyaluronik asit içeren yoğun nemlendirici</p>
+                                    <p class="product-type">Nemlendirici</p>
+                                    <p class="product-description">Hyaluronik asit içeren yoğun nemlendirici</p>
+                                    <div class="product-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <span>(156)</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="product-card">
-                                <div class="product-image">
-                                    <img src="images/product6.jpg" alt="Hydra Intense Serum" class="placeholder-image">
-                                </div>
                                 <div class="product-info">
                                     <h3>Hydra Intense Serum</h3>
-                                    <p>Ceramide ve peptit kompleksi içeren serum</p>
-                                </div>
-                            </div>
-                        `;
-                        break;
-                    case 'oily':
-                        productsHTML = `
-                            <div class="product-card">
-                                <div class="product-image">
-                                    <img src="images/product2.jpg" alt="Pure Clean Yüz Temizleyici" class="placeholder-image">
-                                </div>
-                                <div class="product-info">
-                                    <h3>Pure Clean Yüz Temizleyici</h3>
-                                    <p>Salisilik asit içeren jel formülü</p>
-                                </div>
-                            </div>
-                            <div class="product-card">
-                                <div class="product-image">
-                                    <img src="images/product5.jpg" alt="Daily Defense SPF 50" class="placeholder-image">
-                                </div>
-                                <div class="product-info">
-                                    <h3>Oil-Free SPF 50</h3>
-                                    <p>Yağsız formüllü güneş koruyucu</p>
-                                </div>
-                            </div>
-                        `;
-                        break;
-                    case 'combination':
-                        productsHTML = `
-                            <div class="product-card">
-                                <div class="product-image">
-                                    <img src="images/product2.jpg" alt="Pure Clean Yüz Temizleyici" class="placeholder-image">
-                                </div>
-                                <div class="product-info">
-                                    <h3>Pure Clean Yüz Temizleyici</h3>
-                                    <p>Salisilik asit içeren jel formülü</p>
-                                </div>
-                            </div>
-                            <div class="product-card">
-                                <div class="product-image">
-                                    <img src="images/product1.jpg" alt="Hydra Boost Nemlendirici" class="placeholder-image">
-                                </div>
-                                <div class="product-info">
-                                    <h3>Hydra Boost Nemlendirici</h3>
-                                    <p>Hyaluronik asit içeren hafif nemlendirici</p>
-                                </div>
-                            </div>
-                            <div class="product-card">
-                                <div class="product-image">
-                                    <img src="images/product5.jpg" alt="Daily Defense SPF 50" class="placeholder-image">
-                                </div>
-                                <div class="product-info">
-                                    <h3>Daily Defense SPF 50</h3>
-                                    <p>Hafif dokulu güneş koruyucu</p>
-                                </div>
-                            </div>
-                            <div class="product-card">
-                                <div class="product-image">
-                                    <img src="images/product3.jpg" alt="Calm Skin Serumu" class="placeholder-image">
-                                </div>
-                                <div class="product-info">
-                                    <h3>Calm Skin Serumu</h3>
-                                    <p>Niacinamide ve panthenol içeren yatıştırıcı serum</p>
-                                </div>
-                            </div>
-                            <div class="product-card">
-                                <div class="product-image">
-                                    <img src="images/product4.jpg" alt="Balance Clay Mask" class="placeholder-image">
-                                </div>
-                                <div class="product-info">
-                                    <h3>Balance Clay Mask</h3>
-                                    <p>Kil ve aktif kömür içeren dengeleyici maske</p>
-                                </div>
-                            </div>
-                        `;
-                        break;
-                    case 'sensitive':
-                        productsHTML = `
-                            <div class="product-card">
-                                <div class="product-image">
-                                    <img src="images/product3.jpg" alt="Calm Skin Serumu" class="placeholder-image">
-                                </div>
-                                <div class="product-info">
-                                    <h3>Calm Skin Serumu</h3>
-                                    <p>Niacinamide ve panthenol içeren yatıştırıcı serum</p>
-                                </div>
-                            </div>
-                            <div class="product-card">
-                                <div class="product-image">
-                                    <img src="images/product5.jpg" alt="Sensitive SPF 50" class="placeholder-image">
-                                </div>
-                                <div class="product-info">
-                                    <h3>Sensitive SPF 50</h3>
-                                    <p>Hassas ciltler için mineral güneş koruyucu</p>
+                                    <p class="product-type">Serum</p>
+                                    <p class="product-description">Ceramide ve peptit kompleksi içeren serum</p>
+                                    <div class="product-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <span>(98)</span>
+                                    </div>
                                 </div>
                             </div>
                         `;
@@ -378,21 +297,135 @@ function initSkinTest() {
                     case 'normal':
                         productsHTML = `
                             <div class="product-card">
-                                <div class="product-image">
-                                    <img src="images/product5.jpg" alt="Daily Defense SPF 50" class="placeholder-image">
-                                </div>
                                 <div class="product-info">
                                     <h3>Daily Defense SPF 50</h3>
-                                    <p>Hafif dokulu güneş koruyucu</p>
+                                    <p class="product-type">Güneş Koruyucu</p>
+                                    <p class="product-description">Hafif ve nemlendirici güneş koruyucu</p>
+                                    <div class="product-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <span>(203)</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="product-card">
-                                <div class="product-image">
-                                    <img src="images/product1.jpg" alt="Hydra Boost Nemlendirici" class="placeholder-image">
-                                </div>
                                 <div class="product-info">
-                                    <h3>Daily Moisture</h3>
-                                    <p>Günlük kullanım için hafif nemlendirici</p>
+                                    <h3>Balance Clay Mask</h3>
+                                    <p class="product-type">Maske</p>
+                                    <p class="product-description">Cildi dengeleyen ve arındıran kil maskesi</p>
+                                    <div class="product-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <span>(145)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        break;
+                    case 'combination':
+                        productsHTML = `
+                            <div class="product-card">
+                                <div class="product-info">
+                                    <h3>Pure Clean Yüz Temizleyici</h3>
+                                    <p class="product-type">Temizleyici</p>
+                                    <p class="product-description">Salisilik asit içeren jel formülü ile gözenekleri derinlemesine temizler</p>
+                                    <div class="product-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <span>(178)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-card">
+                                <div class="product-info">
+                                    <h3>Balance Clay Mask</h3>
+                                    <p class="product-type">Maske</p>
+                                    <p class="product-description">T bölgesini dengeleyen ve gözenekleri sıkılaştıran kil maskesi</p>
+                                    <div class="product-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <span>(132)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        break;
+                    case 'oily':
+                        productsHTML = `
+                            <div class="product-card">
+                                <div class="product-info">
+                                    <h3>Pure Clean Yüz Temizleyici</h3>
+                                    <p class="product-type">Temizleyici</p>
+                                    <p class="product-description">Salisilik asit içeren jel formülü ile gözenekleri derinlemesine temizler</p>
+                                    <div class="product-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <span>(167)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-card">
+                                <div class="product-info">
+                                    <h3>Oil Control Serum</h3>
+                                    <p class="product-type">Serum</p>
+                                    <p class="product-description">Niacinamide ve çinko içeren yağ kontrol serumu</p>
+                                    <div class="product-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <span>(189)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        break;
+                    case 'sensitive':
+                        productsHTML = `
+                            <div class="product-card">
+                                <div class="product-info">
+                                    <h3>Calm Skin Serumu</h3>
+                                    <p class="product-type">Serum</p>
+                                    <p class="product-description">Niacinamide ve panthenol içeren yatıştırıcı serum</p>
+                                    <div class="product-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <span>(142)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-card">
+                                <div class="product-info">
+                                    <h3>Sensitive SPF 50</h3>
+                                    <p class="product-type">Güneş Koruyucu</p>
+                                    <p class="product-description">Hassas ciltler için mineral güneş koruyucu</p>
+                                    <div class="product-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <span>(156)</span>
+                                    </div>
                                 </div>
                             </div>
                         `;
@@ -400,21 +433,33 @@ function initSkinTest() {
                     default:
                         productsHTML = `
                             <div class="product-card">
-                                <div class="product-image">
-                                    <img src="images/product4.jpg" alt="Balance Clay Mask" class="placeholder-image">
-                                </div>
                                 <div class="product-info">
-                                    <h3>Balance Clay Mask</h3>
-                                    <p>T bölgesini matlaştırıp yanaklara nem veren maske</p>
+                                    <h3>Hydra Boost Nemlendirici</h3>
+                                    <p class="product-type">Nemlendirici</p>
+                                    <p class="product-description">Hyaluronik asit içeren yoğun nemlendirici</p>
+                                    <div class="product-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <span>(156)</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="product-card">
-                                <div class="product-image">
-                                    <img src="images/product5.jpg" alt="Daily Defense SPF 50" class="placeholder-image">
-                                </div>
                                 <div class="product-info">
                                     <h3>Daily Defense SPF 50</h3>
-                                    <p>Hafif dokulu güneş koruyucu</p>
+                                    <p class="product-type">Güneş Koruyucu</p>
+                                    <p class="product-description">Hafif ve nemlendirici güneş koruyucu</p>
+                                    <div class="product-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <span>(203)</span>
+                                    </div>
                                 </div>
                             </div>
                         `;
