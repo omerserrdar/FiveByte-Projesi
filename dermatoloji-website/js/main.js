@@ -191,7 +191,7 @@ function initFaqAccordions() {
         const question = item.querySelector('.faq-question');
         
         question.addEventListener('click', () => {
-            // Close all other items
+            // Close other items
             faqItems.forEach(otherItem => {
                 if (otherItem !== item && otherItem.classList.contains('active')) {
                     otherItem.classList.remove('active');
@@ -563,4 +563,11 @@ class App {
 // Sayfa yüklendiğinde App'i başlat
 document.addEventListener('DOMContentLoaded', () => {
     new App();
+});
+
+// Initialize all components when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    initMobileNav();
+    initScrollAnimations();
+    initFaqAccordions();
 });

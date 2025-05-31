@@ -139,37 +139,37 @@
             <h2 class="section-title">Sık Sorulan Sorular</h2>
             <div class="faq-container">
                 <div class="faq-item">
-                    <div class="faq-question">
+                    <button class="faq-question">
                         <h3>Cilt Asistanı tamamen ücretsiz mi?</h3>
                         <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
-                    </div>
+                    </button>
                     <div class="faq-answer">
                         <p>Evet, Cilt Asistanımız tüm kullanıcılarımız için tamamen ücretsizdir. Ancak, daha kişiselleştirilmiş öneriler için üye olmanızı öneririz.</p>
                     </div>
                 </div>
                 <div class="faq-item">
-                    <div class="faq-question">
+                    <button class="faq-question">
                         <h3>Asistan gerçek bir dermatoloğun yerini tutar mı?</h3>
                         <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
-                    </div>
+                    </button>
                     <div class="faq-answer">
                         <p>Hayır, Cilt Asistanımız genel bilgi ve öneriler sunmak için tasarlanmıştır. Ciddi cilt sorunları için mutlaka bir dermatoloğa başvurmanızı öneririz.</p>
                     </div>
                 </div>
                 <div class="faq-item">
-                    <div class="faq-question">
+                    <button class="faq-question">
                         <h3>Asistan hangi dilleri destekliyor?</h3>
                         <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
-                    </div>
+                    </button>
                     <div class="faq-answer">
                         <p>Şu anda Cilt Asistanımız sadece Türkçe dilini desteklemektedir. Yakın zamanda İngilizce desteği de eklenecektir.</p>
                     </div>
                 </div>
                 <div class="faq-item">
-                    <div class="faq-question">
+                    <button class="faq-question">
                         <h3>Sohbet geçmişim kaydediliyor mu?</h3>
                         <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
-                    </div>
+                    </button>
                     <div class="faq-answer">
                         <p>Üye iseniz, daha iyi hizmet sunabilmek için sohbet geçmişiniz kaydedilir. Misafir olarak kullanıyorsanız, tarayıcınızı kapattığınızda sohbet geçmişiniz silinir.</p>
                     </div>
@@ -177,6 +177,85 @@
             </div>
         </div>
     </section>
+
+    <style>
+        .faq-item {
+            margin-bottom: 1rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background-color: #f5f5f5;
+            border: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background-color: #e0e0e0;
+        }
+
+        .faq-question h3 {
+            margin: 0;
+            font-size: 1.125rem;
+            text-align: left;
+        }
+
+        .faq-toggle {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            background-color: white;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 1rem 1.5rem;
+        }
+
+        .faq-answer p {
+            margin: 0;
+            color: #666;
+            line-height: 1.6;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                
+                question.addEventListener('click', () => {
+                    // Close other items
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item && otherItem.classList.contains('active')) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle current item
+                    item.classList.toggle('active');
+                });
+            });
+        });
+    </script>
 
     <!-- CTA Section -->
     <section class="cta">
