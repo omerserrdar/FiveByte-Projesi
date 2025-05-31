@@ -1675,6 +1675,16 @@ footer {
     margin: 0 auto;
 }
 
+.chatbot-hero-content h2 {
+    color: var(--white);
+    margin-bottom: var(--spacing-md);
+}
+
+.chatbot-hero-content p {
+    color: var(--white);
+    margin-bottom: var(--spacing-lg);
+}
+
 .chatbot-section {
     padding: var(--spacing-xxl) 0;
     background-color: var(--light-gray);
@@ -1875,7 +1885,7 @@ footer {
 
 .info-icon i {
     font-size: 1.5rem;
-    color: var(--primary-dark);
+    color: var(--white);
 }
 
 .info-card h3 {
@@ -1966,6 +1976,16 @@ footer {
     margin: 0 auto;
 }
 
+.about-hero-content h2 {
+    color: var(--white);
+    margin-bottom: var(--spacing-md);
+}
+
+.about-hero-content p {
+    color: var(--white);
+    margin-bottom: var(--spacing-lg);
+}
+
 .our-story {
     padding: var(--spacing-xxl) 0;
     background-color: var(--white);
@@ -2022,7 +2042,7 @@ footer {
 
 .mission-icon i {
     font-size: 1.75rem;
-    color: var(--primary-dark);
+    color: var(--white);
 }
 
 .team-section {
@@ -2770,4 +2790,26 @@ footer {
 .form-group textarea {
     resize: vertical;
     min-height: 100px;
+}
+
+/* ===== EXPERIENCES PAGE ===== */
+.experiences-hero {
+    padding: var(--spacing-xl) 0;
+    background: linear-gradient(135deg, var(--primary-light) 0%, var(--secondary-light) 100%);
+    text-align: center;
+}
+
+.experiences-hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.experiences-hero-content h2 {
+    color: var(--white);
+    margin-bottom: var(--spacing-md);
+}
+
+.experiences-hero-content p {
+    color: var(--white);
+    margin-bottom: var(--spacing-lg);
 }

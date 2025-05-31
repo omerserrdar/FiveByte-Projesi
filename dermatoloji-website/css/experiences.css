@@ -1,21 +1,23 @@
 /* Experiences Hero Section */
 .experiences-hero {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    padding: 4rem 0;
+    background: linear-gradient(135deg, var(--primary-light) 0%, var(--secondary-light) 100%);
+    padding: var(--spacing-xl) 0;
     text-align: center;
 }
 
-.experiences-hero h2 {
-    font-size: 2.5rem;
-    color: #2c3e50;
-    margin-bottom: 1rem;
+.experiences-hero-content {
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-.experiences-hero p {
-    font-size: 1.2rem;
-    color: #6c757d;
-    max-width: 600px;
-    margin: 0 auto;
+.experiences-hero-content h2 {
+    color: var(--white);
+    margin-bottom: var(--spacing-md);
+}
+
+.experiences-hero-content p {
+    color: var(--white);
+    margin-bottom: var(--spacing-lg);
 }
 
 /* Statistics Section */
@@ -47,7 +49,7 @@
 
 .stat-icon {
     font-size: 2.5rem;
-    color: #3498db;
+    color: #ff7f47;
     margin-bottom: 1rem;
 }
 
@@ -186,48 +188,60 @@
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.3s ease;
+    color: #ff0072;
 }
 
 .pagination-btn:hover {
     background-color: #f8f9fa;
+    color: #ff0072;
 }
 
 .pagination-btn.active {
-    background-color: #3498db;
+    background-color: #ff0072;
     color: #fff;
-    border-color: #3498db;
+    border-color: #ff0072;
+}
+
+.pagination-btn.next {
+    color: #ff0072;
+}
+
+.pagination-btn.next:hover {
+    background-color: #f8f9fa;
+    color: #ff0072;
 }
 
 /* Add Experience Section */
 .add-experience {
-    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-    padding: 4rem 0;
+    padding: var(--spacing-xxl) 0;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     text-align: center;
-    color: #fff;
 }
 
 .add-experience h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
+    color: var(--white);
+    margin-bottom: var(--spacing-sm);
 }
 
 .add-experience p {
-    font-size: 1.1rem;
-    max-width: 600px;
-    margin: 0 auto 2rem;
+    color: var(--white);
+    margin-bottom: var(--spacing-lg);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .add-experience .btn {
-    background-color: #fff;
-    color: #3498db;
+    background-color: var(--white);
+    color: var(--white);
     padding: 0.75rem 2rem;
     font-size: 1.1rem;
     transition: all 0.3s ease;
 }
 
 .add-experience .btn:hover {
-    background-color: #f8f9fa;
-    transform: translateY(-2px);
+    background-color: var(--light-gray);
+    color: var(--white);
 }
 
 /* Featured Experiences Section */
@@ -272,7 +286,7 @@
 
 .featured-card .user-avatar {
     font-size: 3rem;
-    color: #3498db;
+    color: #ff7f47;
 }
 
 .featured-card .user-details h3 {
