@@ -22,7 +22,8 @@ const mongooseOptions = {
 };
 
 // MongoDB bağlantısı
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/dermaskin', mongooseOptions)
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/dermaskin';
+mongoose.connect(MONGODB_URI, mongooseOptions)
     .then(() => {
         console.log('MongoDB bağlantısı başarılı');
     })

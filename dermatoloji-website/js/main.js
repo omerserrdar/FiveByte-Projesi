@@ -495,3 +495,72 @@ function createRatingStars(rating) {
 
     return stars;
 }
+
+class App {
+    constructor() {
+        this.user = null;
+        this.init();
+    }
+
+    init() {
+        // Kullanıcı durumunu kontrol et
+        this.checkAuthStatus();
+        
+        // Header'ı güncelle
+        this.updateHeader();
+        
+        // Çıkış yapma işlemi
+        const logoutBtn = document.getElementById('logoutBtn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => this.handleLogout());
+        }
+    }
+
+    checkAuthStatus() {
+        const token = localStorage.getItem('token');
+        const user = localStorage.getItem('user');
+        
+        if (token && user) {
+            this.user = JSON.parse(user);
+        }
+    }
+
+    updateHeader() {
+        const authButtons = document.querySelector('.auth-buttons');
+        const userMenu = document.querySelector('.user-menu');
+        
+        if (this.user) {
+            // Kullanıcı giriş yapmış
+            if (authButtons) authButtons.style.display = 'none';
+            if (userMenu) {
+                userMenu.style.display = 'flex';
+                const userName = userMenu.querySelector('.user-name');
+                if (userName) userName.textContent = this.user.name;
+            }
+        } else {
+            // Kullanıcı giriş yapmamış
+            if (authButtons) authButtons.style.display = 'flex';
+            if (userMenu) userMenu.style.display = 'none';
+        }
+    }
+
+    handleLogout() {
+        // LocalStorage'dan kullanıcı bilgilerini temizle
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        
+        // Kullanıcı durumunu güncelle
+        this.user = null;
+        
+        // Header'ı güncelle
+        this.updateHeader();
+        
+        // Ana sayfaya yönlendir
+        window.location.href = '/';
+    }
+}
+
+// Sayfa yüklendiğinde App'i başlat
+document.addEventListener('DOMContentLoaded', () => {
+    new App();
+});

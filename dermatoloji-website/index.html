@@ -27,6 +27,14 @@
                     <a href="login.html" class="btn btn-outline">Giriş Yap</a>
                     <a href="login.html#register" class="btn btn-primary">Kayıt Ol</a>
                 </div>
+                <div class="user-menu" style="display: none;">
+                    <span class="user-name"></span>
+                    <div class="user-dropdown">
+                        <a href="profile.html">Profilim</a>
+                        <a href="orders.html">Siparişlerim</a>
+                        <a href="#" id="logoutBtn">Çıkış Yap</a>
+                    </div>
+                </div>
                 <div class="hamburger">
                     <span class="bar"></span>
                     <span class="bar"></span>
@@ -116,291 +124,8 @@
     <section class="featured-products">
         <div class="container">
             <h2 class="section-title">Öne Çıkan Ürünler</h2>
-            <div class="product-cards">
-                <div class="product-card">
-                    <div class="product-badge">Yeni</div>
-                    <div class="product-info">
-                        <h3>Hassas Cilt Kremi</h3>
-                        <p class="product-type">Nemlendirici</p>
-                        <p class="product-description">Hassas ciltler için özel olarak geliştirilmiş, yatıştırıcı nemlendirici krem.</p>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                            <span>(128)</span>
-                        </div>
-                        <div class="product-actions">
-                            <button class="btn btn-outline add-favorite">
-                                <i class="far fa-heart"></i>
-                            </button>
-                        </div>
-                        <div class="product-reviews">
-                            <h4>Kullanıcı Yorumları</h4>
-                            <div class="review">
-                                <div class="review-header">
-                                    <span class="review-author">Ayşe Y.</span>
-                                    <span class="review-date">2 gün önce</span>
-                                </div>
-                                <div class="review-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <p class="review-text">Çok hafif ve cildimi tahriş etmiyor. Kesinlikle tavsiye ederim!</p>
-                            </div>
-                            <div class="review">
-                                <div class="review-header">
-                                    <span class="review-author">Mehmet K.</span>
-                                    <span class="review-date">1 hafta önce</span>
-                                </div>
-                                <div class="review-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                                <p class="review-text">Nemlendirme etkisi gerçekten çok iyi, fiyatına göre kaliteli bir ürün.</p>
-                            </div>
-                            <div class="review hidden">
-                                <div class="review-header">
-                                    <span class="review-author">Zeynep A.</span>
-                                    <span class="review-date">2 hafta önce</span>
-                                </div>
-                                <div class="review-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <p class="review-text">Hassas cildim için mükemmel bir ürün. Kızarıklıklarımı azalttı.</p>
-                            </div>
-                            <div class="review hidden">
-                                <div class="review-header">
-                                    <span class="review-author">Can B.</span>
-                                    <span class="review-date">3 hafta önce</span>
-                                </div>
-                                <div class="review-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <p class="review-text">Kokusu çok hoş ve cildimde hafif bir his bırakıyor. Memnunum.</p>
-                            </div>
-                            <div class="review hidden">
-                                <div class="review-header">
-                                    <span class="review-author">Elif S.</span>
-                                    <span class="review-date">1 ay önce</span>
-                                </div>
-                                <div class="review-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                                <p class="review-text">Kuru cildim için ideal bir nemlendirici. Sabah akşam kullanıyorum.</p>
-                            </div>
-                            <button class="btn btn-outline show-more-reviews">Daha Fazla Yorum Göster</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-badge">Popüler</div>
-                    <div class="product-info">
-                        <h3>Anti-Aging Serum</h3>
-                        <p class="product-type">Serum</p>
-                        <p class="product-description">Cildinizi gençleştiren ve kırışıklıkları azaltan güçlü anti-aging serum.</p>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <span>(256)</span>
-                        </div>
-                        <div class="product-actions">
-                            <button class="btn btn-outline add-favorite">
-                                <i class="far fa-heart"></i>
-                            </button>
-                        </div>
-                        <div class="product-reviews">
-                            <h4>Kullanıcı Yorumları</h4>
-                            <div class="review">
-                                <div class="review-header">
-                                    <span class="review-author">Zeynep A.</span>
-                                    <span class="review-date">3 gün önce</span>
-                                </div>
-                                <div class="review-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <p class="review-text">Kırışıklıklarımda gözle görülür bir azalma var. Çok memnunum!</p>
-                            </div>
-                            <div class="review">
-                                <div class="review-header">
-                                    <span class="review-author">Ali R.</span>
-                                    <span class="review-date">1 hafta önce</span>
-                                </div>
-                                <div class="review-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <p class="review-text">Cildim daha canlı ve parlak görünüyor. Tavsiye ederim.</p>
-                            </div>
-                            <div class="review hidden">
-                                <div class="review-header">
-                                    <span class="review-author">Selin M.</span>
-                                    <span class="review-date">2 hafta önce</span>
-                                </div>
-                                <div class="review-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <p class="review-text">Anti-aging etkisi gerçekten etkileyici. 2 aydır kullanıyorum ve farkı görüyorum.</p>
-                            </div>
-                            <div class="review hidden">
-                                <div class="review-header">
-                                    <span class="review-author">Burak K.</span>
-                                    <span class="review-date">3 hafta önce</span>
-                                </div>
-                                <div class="review-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                                <p class="review-text">Fiyatı biraz yüksek ama kalitesi gerçekten iyi. Alacaklarınıza değer.</p>
-                            </div>
-                            <div class="review hidden">
-                                <div class="review-header">
-                                    <span class="review-author">Deniz Y.</span>
-                                    <span class="review-date">1 ay önce</span>
-                                </div>
-                                <div class="review-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <p class="review-text">Göz çevresi kırışıklıklarım için kullanıyorum. Etkili bir ürün.</p>
-                            </div>
-                            <button class="btn btn-outline show-more-reviews">Daha Fazla Yorum Göster</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-info">
-                        <h3>Güneş Koruyucu</h3>
-                        <p class="product-type">Koruyucu</p>
-                        <p class="product-description">Yüksek koruma faktörlü, hafif ve hızlı emilen güneş koruyucu krem.</p>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <span>(89)</span>
-                        </div>
-                        <div class="product-actions">
-                            <button class="btn btn-outline add-favorite">
-                                <i class="far fa-heart"></i>
-                            </button>
-                        </div>
-                        <div class="product-reviews">
-                            <h4>Kullanıcı Yorumları</h4>
-                            <div class="review">
-                                <div class="review-header">
-                                    <span class="review-author">Deniz K.</span>
-                                    <span class="review-date">5 gün önce</span>
-                                </div>
-                                <div class="review-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <p class="review-text">Hafif formülü sayesinde makyaj altında bile rahatça kullanabiliyorum.</p>
-                            </div>
-                            <div class="review">
-                                <div class="review-header">
-                                    <span class="review-author">Can B.</span>
-                                    <span class="review-date">2 hafta önce</span>
-                                </div>
-                                <div class="review-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                                <p class="review-text">Yaz aylarında vazgeçilmezim oldu. Cildimi güneşten koruyor.</p>
-                            </div>
-                            <div class="review hidden">
-                                <div class="review-header">
-                                    <span class="review-author">Ayşe S.</span>
-                                    <span class="review-date">3 hafta önce</span>
-                                </div>
-                                <div class="review-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <p class="review-text">Hassas cildim için ideal. Güneş yanığı olmadan güneşlenebiliyorum.</p>
-                            </div>
-                            <div class="review hidden">
-                                <div class="review-header">
-                                    <span class="review-author">Mehmet Y.</span>
-                                    <span class="review-date">1 ay önce</span>
-                                </div>
-                                <div class="review-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                                <p class="review-text">Yağlı cildim için bile uygun. Yüzümde ağır bir his bırakmıyor.</p>
-                            </div>
-                            <div class="review hidden">
-                                <div class="review-header">
-                                    <span class="review-author">Zeynep K.</span>
-                                    <span class="review-date">1 ay önce</span>
-                                </div>
-                                <div class="review-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <p class="review-text">SPF 50+ koruma faktörü ile güneşe karşı tam koruma sağlıyor.</p>
-                            </div>
-                            <button class="btn btn-outline show-more-reviews">Daha Fazla Yorum Göster</button>
-                        </div>
-                    </div>
-                </div>
+            <div id="products-container" class="product-cards">
+                <!-- Ürünler JavaScript ile buraya eklenecek -->
             </div>
             <div class="view-all">
                 <a href="products.html" class="btn btn-outline">Tüm Ürünleri Gör</a>
@@ -508,5 +233,7 @@
     </footer>
 
     <script src="js/main.js"></script>
+    <script type="module" src="js/services/api.js"></script>
+    <script type="module" src="js/pages/products.js"></script>
 </body>
 </html>
