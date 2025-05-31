@@ -211,7 +211,7 @@ button, input, select, textarea {
 
 .btn-secondary {
     background-color: var(--secondary-color);
-    color: var(--black);
+    color: var(--white);
 }
 
 .btn-secondary:hover {
@@ -443,7 +443,7 @@ nav {
 
 .feature-icon {
     font-size: 2.5rem;
-    color: #4a90e2;
+    color: #ff7f47;
     margin-bottom: 20px;
 }
 
@@ -481,7 +481,7 @@ nav {
 }
 
 .feature-card-link:hover .feature-icon {
-    color: #357abd;
+    color: #ff6b2b;
 }
 
 /* ===== PRODUCTS SECTION ===== */
