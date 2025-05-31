@@ -8,15 +8,15 @@
 /* ===== VARIABLES ===== */
 :root {
     /* Color Palette - Pastel Colors */
-    --primary-color: #a5d8d6;       /* Soft Teal */
-    --primary-dark: #7ebfbd;        /* Darker Teal */
-    --primary-light: #c7e7e6;       /* Lighter Teal */
-    --secondary-color: #f8c7cc;     /* Soft Pink */
-    --secondary-dark: #e6a9af;      /* Darker Pink */
-    --secondary-light: #fde2e5;     /* Lighter Pink */
-    --accent-color: #ffeaac;        /* Soft Yellow */
-    --accent-dark: #f0d88e;         /* Darker Yellow */
-    --accent-light: #fff5d6;        /* Lighter Yellow */
+    --primary-color: #ff0072;       /* Pink */
+    --primary-dark: #ff1a5c;        /* Darker Pink */
+    --primary-light: #ff3385;       /* Lighter Pink */
+    --secondary-color: #ff4d4d;     /* Red-Orange */
+    --secondary-dark: #ff3d3d;      /* Darker Red-Orange */
+    --secondary-light: #ff6666;     /* Lighter Red-Orange */
+    --accent-color: #ff7f47;        /* Orange */
+    --accent-dark: #ff6b2b;         /* Darker Orange */
+    --accent-light: #ff9966;        /* Lighter Orange */
     
     /* Neutral Colors */
     --white: #ffffff;
@@ -26,11 +26,11 @@
     --black: #333333;
     
     /* Skin Type Colors */
-    --dry-skin: #f8c7cc;            /* Pink */
-    --oily-skin: #a5d8d6;           /* Teal */
-    --combination-skin: #d6c9e1;    /* Lavender */
-    --sensitive-skin: #ffeaac;      /* Yellow */
-    --normal-skin: #c7e1c3;         /* Mint */
+    --dry-skin: #ff0072;            /* Pink */
+    --oily-skin: #ff4d4d;           /* Red-Orange */
+    --combination-skin: #ff6666;    /* Lighter Red-Orange */
+    --sensitive-skin: #ff7f47;      /* Orange */
+    --normal-skin: #ff6b2b;         /* Darker Orange */
     
     /* Typography */
     --font-primary: 'Poppins', sans-serif;
