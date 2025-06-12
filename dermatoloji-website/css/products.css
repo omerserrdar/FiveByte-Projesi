@@ -73,4 +73,21 @@
     .product-description {
         font-size: 0.875rem;
     }
+}
+
+.product-image {
+    width: 100%;
+    min-height: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.product-image img {
+    max-width: 80px;
+    max-height: 80px;
+    object-fit: contain;
+    display: block;
 } 

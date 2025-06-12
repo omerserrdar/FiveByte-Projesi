@@ -16,12 +16,12 @@ const api = {
 
     // Yorumlar
     async getReviews(productId) {
-        const response = await fetch(`${API_URL}/reviews/${productId}`);
+        const response = await fetch(`${API_URL}/products/${productId}/reviews`);
         return response.json();
     },
 
     async addReview(productId, reviewData) {
-        const response = await fetch(`${API_URL}/reviews/${productId}`, {
+        const response = await fetch(`${API_URL}/products/${productId}/reviews`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -62,6 +62,28 @@ const api = {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(userData)
+        });
+        return response.json();
+    },
+
+    // Favoriler
+    async getFavorites(email) {
+        const response = await fetch(`${API_URL}/favorites?email=${encodeURIComponent(email)}`);
+        return response.json();
+    },
+    async addFavorite(email, productId) {
+        const response = await fetch(`${API_URL}/favorites?email=${encodeURIComponent(email)}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(productId)
+        });
+        return response.json();
+    },
+    async removeFavorite(email, productId) {
+        const response = await fetch(`${API_URL}/favorites?email=${encodeURIComponent(email)}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(productId)
         });
         return response.json();
     }

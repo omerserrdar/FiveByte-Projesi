@@ -2813,3 +2813,66 @@ footer {
     color: var(--white);
     margin-bottom: var(--spacing-lg);
 }
+
+.user-menu {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    position: relative;
+    gap: 0.5rem;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    padding: 0.25rem 1.2rem 0.25rem 1.2rem;
+    min-width: 160px;
+}
+
+.user-name {
+    font-weight: 600;
+    color: var(--primary-color);
+    font-size: 1rem;
+    margin-right: 0.5rem;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.user-dropdown {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-10px);
+    display: block;
+    position: absolute;
+    top: 120%;
+    right: 0;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    min-width: 160px;
+    z-index: 100;
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+.user-menu:hover .user-dropdown,
+.user-menu:focus-within .user-dropdown {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.user-dropdown a {
+    display: block;
+    padding: 0.75rem 1.2rem;
+    color: var(--black);
+    text-decoration: none;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.2s;
+}
+
+.user-dropdown a:last-child {
+    border-bottom: none;
+}
+
+.user-dropdown a:hover {
+    background: var(--light-gray);
+    color: var(--primary-color);
+}

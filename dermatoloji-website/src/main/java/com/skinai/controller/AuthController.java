@@ -11,10 +11,18 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         // Şimdilik basit bir doğrulama yapalım
-        if ("admin".equals(loginRequest.getUsername()) && "admin123".equals(loginRequest.getPassword())) {
-            return ResponseEntity.ok(new LoginResponse("Login successful", "dummy-token"));
+        if ("admin@skinai.com".equals(loginRequest.getEmail()) && "admin123".equals(loginRequest.getPassword())) {
+            return ResponseEntity.ok(java.util.Map.of(
+                "success", true,
+                "message", "Login successful",
+                "token", "dummy-token",
+                "user", java.util.Map.of("email", loginRequest.getEmail())
+            ));
         }
-        return ResponseEntity.badRequest().body("Invalid credentials");
+        return ResponseEntity.badRequest().body(java.util.Map.of(
+            "success", false,
+            "message", "Invalid credentials"
+        ));
     }
 
     @PostMapping("/register")
@@ -25,12 +33,12 @@ public class AuthController {
 }
 
 class LoginRequest {
-    private String username;
+    private String email;
     private String password;
 
     // Getters and Setters
-    public String getUsername() { return username; }
-    public void setUsername(String username) { this.username = username; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
 }

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorilerim - SkinAI</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .favorites-container {
+            max-width: 900px;
+            margin: 3rem auto;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+            padding: 2.5rem 2rem;
+        }
+        .favorites-title {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+        }
+        .favorites-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+        }
+        .favorite-card {
+            background: #fafbfc;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            padding: 1.5rem 1rem;
+            text-align: center;
+            transition: box-shadow 0.2s;
+        }
+        .favorite-card:hover {
+            box-shadow: 0 6px 24px rgba(0,0,0,0.10);
+        }
+        .favorite-image {
+            width: 90px;
+            height: 90px;
+            border-radius: 12px;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            background: #eee;
+        }
+        .favorite-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+        .favorite-desc {
+            color: var(--dark-gray);
+            font-size: 0.97rem;
+            margin-bottom: 1rem;
+        }
+        .remove-favorite {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .remove-favorite:hover {
+            color: var(--secondary-color);
+        }
+        .empty-favorites {
+            text-align: center;
+            color: var(--dark-gray);
+            font-size: 1.1rem;
+            margin: 3rem 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>SkinAI</h1>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Anasayfa</a></li>
+                    <li><a href="products.html">Ürünler</a></li>
+                    <li><a href="skintest.html">Cilt Tipi Testi</a></li>
+                    <li><a href="chatbot.html">Cilt Asistanı</a></li>
+                    <li><a href="experiences.html">Kullanıcı Deneyimleri</a></li>
+                    <li><a href="about.html">Hakkımızda</a></li>
+                </ul>
+                <div class="auth-buttons">
+                    <a href="login.html" class="btn btn-outline">Giriş Yap</a>
+                    <a href="login.html#register" class="btn btn-primary">Kayıt Ol</a>
+                </div>
+                <div class="user-menu" style="display: none;">
+                    <span class="user-name"></span>
+                    <div class="user-dropdown">
+                        <a href="profile.html" id="profileBtn">Profilim</a>
+                        <a href="favorites.html" id="favoritesBtn">Favorilerim</a>
+                        <a href="#" id="logoutBtn">Çıkış Yap</a>
+                    </div>
+                </div>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="favorites-container">
+            <h2 class="favorites-title"><i class="fas fa-heart"></i> Favorilerim</h2>
+            <div id="favoritesList" class="favorites-list"></div>
+            <div id="emptyFavorites" class="empty-favorites" style="display:none;">
+                Henüz favori ürününüz yok. Ürünleri favorilere eklemek için kalp ikonuna tıklayın.
+            </div>
+        </div>
+    </main>
+    <script type="module">
+        import api from './js/services/api.js';
+        // Giriş yapan kullanıcıyı al
+        const user = JSON.parse(localStorage.getItem('user'));
+        const favoritesList = document.getElementById('favoritesList');
+        const emptyFavorites = document.getElementById('emptyFavorites');
+
+        async function renderFavorites() {
+            if (!user || !user.email) {
+                favoritesList.innerHTML = '';
+                emptyFavorites.style.display = 'block';
+                emptyFavorites.textContent = 'Favori ürünlerinizi görmek için giriş yapmalısınız.';
+                return;
+            }
+            const productIds = await api.getFavorites(user.email);
+            if (!productIds.length) {
+                favoritesList.innerHTML = '';
+                emptyFavorites.style.display = 'block';
+                return;
+            }
+            emptyFavorites.style.display = 'none';
+            // Ürün detaylarını çekmek için getProduct fonksiyonunu kullan
+            favoritesList.innerHTML = '';
+            for (const id of productIds) {
+                const product = await api.getProduct(id);
+                const card = document.createElement('div');
+                card.className = 'favorite-card';
+                card.innerHTML = `
+                    <img src="${product.image || 'images/product1.jpg'}" alt="${product.name}" class="favorite-image">
+                    <div class="favorite-name">${product.name}</div>
+                    <div class="favorite-desc">${product.description || ''}</div>
+                    <button class="remove-favorite" data-id="${product.id}"><i class="fas fa-trash"></i> Kaldır</button>
+                `;
+                favoritesList.appendChild(card);
+            }
+            // Kaldır butonlarına event ekle
+            document.querySelectorAll('.remove-favorite').forEach(btn => {
+                btn.addEventListener('click', async function() {
+                    const id = this.getAttribute('data-id');
+                    await api.removeFavorite(user.email, id);
+                    renderFavorites();
+                });
+            });
+        }
+        renderFavorites();
+    </script>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html> 

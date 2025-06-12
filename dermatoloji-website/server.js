@@ -64,7 +64,7 @@ app.use((err, req, res, next) => {
     });
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = 3000;
 
 // Sunucuyu başlat
 app.listen(PORT, () => {

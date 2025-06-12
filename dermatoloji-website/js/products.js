@@ -6,7 +6,7 @@
  */
 
 // API endpoint'leri
-const API_BASE_URL = 'http://localhost:8080/api/products';
+const API_BASE_URL = 'http://localhost:5000/api/products';
 
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
@@ -371,15 +371,15 @@ function displayProducts(products) {
     products.forEach(product => {
         const productCard = `
             <div class="product-card">
-                <img src="${product.imageUrl}" alt="${product.name}">
-                <h3>${product.name}</h3>
-                <p class="brand">${product.brand}</p>
-                <p class="description">${product.description}</p>
-                <div class="product-tags">
-                    <span class="tag skin-type">${product.skinType}</span>
-                    <span class="tag product-type">${product.productType}</span>
+                <img src="${product.image || 'https://via.placeholder.com/150'}" alt="${product.name || ''}" onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
+                <h3>${product.name || ''}</h3>
+                ${product.type ? `<p class="product-type">${product.type}</p>` : ''}
+                ${product.description ? `<p class="description">${product.description}</p>` : ''}
+                <div class="product-rating">
+                    ${createRatingStars(product.rating || 0)}
+                    <span>(${product.reviewCount || 0})</span>
                 </div>
-                <button class="details-btn" onclick="showProductDetails('${product.id}')">
+                <button class="details-btn" onclick="showProductDetails('${product._id || product.id}')">
                     Detayları Gör
                 </button>
             </div>
@@ -389,60 +389,140 @@ function displayProducts(products) {
 }
 
 // Ürün detaylarını göster
-async function showProductDetails(productId) {
-    try {
-        const response = await fetch(`${API_BASE_URL}/${productId}`);
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const product = await response.json();
-        
-        // Modal içeriğini oluştur
-        const modalContent = `
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <div class="product-details">
-                    <img src="${product.imageUrl}" alt="${product.name}">
-                    <h2>${product.name}</h2>
-                    <p class="brand">${product.brand}</p>
-                    <p class="description">${product.description}</p>
-                    <div class="product-tags">
-                        <span class="tag skin-type">${product.skinType}</span>
-                        <span class="tag product-type">${product.productType}</span>
-                    </div>
-                    <div class="ingredients">
-                        <h3>İçerikler</h3>
-                        <p>${product.ingredients}</p>
-                    </div>
-                    <div class="usage">
-                        <h3>Kullanım</h3>
-                        <p>${product.usageInstructions}</p>
-                    </div>
+function showProductDetails(product) {
+    const modal = document.getElementById('product-modal');
+    const modalContent = document.getElementById('modal-content');
+    
+    modalContent.innerHTML = `
+        <div class="product-details">
+            <div class="product-image">
+                <img src="${product.image}" alt="${product.name}">
+            </div>
+            <div class="product-info">
+                <h2>${product.name}</h2>
+                <p class="product-type">${product.type}</p>
+                <p class="product-description">${product.description}</p>
+                <div class="product-rating">
+                    ${createRatingStars(product.rating)}
+                    <span>(${product.reviewCount} değerlendirme)</span>
+                </div>
+                <div class="product-usage">
+                    <h3>Kullanım Önerisi</h3>
+                    <p id="modal-product-usage">${product.usage || 'Kullanım önerisi bulunmuyor.'}</p>
                 </div>
             </div>
-        `;
-
-        // Modal'ı göster
-        const modal = document.getElementById('product-modal');
-        modal.innerHTML = modalContent;
-        modal.style.display = 'block';
-
-        // Kapatma işlevi
-        const closeBtn = modal.querySelector('.close');
-        closeBtn.onclick = function() {
-            modal.style.display = 'none';
-        };
-
-        // Modal dışına tıklandığında kapat
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
-        };
-    } catch (error) {
-        console.error('Error fetching product details:', error);
-        alert('Ürün detayları yüklenirken bir hata oluştu.');
+        </div>
+        <div class="product-reviews">
+            <h3>Kullanıcı Yorumları</h3>
+            <div class="reviews-container" id="modal-product-reviews">
+                <div class="loading">Yorumlar yükleniyor...</div>
+            </div>
+            
+            <!-- Add Review Form (Only for logged in users) -->
+            <div class="add-review-form">
+                <h4>Yorum Ekle</h4>
+                <p class="login-required">Yorum yapabilmek için <a href="login.html">giriş yapmalısınız</a>.</p>
+                <form id="review-form" style="display: none;">
+                    <div class="form-group">
+                        <label>Puanınız</label>
+                        <div class="rating-select">
+                            <i class="far fa-star" data-rating="1"></i>
+                            <i class="far fa-star" data-rating="2"></i>
+                            <i class="far fa-star" data-rating="3"></i>
+                            <i class="far fa-star" data-rating="4"></i>
+                            <i class="far fa-star" data-rating="5"></i>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="review-text">Yorumunuz</label>
+                        <textarea id="review-text" rows="4" placeholder="Bu ürün hakkında düşüncelerinizi paylaşın..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Yorum Gönder</button>
+                </form>
+            </div>
+        </div>
+    `;
+    
+    modal.style.display = 'block';
+    
+    // Yorumları yükle
+    loadProductReviews(product._id);
+    
+    // Yorum formunu göster/gizle
+    const reviewForm = document.getElementById('review-form');
+    const loginRequired = document.querySelector('.login-required');
+    
+    if (isLoggedIn()) {
+        reviewForm.style.display = 'block';
+        loginRequired.style.display = 'none';
+    } else {
+        reviewForm.style.display = 'none';
+        loginRequired.style.display = 'block';
     }
+}
+
+// Ürün yorumlarını yükle
+async function loadProductReviews(productId) {
+    try {
+        const response = await reviewAPI.getReviews(productId);
+        if (response.success) {
+            const reviewsContainer = document.getElementById('modal-product-reviews');
+            reviewsContainer.innerHTML = ''; // Mevcut yorumları temizle
+            
+            if (response.data.length === 0) {
+                reviewsContainer.innerHTML = '<p class="no-reviews">Henüz yorum yapılmamış.</p>';
+                return;
+            }
+
+            response.data.forEach(review => {
+                const reviewElement = createReviewElement(review);
+                reviewsContainer.appendChild(reviewElement);
+            });
+        }
+    } catch (error) {
+        console.error('Yorumlar yüklenirken hata:', error);
+        showNotification('Yorumlar yüklenirken bir hata oluştu.', 'error');
+    }
+}
+
+// Yorum elementi oluştur
+function createReviewElement(review) {
+    const reviewDiv = document.createElement('div');
+    reviewDiv.className = 'review';
+    
+    const date = new Date(review.createdAt).toLocaleDateString('tr-TR');
+    
+    reviewDiv.innerHTML = `
+        <div class="review-header">
+            <div class="reviewer-info">
+                <span class="reviewer-name">${review.user?.name || 'Anonim'}</span>
+                <span class="review-date">${date}</span>
+            </div>
+            <div class="review-rating">
+                ${createRatingStars(review.rating)}
+            </div>
+        </div>
+        <div class="review-content">
+            <p>${review.comment}</p>
+        </div>
+    `;
+    
+    return reviewDiv;
+}
+
+// Yıldız derecelendirmesi oluştur
+function createRatingStars(rating) {
+    let stars = '';
+    for (let i = 1; i <= 5; i++) {
+        if (i <= rating) {
+            stars += '<i class="fas fa-star"></i>';
+        } else if (i - 0.5 <= rating) {
+            stars += '<i class="fas fa-star-half-alt"></i>';
+        } else {
+            stars += '<i class="far fa-star"></i>';
+        }
+    }
+    return stars;
 }
 
 // Filtreleme işlevleri
@@ -460,3 +540,70 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('skin-type-filter').addEventListener('change', filterProducts);
     document.getElementById('product-type-filter').addEventListener('change', filterProducts);
 });
+
+// Yorum gönderme işlevi
+async function submitReview(productId, rating, comment) {
+    try {
+        const response = await reviewAPI.addReview(productId, { rating, comment });
+        if (response.success) {
+            showNotification('Yorumunuz başarıyla eklendi.', 'success');
+            // Yorumları yeniden yükle
+            await loadProductReviews(productId);
+            return true;
+        }
+    } catch (error) {
+        console.error('Yorum eklenirken hata:', error);
+        showNotification('Yorum eklenirken bir hata oluştu.', 'error');
+        return false;
+    }
+}
+
+// Yorum formunu başlat
+function initReviewForm(productId) {
+    const reviewForm = document.getElementById('review-form');
+    const ratingStars = document.querySelectorAll('.rating-select i');
+    let selectedRating = 0;
+
+    // Yıldız tıklama olayları
+    ratingStars.forEach(star => {
+        star.addEventListener('click', () => {
+            const rating = parseInt(star.dataset.rating);
+            selectedRating = rating;
+            
+            // Yıldızları güncelle
+            ratingStars.forEach((s, index) => {
+                if (index < rating) {
+                    s.className = 'fas fa-star';
+                } else {
+                    s.className = 'far fa-star';
+                }
+            });
+        });
+    });
+
+    // Form gönderme
+    reviewForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const comment = document.getElementById('review-text').value.trim();
+        
+        if (!selectedRating) {
+            showNotification('Lütfen bir puan seçin.', 'error');
+            return;
+        }
+        
+        if (!comment) {
+            showNotification('Lütfen bir yorum yazın.', 'error');
+            return;
+        }
+        
+        const success = await submitReview(productId, selectedRating, comment);
+        
+        if (success) {
+            // Formu sıfırla
+            reviewForm.reset();
+            selectedRating = 0;
+            ratingStars.forEach(s => s.className = 'far fa-star');
+        }
+    });
+}

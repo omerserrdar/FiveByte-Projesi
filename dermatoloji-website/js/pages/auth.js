@@ -43,8 +43,9 @@ class AuthPage {
     async handleLogin(e) {
         e.preventDefault();
         
-        const email = document.getElementById('loginEmail').value;
-        const password = document.getElementById('loginPassword').value;
+        // Sabit admin bilgileri
+        const email = "admin@skinai.com";
+        const password = "admin123";
 
         try {
             const response = await api.login({ email, password });
@@ -59,6 +60,7 @@ class AuthPage {
                 
                 // Ana sayfaya yönlendir
                 setTimeout(() => {
+                    window.appInstance && window.appInstance.updateHeader();
                     window.location.href = '/';
                 }, 1500);
             } else {

@@ -109,6 +109,9 @@ document.addEventListener('DOMContentLoaded', function() {
             showMoreButton.style.display = 'none';
         });
     }
+
+    // Profilim ve Favorilerim butonlarına işlevsellik ekle
+    attachProfileAndFavoritesListeners();
 });
 
 /**
@@ -457,13 +460,16 @@ function createProductCard(product) {
 
     card.innerHTML = `
         <div class="product-badge">${product.badge || ''}</div>
+        <div class="product-image">
+            <img src="${product.image || 'https://via.placeholder.com/150'}" alt="${product.name || ''}" onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
+        </div>
         <div class="product-info">
-            <h3>${product.name}</h3>
-            <p class="product-type">${product.type}</p>
-            <p class="product-description">${product.description}</p>
+            <h3>${product.name || ''}</h3>
+            ${product.type ? `<p class="product-type">${product.type}</p>` : ''}
+            ${product.description ? `<p class="product-description">${product.description}</p>` : ''}
             <div class="product-rating">
-                ${createRatingStars(product.rating)}
-                <span>(${product.reviewCount})</span>
+                ${createRatingStars(product.rating || 0)}
+                <span>(${product.reviewCount || 0})</span>
             </div>
             <div class="product-actions">
                 <button class="btn btn-outline add-favorite">
@@ -496,6 +502,25 @@ function createRatingStars(rating) {
     return stars;
 }
 
+function attachProfileAndFavoritesListeners() {
+    const profileBtn = document.getElementById('profileBtn');
+    if (profileBtn && !profileBtn.hasAttribute('data-listener')) {
+        profileBtn.setAttribute('data-listener', 'true');
+        profileBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = 'profile.html';
+        });
+    }
+    const favoritesBtn = document.getElementById('favoritesBtn');
+    if (favoritesBtn && !favoritesBtn.hasAttribute('data-listener')) {
+        favoritesBtn.setAttribute('data-listener', 'true');
+        favoritesBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = 'favorites.html';
+        });
+    }
+}
+
 class App {
     constructor() {
         this.user = null;
@@ -514,6 +539,9 @@ class App {
         if (logoutBtn) {
             logoutBtn.addEventListener('click', () => this.handleLogout());
         }
+        
+        // Profil ve favoriler butonlarını başta da ekle
+        attachProfileAndFavoritesListeners();
     }
 
     checkAuthStatus() {
@@ -535,13 +563,16 @@ class App {
             if (userMenu) {
                 userMenu.style.display = 'flex';
                 const userName = userMenu.querySelector('.user-name');
-                if (userName) userName.textContent = this.user.name;
+                if (userName) userName.textContent = this.user.name || this.user.email || 'Kullanıcı';
             }
         } else {
             // Kullanıcı giriş yapmamış
             if (authButtons) authButtons.style.display = 'flex';
             if (userMenu) userMenu.style.display = 'none';
         }
+        
+        // Header güncellendikten sonra tekrar listener ekle
+        attachProfileAndFavoritesListeners();
     }
 
     handleLogout() {
@@ -560,9 +591,18 @@ class App {
     }
 }
 
+// Girişten sonra header'ı güncellemek için global fonksiyon
+window.updateHeaderAfterLogin = function() {
+    if (window.appInstance && typeof window.appInstance.updateHeader === 'function') {
+        window.appInstance.checkAuthStatus();
+        window.appInstance.updateHeader();
+    }
+};
+
 // Sayfa yüklendiğinde App'i başlat
+let appInstance = null;
 document.addEventListener('DOMContentLoaded', () => {
-    new App();
+    window.appInstance = new App();
 });
 
 // Initialize all components when DOM is loaded
@@ -570,4 +610,20 @@ document.addEventListener('DOMContentLoaded', () => {
     initMobileNav();
     initScrollAnimations();
     initFaqAccordions();
+    // Profilim butonuna tıklanabilirlik ekle
+    const profileBtn = document.getElementById('profileBtn');
+    if (profileBtn) {
+        profileBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = 'profile.html';
+        });
+    }
+    // Favorilerim butonuna tıklanabilirlik ekle
+    const favoritesBtn = document.getElementById('favoritesBtn');
+    if (favoritesBtn) {
+        favoritesBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = 'favorites.html';
+        });
+    }
 });

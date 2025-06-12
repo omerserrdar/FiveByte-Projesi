@@ -42,6 +42,9 @@ export const authAPI = {
             if (data.token) {
                 localStorage.setItem('token', data.token);
             }
+            if (data.user) {
+                localStorage.setItem('user', JSON.stringify(data.user));
+            }
             return data;
         } catch (error) {
             console.error('Giriş hatası:', error);

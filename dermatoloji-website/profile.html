@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profilim - SkinAI</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .profile-container {
+            max-width: 500px;
+            margin: 3rem auto;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+            padding: 2.5rem 2rem;
+            text-align: center;
+        }
+        .profile-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem auto;
+            font-size: 2.5rem;
+            color: #fff;
+        }
+        .profile-info h2 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        .profile-info p {
+            color: var(--dark-gray);
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+        .profile-actions {
+            margin-top: 2rem;
+        }
+        .profile-actions .btn {
+            margin: 0 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>SkinAI</h1>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Anasayfa</a></li>
+                    <li><a href="products.html">Ürünler</a></li>
+                    <li><a href="skintest.html">Cilt Tipi Testi</a></li>
+                    <li><a href="chatbot.html">Cilt Asistanı</a></li>
+                    <li><a href="experiences.html">Kullanıcı Deneyimleri</a></li>
+                    <li><a href="about.html">Hakkımızda</a></li>
+                </ul>
+                <div class="auth-buttons">
+                    <a href="login.html" class="btn btn-outline">Giriş Yap</a>
+                    <a href="login.html#register" class="btn btn-primary">Kayıt Ol</a>
+                </div>
+                <div class="user-menu" style="display: none;">
+                    <span class="user-name"></span>
+                    <div class="user-dropdown">
+                        <a href="profile.html" id="profileBtn">Profilim</a>
+                        <a href="favorites.html" id="favoritesBtn">Favorilerim</a>
+                        <a href="#" id="logoutBtn">Çıkış Yap</a>
+                    </div>
+                </div>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="profile-container">
+            <div class="profile-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="profile-info">
+                <h2 id="profileName">Kullanıcı Adı</h2>
+                <p><strong>E-posta:</strong> <span id="profileEmail">kullanici@mail.com</span></p>
+                <p><strong>Cilt Tipi:</strong> <span id="profileSkinType">Belirtilmemiş</span></p>
+                <p id="profileSkinTypeDesc" style="color: #888; font-size: 0.98rem; margin-top: -1rem; margin-bottom: 1.5rem;"></p>
+                <div style="margin-bottom: 1.5rem;">
+                    <label for="skinTypeSelect"><strong>Cilt Tipini Değiştir:</strong></label><br>
+                    <select id="skinTypeSelect" style="margin-top: 0.5rem; padding: 0.4rem 1rem; border-radius: 8px; border: 1px solid #ccc;">
+                        <option value="">Seçiniz</option>
+                        <option value="Kuru Cilt">Kuru Cilt</option>
+                        <option value="Yağlı Cilt">Yağlı Cilt</option>
+                        <option value="Karma Cilt">Karma Cilt</option>
+                        <option value="Hassas Cilt">Hassas Cilt</option>
+                        <option value="Normal Cilt">Normal Cilt</option>
+                    </select>
+                    <button id="saveSkinTypeBtn" class="btn btn-outline" style="margin-left: 0.7rem;">Kaydet</button>
+                </div>
+                <div style="margin-bottom: 1.5rem; text-align:left;">
+                    <label for="ageInput"><strong>Yaş:</strong></label><br>
+                    <input type="number" id="ageInput" min="0" max="120" style="margin-top:0.3rem; padding:0.4rem 1rem; border-radius:8px; border:1px solid #ccc; width:100%; max-width:200px;">
+                </div>
+                <div style="margin-bottom: 1.5rem; text-align:left;">
+                    <label for="genderSelect"><strong>Cinsiyet:</strong></label><br>
+                    <select id="genderSelect" style="margin-top:0.3rem; padding:0.4rem 1rem; border-radius:8px; border:1px solid #ccc; width:100%; max-width:200px;">
+                        <option value="">Seçiniz</option>
+                        <option value="Kadın">Kadın</option>
+                        <option value="Erkek">Erkek</option>
+                        <option value="Diğer">Diğer</option>
+                    </select>
+                </div>
+                <div style="margin-bottom: 1.5rem; text-align:left;">
+                    <label for="skinToneSelect"><strong>Cilt Tonu:</strong></label><br>
+                    <select id="skinToneSelect" style="margin-top:0.3rem; padding:0.4rem 1rem; border-radius:8px; border:1px solid #ccc; width:100%; max-width:200px;">
+                        <option value="">Seçiniz</option>
+                        <option value="Açık">Açık</option>
+                        <option value="Buğday">Buğday</option>
+                        <option value="Esmer">Esmer</option>
+                        <option value="Koyu">Koyu</option>
+                    </select>
+                </div>
+                <div style="margin-bottom: 1.5rem; text-align:left;">
+                    <label for="skinSensitivitySelect"><strong>Cilt Hassasiyeti:</strong></label><br>
+                    <select id="skinSensitivitySelect" style="margin-top:0.3rem; padding:0.4rem 1rem; border-radius:8px; border:1px solid #ccc; width:100%; max-width:200px;">
+                        <option value="">Seçiniz</option>
+                        <option value="Düşük">Düşük</option>
+                        <option value="Orta">Orta</option>
+                        <option value="Yüksek">Yüksek</option>
+                    </select>
+                </div>
+                <button id="saveProfileBtn" class="btn btn-primary" style="width:100%; max-width:220px;">Tüm Bilgileri Kaydet</button>
+                <div id="profileSaveMsg" style="color:green; margin-top:0.7rem; display:none;">Bilgiler kaydedildi!</div>
+            </div>
+            <div class="profile-actions">
+                <a href="favorites.html" class="btn btn-primary">Favorilerim</a>
+                <a href="index.html" class="btn btn-outline">Ana Sayfa</a>
+            </div>
+        </div>
+    </main>
+    <script type="module">
+        // localStorage'dan kullanıcı bilgisini al ve göster
+        const user = JSON.parse(localStorage.getItem('user')) || {};
+        const skinTypeDescriptions = {
+            'Kuru Cilt': 'Kuru cilt tipi, ciltte gerginlik, pullanma ve bazen kaşıntı ile karakterizedir. Cildiniz nem tutma konusunda zorluk yaşıyor ve dış etkenlere karşı daha hassas olabilir. Nemlendirici ürünler ve nazik temizleyiciler kullanmanız önerilir.',
+            'Normal Cilt': 'Normal cilt tipi, dengeli nem ve yağ seviyelerine sahiptir. Gözenekleriniz belirgin değil ve cildiniz genellikle pürüzsüz ve sağlıklı görünür. Mevcut cilt durumunuzu korumak için dengeli bir cilt bakım rutini izlemeniz önerilir.',
+            'Karma Cilt': 'Karma cilt tipi, T bölgesinde (alın, burun ve çene) yağlı, yanaklarda ise normal veya kuru alanlar içerir. Farklı bölgeler için farklı ürünler kullanmanız veya çok yönlü formüller seçmeniz önerilir.',
+            'Yağlı Cilt': 'Yağlı cilt tipi, fazla sebum (yağ) üretimi ile karakterizedir. Cildiniz genellikle parlak görünür ve gözenekleriniz daha belirgindir. Yağ kontrol eden ürünler ve derin temizleme yapan formüller kullanmanız önerilir.',
+            'Hassas Cilt': 'Hassas cilt tipi, dış etkenlere karşı aşırı tepki verir ve kolayca tahriş olur. Kızarıklık, yanma veya batma hissi yaşayabilirsiniz. Parfümsüz, hipoalerjenik ve sakinleştirici içerikli ürünler kullanmanız önerilir.'
+        };
+        function updateProfileInfo(user) {
+            document.getElementById('profileName').textContent = user.name || 'Kullanıcı';
+            document.getElementById('profileEmail').textContent = user.email || '';
+            document.getElementById('profileSkinType').textContent = user.skinType || 'Belirtilmemiş';
+            document.getElementById('profileSkinTypeDesc').textContent = user.skinTypeDesc || '';
+            document.getElementById('skinTypeSelect').value = user.skinType || '';
+            document.getElementById('ageInput').value = user.age || '';
+            document.getElementById('genderSelect').value = user.gender || '';
+            document.getElementById('skinToneSelect').value = user.skinTone || '';
+            document.getElementById('skinSensitivitySelect').value = user.skinSensitivity || '';
+        }
+        updateProfileInfo(user);
+        // Cilt tipi kaydetme
+        document.getElementById('saveSkinTypeBtn').addEventListener('click', function() {
+            const select = document.getElementById('skinTypeSelect');
+            const selectedType = select.value;
+            if (!selectedType) return;
+            user.skinType = selectedType;
+            user.skinTypeDesc = skinTypeDescriptions[selectedType] || '';
+            localStorage.setItem('user', JSON.stringify(user));
+            updateProfileInfo(user);
+        });
+        // Tüm bilgileri kaydetme
+        document.getElementById('saveProfileBtn').addEventListener('click', function() {
+            user.age = document.getElementById('ageInput').value;
+            user.gender = document.getElementById('genderSelect').value;
+            user.skinTone = document.getElementById('skinToneSelect').value;
+            user.skinSensitivity = document.getElementById('skinSensitivitySelect').value;
+            // Cilt tipi seçiliyse açıklamasını da güncelle
+            const selectedType = document.getElementById('skinTypeSelect').value;
+            if (selectedType) {
+                user.skinType = selectedType;
+                user.skinTypeDesc = skinTypeDescriptions[selectedType] || '';
+            }
+            localStorage.setItem('user', JSON.stringify(user));
+            updateProfileInfo(user);
+            document.getElementById('profileSaveMsg').style.display = 'block';
+            setTimeout(()=>{
+                document.getElementById('profileSaveMsg').style.display = 'none';
+            }, 2000);
+        });
+    </script>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html> 

@@ -81,7 +81,9 @@ router.post('/login', async (req, res) => {
             { expiresIn: '24h' },
             (err, token) => {
                 if (err) throw err;
-                res.json({ success: true, token });
+                // Şifreyi göndermeden kullanıcı bilgisini ekle
+                const { password, ...userData } = user.toObject();
+                res.json({ success: true, token, user: userData });
             }
         );
     } catch (err) {
