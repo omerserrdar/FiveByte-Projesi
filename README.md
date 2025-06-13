@@ -241,4 +241,8 @@ Bu projeyi mümkün kılan tüm açık kaynak kütüphane geliştiricilerine ve 
 
 <div align="center">
   <img src="https://img.shields.io/badge/Yapılmış_❤️_ile-Türkiye'de-red?style=for-the-badge" alt="Made with ❤️ in Turkey">
+<<<<<<< HEAD
 </div>
+=======
+</div>
+>>>>>>> 6b4a9731baa56de35f941aa8cd043068bba3b334
