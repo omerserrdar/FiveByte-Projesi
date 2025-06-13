@@ -7,41 +7,332 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        .profile-container {
-            max-width: 500px;
-            margin: 3rem auto;
-            background: #fff;
-            border-radius: 20px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.07);
-            padding: 2.5rem 2rem;
-            text-align: center;
+        /* Profile Layout Styles */
+        .profile-layout {
+            display: flex;
+            min-height: calc(100vh - 120px);
+            margin-top: 2rem;
+            gap: 2rem;
         }
+        
+        /* Sidebar Styles */
+        .profile-sidebar {
+            width: 300px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            padding: 2rem;
+            height: fit-content;
+            position: sticky;
+            top: 2rem;
+        }
+        
+        .profile-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
         .profile-avatar {
-            width: 90px;
-            height: 90px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
-            background: var(--primary-light);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1.5rem auto;
-            font-size: 2.5rem;
+            margin: 0 auto 1rem auto;
+            font-size: 2rem;
             color: #fff;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
         }
-        .profile-info h2 {
+        
+        .profile-avatar:hover {
+            transform: scale(1.05);
+        }
+        
+        .avatar-upload {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: var(--primary-color);
+            border: 2px solid #fff;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: #fff;
+            cursor: pointer;
+        }
+        
+        .profile-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--black);
             margin-bottom: 0.5rem;
-            color: var(--primary-color);
         }
-        .profile-info p {
+        
+        .profile-email {
             color: var(--dark-gray);
-            font-size: 1.1rem;
+            font-size: 0.9rem;
+        }
+        
+        .profile-nav {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .profile-nav li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .profile-nav a {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1rem;
+            color: var(--dark-gray);
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .profile-nav a:hover,
+        .profile-nav a.active {
+            background: var(--primary-color);
+            color: #fff;
+            transform: translateX(5px);
+        }
+        
+        .profile-nav i {
+            margin-right: 0.8rem;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .logout-btn {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #f0f0f0;
+        }
+        
+        .logout-btn a {
+            background: #ff4444;
+            color: #fff !important;
+            justify-content: center;
+        }
+        
+        .logout-btn a:hover {
+            background: #ff3333;
+            transform: none;
+        }
+        
+        /* Main Content Styles */
+        .profile-content {
+            flex: 1;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            padding: 2rem;
+        }
+        
+        .content-section {
+            display: none;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--black);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
             margin-bottom: 1.5rem;
         }
-        .profile-actions {
-            margin-top: 2rem;
+        
+        .form-group {
+            margin-bottom: 1.5rem;
         }
-        .profile-actions .btn {
-            margin: 0 0.5rem;
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--black);
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .save-btn {
+            background: var(--primary-color);
+            color: #fff;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .save-btn:hover {
+            background: var(--primary-dark);
+        }
+        
+        .success-message {
+            background: #4CAF50;
+            color: #fff;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, var(--primary-light), var(--secondary-light));
+            color: #fff;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .skin-type-card {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .skin-type-card.active {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+            color: #fff;
+        }
+        
+        .skin-type-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .favorites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .favorite-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .favorite-image {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-light);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.5rem;
+        }
+        
+        .favorite-info h4 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1rem;
+        }
+        
+        .favorite-info p {
+            margin: 0;
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+        }
+        
+        .remove-favorite {
+            background: #ff4444;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            margin-left: auto;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .profile-layout {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .profile-sidebar {
+                width: 100%;
+                position: static;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
         }
     </style>
 </head>
@@ -80,19 +371,122 @@
             </nav>
         </div>
     </header>
+
     <main>
-        <div class="profile-container">
-            <div class="profile-avatar">
+        <div class="container">
+            <div class="profile-layout">
+                <!-- Sidebar -->
+                <aside class="profile-sidebar">
+                    <div class="profile-header">
+                        <div class="profile-avatar" id="profileAvatar">
                 <i class="fas fa-user"></i>
+                            <div class="avatar-upload">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                        </div>
+                        <div class="profile-name" id="sidebarName">Kullanıcı Adı</div>
+                        <div class="profile-email" id="sidebarEmail">kullanici@email.com</div>
+                    </div>
+                    
+                    <nav>
+                        <ul class="profile-nav">
+                            <li><a href="#" class="nav-link active" data-section="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                            <li><a href="#" class="nav-link" data-section="profile"><i class="fas fa-user-edit"></i> Profil Düzenle</a></li>
+                            <li><a href="#" class="nav-link" data-section="skin-analysis"><i class="fas fa-microscope"></i> Cilt Analizi</a></li>
+                            <li><a href="#" class="nav-link" data-section="favorites"><i class="fas fa-heart"></i> Favorilerim</a></li>
+                            <li><a href="#" class="nav-link" data-section="history"><i class="fas fa-history"></i> Geçmiş</a></li>
+                            <li><a href="#" class="nav-link" data-section="settings"><i class="fas fa-cog"></i> Ayarlar</a></li>
+                        </ul>
+                    </nav>
+                    
+                    <div class="logout-btn">
+                        <a href="#" id="logoutLink"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a>
+                    </div>
+                </aside>
+
+                <!-- Main Content -->
+                <div class="profile-content">
+                    <!-- Dashboard Section -->
+                    <section id="dashboard" class="content-section active">
+                        <h2 class="section-title">Dashboard</h2>
+                        <div class="success-message" id="dashboardMessage"></div>
+                        
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-number" id="totalTests">0</div>
+                                <div class="stat-label">Cilt Testi</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number" id="totalFavorites">0</div>
+                                <div class="stat-label">Favori Ürün</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number" id="totalReviews">0</div>
+                                <div class="stat-label">Yorum</div>
+                            </div>
+                        </div>
+                        
+                        <div class="skin-type-card" id="currentSkinType">
+                            <div class="skin-type-icon">
+                                <i class="fas fa-spa"></i>
+                            </div>
+                            <h3>Mevcut Cilt Tipi</h3>
+                            <p id="skinTypeDisplay">Henüz belirlenmemiş</p>
+                            <p id="skinTypeDescription">Cilt tipinizi belirlemek için cilt testi yapın.</p>
+                            <button class="btn btn-primary" onclick="window.location.href='skintest.html'">Cilt Testi Yap</button>
+                        </div>
+                    </section>
+
+                    <!-- Profile Edit Section -->
+                    <section id="profile" class="content-section">
+                        <h2 class="section-title">Profil Düzenle</h2>
+                        <div class="success-message" id="profileMessage"></div>
+                        
+                        <form id="profileForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="firstName">Ad</label>
+                                    <input type="text" id="firstName" name="firstName" placeholder="Adınız">
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName">Soyad</label>
+                                    <input type="text" id="lastName" name="lastName" placeholder="Soyadınız">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">E-posta</label>
+                                <input type="email" id="email" name="email" placeholder="E-posta adresiniz">
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="phone">Telefon</label>
+                                    <input type="tel" id="phone" name="phone" placeholder="Telefon numaranız">
+                                </div>
+                                <div class="form-group">
+                                    <label for="birthDate">Doğum Tarihi</label>
+                                    <input type="date" id="birthDate" name="birthDate">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="bio">Hakkımda</label>
+                                <textarea id="bio" name="bio" rows="4" placeholder="Kendiniz hakkında kısa bilgi..."></textarea>
             </div>
-            <div class="profile-info">
-                <h2 id="profileName">Kullanıcı Adı</h2>
-                <p><strong>E-posta:</strong> <span id="profileEmail">kullanici@mail.com</span></p>
-                <p><strong>Cilt Tipi:</strong> <span id="profileSkinType">Belirtilmemiş</span></p>
-                <p id="profileSkinTypeDesc" style="color: #888; font-size: 0.98rem; margin-top: -1rem; margin-bottom: 1.5rem;"></p>
-                <div style="margin-bottom: 1.5rem;">
-                    <label for="skinTypeSelect"><strong>Cilt Tipini Değiştir:</strong></label><br>
-                    <select id="skinTypeSelect" style="margin-top: 0.5rem; padding: 0.4rem 1rem; border-radius: 8px; border: 1px solid #ccc;">
+                            
+                            <button type="submit" class="save-btn">Profili Güncelle</button>
+                        </form>
+                    </section>
+
+                    <!-- Skin Analysis Section -->
+                    <section id="skin-analysis" class="content-section">
+                        <h2 class="section-title">Cilt Analizi</h2>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="skinType">Cilt Tipi</label>
+                                <select id="skinType" name="skinType">
                         <option value="">Seçiniz</option>
                         <option value="Kuru Cilt">Kuru Cilt</option>
                         <option value="Yağlı Cilt">Yağlı Cilt</option>
@@ -100,24 +494,10 @@
                         <option value="Hassas Cilt">Hassas Cilt</option>
                         <option value="Normal Cilt">Normal Cilt</option>
                     </select>
-                    <button id="saveSkinTypeBtn" class="btn btn-outline" style="margin-left: 0.7rem;">Kaydet</button>
                 </div>
-                <div style="margin-bottom: 1.5rem; text-align:left;">
-                    <label for="ageInput"><strong>Yaş:</strong></label><br>
-                    <input type="number" id="ageInput" min="0" max="120" style="margin-top:0.3rem; padding:0.4rem 1rem; border-radius:8px; border:1px solid #ccc; width:100%; max-width:200px;">
-                </div>
-                <div style="margin-bottom: 1.5rem; text-align:left;">
-                    <label for="genderSelect"><strong>Cinsiyet:</strong></label><br>
-                    <select id="genderSelect" style="margin-top:0.3rem; padding:0.4rem 1rem; border-radius:8px; border:1px solid #ccc; width:100%; max-width:200px;">
-                        <option value="">Seçiniz</option>
-                        <option value="Kadın">Kadın</option>
-                        <option value="Erkek">Erkek</option>
-                        <option value="Diğer">Diğer</option>
-                    </select>
-                </div>
-                <div style="margin-bottom: 1.5rem; text-align:left;">
-                    <label for="skinToneSelect"><strong>Cilt Tonu:</strong></label><br>
-                    <select id="skinToneSelect" style="margin-top:0.3rem; padding:0.4rem 1rem; border-radius:8px; border:1px solid #ccc; width:100%; max-width:200px;">
+                            <div class="form-group">
+                                <label for="skinTone">Cilt Tonu</label>
+                                <select id="skinTone" name="skinTone">
                         <option value="">Seçiniz</option>
                         <option value="Açık">Açık</option>
                         <option value="Buğday">Buğday</option>
@@ -125,75 +505,295 @@
                         <option value="Koyu">Koyu</option>
                     </select>
                 </div>
-                <div style="margin-bottom: 1.5rem; text-align:left;">
-                    <label for="skinSensitivitySelect"><strong>Cilt Hassasiyeti:</strong></label><br>
-                    <select id="skinSensitivitySelect" style="margin-top:0.3rem; padding:0.4rem 1rem; border-radius:8px; border:1px solid #ccc; width:100%; max-width:200px;">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="skinSensitivity">Cilt Hassasiyeti</label>
+                                <select id="skinSensitivity" name="skinSensitivity">
                         <option value="">Seçiniz</option>
                         <option value="Düşük">Düşük</option>
                         <option value="Orta">Orta</option>
                         <option value="Yüksek">Yüksek</option>
                     </select>
                 </div>
-                <button id="saveProfileBtn" class="btn btn-primary" style="width:100%; max-width:220px;">Tüm Bilgileri Kaydet</button>
-                <div id="profileSaveMsg" style="color:green; margin-top:0.7rem; display:none;">Bilgiler kaydedildi!</div>
+                            <div class="form-group">
+                                <label for="skinConcerns">Cilt Sorunları</label>
+                                <select id="skinConcerns" name="skinConcerns">
+                                    <option value="">Seçiniz</option>
+                                    <option value="Akne">Akne</option>
+                                    <option value="Kırışıklık">Kırışıklık</option>
+                                    <option value="Leke">Leke</option>
+                                    <option value="Gözenek">Gözenek</option>
+                                    <option value="Kuruluk">Kuruluk</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button class="save-btn" id="saveSkinAnalysis">Cilt Analizi Kaydet</button>
+                    </section>
+
+                    <!-- Favorites Section -->
+                    <section id="favorites" class="content-section">
+                        <h2 class="section-title">Favori Ürünlerim</h2>
+                        
+                        <div class="favorites-grid" id="favoritesGrid">
+                            <!-- Favorite items will be loaded here -->
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 2rem;">
+                            <a href="products.html" class="btn btn-primary">Ürünleri Keşfet</a>
+                        </div>
+                    </section>
+
+                    <!-- History Section -->
+                    <section id="history" class="content-section">
+                        <h2 class="section-title">Aktivite Geçmişi</h2>
+                        
+                        <div id="historyList">
+                            <div class="history-item">
+                                <div class="history-icon">
+                                    <i class="fas fa-microscope"></i>
+                                </div>
+                                <div class="history-content">
+                                    <h4>Cilt Tipi Testi</h4>
+                                    <p>Cilt tipi testi tamamlandı</p>
+                                    <small>2 gün önce</small>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Settings Section -->
+                    <section id="settings" class="content-section">
+                        <h2 class="section-title">Ayarlar</h2>
+                        
+                        <div class="form-group">
+                            <label for="language">Dil</label>
+                            <select id="language" name="language">
+                                <option value="tr">Türkçe</option>
+                                <option value="en">English</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="notifications">Bildirimler</label>
+                            <select id="notifications" name="notifications">
+                                <option value="all">Tüm Bildirimler</option>
+                                <option value="important">Sadece Önemli</option>
+                                <option value="none">Hiçbiri</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="privacy">Gizlilik</label>
+                            <select id="privacy" name="privacy">
+                                <option value="public">Herkese Açık</option>
+                                <option value="private">Özel</option>
+                            </select>
+                        </div>
+                        
+                        <button class="save-btn" id="saveSettings">Ayarları Kaydet</button>
+                    </section>
             </div>
-            <div class="profile-actions">
-                <a href="favorites.html" class="btn btn-primary">Favorilerim</a>
-                <a href="index.html" class="btn btn-outline">Ana Sayfa</a>
             </div>
         </div>
     </main>
+
     <script type="module">
-        // localStorage'dan kullanıcı bilgisini al ve göster
-        const user = JSON.parse(localStorage.getItem('user')) || {};
-        const skinTypeDescriptions = {
-            'Kuru Cilt': 'Kuru cilt tipi, ciltte gerginlik, pullanma ve bazen kaşıntı ile karakterizedir. Cildiniz nem tutma konusunda zorluk yaşıyor ve dış etkenlere karşı daha hassas olabilir. Nemlendirici ürünler ve nazik temizleyiciler kullanmanız önerilir.',
-            'Normal Cilt': 'Normal cilt tipi, dengeli nem ve yağ seviyelerine sahiptir. Gözenekleriniz belirgin değil ve cildiniz genellikle pürüzsüz ve sağlıklı görünür. Mevcut cilt durumunuzu korumak için dengeli bir cilt bakım rutini izlemeniz önerilir.',
-            'Karma Cilt': 'Karma cilt tipi, T bölgesinde (alın, burun ve çene) yağlı, yanaklarda ise normal veya kuru alanlar içerir. Farklı bölgeler için farklı ürünler kullanmanız veya çok yönlü formüller seçmeniz önerilir.',
-            'Yağlı Cilt': 'Yağlı cilt tipi, fazla sebum (yağ) üretimi ile karakterizedir. Cildiniz genellikle parlak görünür ve gözenekleriniz daha belirgindir. Yağ kontrol eden ürünler ve derin temizleme yapan formüller kullanmanız önerilir.',
-            'Hassas Cilt': 'Hassas cilt tipi, dış etkenlere karşı aşırı tepki verir ve kolayca tahriş olur. Kızarıklık, yanma veya batma hissi yaşayabilirsiniz. Parfümsüz, hipoalerjenik ve sakinleştirici içerikli ürünler kullanmanız önerilir.'
+        // Initialize profile data
+        let userData = JSON.parse(localStorage.getItem('user')) || {
+            name: 'Kullanıcı',
+            email: 'kullanici@email.com',
+            firstName: '',
+            lastName: '',
+            phone: '',
+            birthDate: '',
+            bio: '',
+            skinType: '',
+            skinTone: '',
+            skinSensitivity: '',
+            skinConcerns: '',
+            totalTests: 0,
+            totalFavorites: 0,
+            totalReviews: 0,
+            favorites: []
         };
-        function updateProfileInfo(user) {
-            document.getElementById('profileName').textContent = user.name || 'Kullanıcı';
-            document.getElementById('profileEmail').textContent = user.email || '';
-            document.getElementById('profileSkinType').textContent = user.skinType || 'Belirtilmemiş';
-            document.getElementById('profileSkinTypeDesc').textContent = user.skinTypeDesc || '';
-            document.getElementById('skinTypeSelect').value = user.skinType || '';
-            document.getElementById('ageInput').value = user.age || '';
-            document.getElementById('genderSelect').value = user.gender || '';
-            document.getElementById('skinToneSelect').value = user.skinTone || '';
-            document.getElementById('skinSensitivitySelect').value = user.skinSensitivity || '';
+
+        // Skin type descriptions
+        const skinTypeDescriptions = {
+            'Kuru Cilt': 'Kuru cilt tipi, ciltte gerginlik, pullanma ve bazen kaşıntı ile karakterizedir.',
+            'Normal Cilt': 'Normal cilt tipi, dengeli nem ve yağ seviyelerine sahiptir.',
+            'Karma Cilt': 'Karma cilt tipi, T bölgesinde yağlı, yanaklarda normal veya kuru alanlar içerir.',
+            'Yağlı Cilt': 'Yağlı cilt tipi, fazla sebum üretimi ile karakterizedir.',
+            'Hassas Cilt': 'Hassas cilt tipi, dış etkenlere karşı aşırı tepki verir ve kolayca tahriş olur.'
+        };
+
+        // Initialize page
+        function initializePage() {
+            updateSidebarInfo();
+            updateDashboard();
+            loadProfileForm();
+            loadSkinAnalysis();
+            loadFavorites();
+            setupEventListeners();
         }
-        updateProfileInfo(user);
-        // Cilt tipi kaydetme
-        document.getElementById('saveSkinTypeBtn').addEventListener('click', function() {
-            const select = document.getElementById('skinTypeSelect');
-            const selectedType = select.value;
-            if (!selectedType) return;
-            user.skinType = selectedType;
-            user.skinTypeDesc = skinTypeDescriptions[selectedType] || '';
-            localStorage.setItem('user', JSON.stringify(user));
-            updateProfileInfo(user);
-        });
-        // Tüm bilgileri kaydetme
-        document.getElementById('saveProfileBtn').addEventListener('click', function() {
-            user.age = document.getElementById('ageInput').value;
-            user.gender = document.getElementById('genderSelect').value;
-            user.skinTone = document.getElementById('skinToneSelect').value;
-            user.skinSensitivity = document.getElementById('skinSensitivitySelect').value;
-            // Cilt tipi seçiliyse açıklamasını da güncelle
-            const selectedType = document.getElementById('skinTypeSelect').value;
-            if (selectedType) {
-                user.skinType = selectedType;
-                user.skinTypeDesc = skinTypeDescriptions[selectedType] || '';
+
+        function updateSidebarInfo() {
+            document.getElementById('sidebarName').textContent = userData.name || 'Kullanıcı';
+            document.getElementById('sidebarEmail').textContent = userData.email || 'kullanici@email.com';
+        }
+
+        function updateDashboard() {
+            document.getElementById('totalTests').textContent = userData.totalTests || 0;
+            document.getElementById('totalFavorites').textContent = userData.totalFavorites || 0;
+            document.getElementById('totalReviews').textContent = userData.totalReviews || 0;
+            
+            const skinTypeDisplay = document.getElementById('skinTypeDisplay');
+            const skinTypeDescription = document.getElementById('skinTypeDescription');
+            
+            if (userData.skinType) {
+                skinTypeDisplay.textContent = userData.skinType;
+                skinTypeDescription.textContent = skinTypeDescriptions[userData.skinType] || 'Cilt tipi belirlendi.';
+                document.getElementById('currentSkinType').classList.add('active');
             }
-            localStorage.setItem('user', JSON.stringify(user));
-            updateProfileInfo(user);
-            document.getElementById('profileSaveMsg').style.display = 'block';
-            setTimeout(()=>{
-                document.getElementById('profileSaveMsg').style.display = 'none';
-            }, 2000);
-        });
+        }
+
+        function loadProfileForm() {
+            document.getElementById('firstName').value = userData.firstName || '';
+            document.getElementById('lastName').value = userData.lastName || '';
+            document.getElementById('email').value = userData.email || '';
+            document.getElementById('phone').value = userData.phone || '';
+            document.getElementById('birthDate').value = userData.birthDate || '';
+            document.getElementById('bio').value = userData.bio || '';
+        }
+
+        function loadSkinAnalysis() {
+            document.getElementById('skinType').value = userData.skinType || '';
+            document.getElementById('skinTone').value = userData.skinTone || '';
+            document.getElementById('skinSensitivity').value = userData.skinSensitivity || '';
+            document.getElementById('skinConcerns').value = userData.skinConcerns || '';
+        }
+
+        function loadFavorites() {
+            const favoritesGrid = document.getElementById('favoritesGrid');
+            if (!userData.favorites || userData.favorites.length === 0) {
+                favoritesGrid.innerHTML = '<p style="text-align: center; color: #666; grid-column: 1/-1;">Henüz favori ürününüz yok.</p>';
+                return;
+            }
+
+            favoritesGrid.innerHTML = userData.favorites.map((item, index) => `
+                <div class="favorite-item">
+                    <div class="favorite-image">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="favorite-info">
+                        <h4>${item.name || 'Ürün ' + (index + 1)}</h4>
+                        <p>${item.category || 'Cilt bakım ürünü'}</p>
+                    </div>
+                    <button class="remove-favorite" onclick="removeFavorite(${index})">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function setupEventListeners() {
+            // Navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const section = this.dataset.section;
+                    showSection(section);
+                    
+                    // Update active nav
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // Profile form
+            document.getElementById('profileForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveProfile();
+            });
+
+            // Skin analysis
+            document.getElementById('saveSkinAnalysis').addEventListener('click', saveSkinAnalysis);
+
+            // Settings
+            document.getElementById('saveSettings').addEventListener('click', saveSettings);
+
+            // Logout
+            document.getElementById('logoutLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                logout();
+            });
+        }
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        function saveProfile() {
+            userData.firstName = document.getElementById('firstName').value;
+            userData.lastName = document.getElementById('lastName').value;
+            userData.email = document.getElementById('email').value;
+            userData.phone = document.getElementById('phone').value;
+            userData.birthDate = document.getElementById('birthDate').value;
+            userData.bio = document.getElementById('bio').value;
+            userData.name = (userData.firstName + ' ' + userData.lastName).trim() || 'Kullanıcı';
+            
+            localStorage.setItem('user', JSON.stringify(userData));
+            updateSidebarInfo();
+            showMessage('profileMessage', 'Profil başarıyla güncellendi!');
+        }
+
+        function saveSkinAnalysis() {
+            userData.skinType = document.getElementById('skinType').value;
+            userData.skinTone = document.getElementById('skinTone').value;
+            userData.skinSensitivity = document.getElementById('skinSensitivity').value;
+            userData.skinConcerns = document.getElementById('skinConcerns').value;
+            
+            localStorage.setItem('user', JSON.stringify(userData));
+            updateDashboard();
+            showMessage('dashboardMessage', 'Cilt analizi başarıyla kaydedildi!');
+        }
+
+        function saveSettings() {
+            showMessage('dashboardMessage', 'Ayarlar başarıyla kaydedildi!');
+        }
+
+        function removeFavorite(index) {
+            userData.favorites.splice(index, 1);
+            userData.totalFavorites = userData.favorites.length;
+            localStorage.setItem('user', JSON.stringify(userData));
+            loadFavorites();
+            updateDashboard();
+        }
+
+        function showMessage(elementId, message) {
+            const messageEl = document.getElementById(elementId);
+            messageEl.textContent = message;
+            messageEl.style.display = 'block';
+            setTimeout(() => {
+                messageEl.style.display = 'none';
+            }, 3000);
+        }
+
+        function logout() {
+            localStorage.removeItem('user');
+            window.location.href = 'index.html';
+        }
+
+        // Make removeFavorite globally accessible
+        window.removeFavorite = removeFavorite;
+
+        // Initialize when page loads
+        initializePage();
     </script>
     <script type="module" src="js/main.js"></script>
 </body>

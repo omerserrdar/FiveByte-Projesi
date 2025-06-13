@@ -1,14 +1,16 @@
 import mongoose from 'mongoose';
 
 const reviewSchema = new mongoose.Schema({
-    product: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Product',
+    productId: {
+        type: String,
         required: true
     },
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+    userEmail: {
+        type: String,
+        required: true
+    },
+    userName: {
+        type: String,
         required: true
     },
     rating: {
@@ -19,13 +21,18 @@ const reviewSchema = new mongoose.Schema({
     },
     comment: {
         type: String,
-        required: true
+        required: true,
+        minlength: 3,
+        maxlength: 1000
     },
     createdAt: {
         type: Date,
         default: Date.now
     }
 });
+
+// Aynı kullanıcının aynı ürüne birden fazla yorum yapmasını engelle
+reviewSchema.index({ productId: 1, userEmail: 1 }, { unique: true });
 
 const Review = mongoose.model('Review', reviewSchema);
 

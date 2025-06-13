@@ -12,6 +12,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize mobile navigation
     initMobileNav();
     
+    // Initialize user dropdown
+    initUserDropdown();
+    
     // Initialize scroll animations
     initScrollAnimations();
     
@@ -152,6 +155,81 @@ function initMobileNav() {
                 bars[1].style.opacity = '1';
                 bars[2].style.transform = 'none';
             });
+        });
+    }
+}
+
+/**
+ * Initialize user dropdown functionality with click-based controls
+ */
+function initUserDropdown() {
+    const userMenu = document.querySelector('.user-menu');
+    const userDropdown = document.querySelector('.user-dropdown');
+    
+    if (userMenu && userDropdown) {
+        // Click to toggle dropdown
+        userMenu.addEventListener('click', function(e) {
+            e.stopPropagation();
+            userMenu.classList.toggle('active');
+        });
+        
+        // Prevent dropdown from closing when clicking inside it
+        userDropdown.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!userMenu.contains(e.target)) {
+                userMenu.classList.remove('active');
+            }
+        });
+        
+        // Close dropdown when pressing Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                userMenu.classList.remove('active');
+            }
+        });
+        
+        // Enhanced dropdown link handling with visual feedback
+        const dropdownLinks = userDropdown.querySelectorAll('a');
+        dropdownLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Add loading animation
+                const originalText = this.textContent;
+                this.style.opacity = '0.6';
+                this.style.pointerEvents = 'none';
+                
+                // Restore after short delay (allows for page transition)
+                setTimeout(() => {
+                    this.style.opacity = '1';
+                    this.style.pointerEvents = 'auto';
+                }, 1000);
+                
+                // Close dropdown
+                userMenu.classList.remove('active');
+            });
+        });
+        
+        // Add hover delay for mobile compatibility
+        let hoverTimeout;
+        userMenu.addEventListener('mouseenter', function() {
+            if (window.innerWidth > 768) { // Only on desktop
+                clearTimeout(hoverTimeout);
+                hoverTimeout = setTimeout(() => {
+                    userMenu.classList.add('active');
+                }, 200);
+            }
+        });
+        
+        userMenu.addEventListener('mouseleave', function() {
+            if (window.innerWidth > 768) { // Only on desktop
+                clearTimeout(hoverTimeout);
+                hoverTimeout = setTimeout(() => {
+                    userMenu.classList.remove('active');
+                }, 300);
+            }
         });
     }
 }
@@ -605,25 +683,123 @@ document.addEventListener('DOMContentLoaded', () => {
     window.appInstance = new App();
 });
 
-// Initialize all components when DOM is loaded
+// Favorites Management System
+function initializeFavorites() {
+    // Load favorites from localStorage
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    
+    // Update all heart buttons on page load
+    document.querySelectorAll('.add-favorite').forEach(button => {
+        const productId = parseInt(button.getAttribute('onclick').match(/\d+/)[0]);
+        if (favorites.includes(productId)) {
+            button.classList.add('favorited');
+            button.querySelector('i').classList.remove('far');
+            button.querySelector('i').classList.add('fas');
+        }
+    });
+}
+
+// Toggle favorite status
+function toggleFavorite(productId, buttonElement) {
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    const userData = JSON.parse(localStorage.getItem('user')) || {};
+    
+    // Get product info
+    const productCard = buttonElement.closest('.product-card');
+    const productName = productCard.querySelector('h3').textContent;
+    const productDescription = productCard.querySelector('.product-description')?.textContent || '';
+    const productType = productCard.dataset.productType || 'product';
+    
+    const product = {
+        id: productId,
+        name: productName,
+        description: productDescription,
+        category: getCategoryFromType(productType),
+        type: getDisplayType(productType),
+        dateAdded: new Date().toISOString().split('T')[0]
+    };
+    
+    if (favorites.includes(productId)) {
+        // Remove from favorites
+        favorites = favorites.filter(id => id !== productId);
+        buttonElement.classList.remove('favorited');
+        buttonElement.querySelector('i').classList.remove('fas');
+        buttonElement.querySelector('i').classList.add('far');
+        
+        // Remove from user favorites
+        if (userData.favorites) {
+            userData.favorites = userData.favorites.filter(item => item.id !== productId);
+        }
+        
+        showNotification('Ürün favorilerden kaldırıldı', 'info', 2000);
+    } else {
+        // Add to favorites
+        favorites.push(productId);
+        buttonElement.classList.add('favorited');
+        buttonElement.querySelector('i').classList.remove('far');
+        buttonElement.querySelector('i').classList.add('fas');
+        
+        // Add to user favorites
+        if (!userData.favorites) {
+            userData.favorites = [];
+        }
+        userData.favorites.push(product);
+        
+        // Trigger heart animation
+        buttonElement.style.animation = 'favoriteAdded 0.6s ease-in-out';
+        setTimeout(() => {
+            buttonElement.style.animation = '';
+        }, 600);
+        
+        showNotification('Ürün favorilere eklendi!', 'success', 2000);
+    }
+    
+    // Update localStorage
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    localStorage.setItem('user', JSON.stringify(userData));
+    
+    // Update favorites count in user data
+    userData.totalFavorites = favorites.length;
+    localStorage.setItem('user', JSON.stringify(userData));
+}
+
+// Helper function to map product types to categories
+function getCategoryFromType(type) {
+    const categoryMap = {
+        'moisturizer': 'moisturizers',
+        'moisturizers': 'moisturizers',
+        'cleanser': 'cleansers',
+        'cleansers': 'cleansers',
+        'serum': 'serums',
+        'serums': 'serums',
+        'sunscreen': 'sunscreens',
+        'sunscreens': 'sunscreens',
+        'mask': 'skincare',
+        'toner': 'skincare',
+        'cream': 'moisturizers'
+    };
+    return categoryMap[type] || 'skincare';
+}
+
+// Helper function to get display type
+function getDisplayType(type) {
+    const typeMap = {
+        'moisturizer': 'Nemlendirici',
+        'cleanser': 'Temizleyici',
+        'serum': 'Serum',
+        'sunscreen': 'Güneş Koruma',
+        'mask': 'Maske',
+        'toner': 'Toner',
+        'cream': 'Krem'
+    };
+    return typeMap[type] || 'Cilt Bakım Ürünü';
+}
+
+// Make functions globally accessible
+window.toggleFavorite = toggleFavorite;
+window.initializeFavorites = initializeFavorites;
+
+// Initialize favorites when page loads
 document.addEventListener('DOMContentLoaded', () => {
-    initMobileNav();
-    initScrollAnimations();
-    initFaqAccordions();
-    // Profilim butonuna tıklanabilirlik ekle
-    const profileBtn = document.getElementById('profileBtn');
-    if (profileBtn) {
-        profileBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            window.location.href = 'profile.html';
-        });
-    }
-    // Favorilerim butonuna tıklanabilirlik ekle
-    const favoritesBtn = document.getElementById('favoritesBtn');
-    if (favoritesBtn) {
-        favoritesBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            window.location.href = 'favorites.html';
-        });
-    }
+    initializeFavorites();
 });

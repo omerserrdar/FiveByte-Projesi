@@ -97,7 +97,10 @@
         <div class="container">
             <div class="products-grid" id="products-container">
                 <!-- Product 1 -->
-                <div class="product-card" data-skin-type="dry" data-product-type="moisturizer">
+                <div class="product-card" data-skin-type="dry" data-product-type="moisturizer" data-product-id="1">
+                    <button class="add-favorite" onclick="toggleFavorite(1, this)">
+                        <i class="far fa-heart"></i>
+                    </button>
                     <div class="product-info">
                         <h3>Hydra Boost Nemlendirici</h3>
                         <p class="product-description">Hyaluronik asit içeren yoğun nemlendirici, 24 saat kalıcı nem sağlar.</p>
@@ -113,7 +116,10 @@
                 </div>
 
                 <!-- Product 2 -->
-                <div class="product-card" data-skin-type="oily" data-product-type="cleanser">
+                <div class="product-card" data-skin-type="oily" data-product-type="cleanser" data-product-id="2">
+                    <button class="add-favorite" onclick="toggleFavorite(2, this)">
+                        <i class="far fa-heart"></i>
+                    </button>
                     <div class="product-info">
                         <h3>Pure Clean Yüz Temizleyici</h3>
                         <p class="product-description">Salisilik asit içeren jel formülü ile gözenekleri derinlemesine temizler.</p>
@@ -129,7 +135,10 @@
                 </div>
 
                 <!-- Product 3 -->
-                <div class="product-card" data-skin-type="sensitive" data-product-type="serum">
+                <div class="product-card" data-skin-type="sensitive" data-product-type="serum" data-product-id="3">
+                    <button class="add-favorite" onclick="toggleFavorite(3, this)">
+                        <i class="far fa-heart"></i>
+                    </button>
                     <div class="product-info">
                         <h3>Calm Skin Serumu</h3>
                         <p class="product-description">Niacinamide ve panthenol içeren hassas ciltler için yatıştırıcı serum.</p>
@@ -145,7 +154,10 @@
                 </div>
 
                 <!-- Product 4 -->
-                <div class="product-card" data-skin-type="combination" data-product-type="mask">
+                <div class="product-card" data-skin-type="combination" data-product-type="mask" data-product-id="4">
+                    <button class="add-favorite" onclick="toggleFavorite(4, this)">
+                        <i class="far fa-heart"></i>
+                    </button>
                     <div class="product-info">
                         <h3>Balance Clay Mask</h3>
                         <p class="product-description">Kil ve aktif kömür içeren, T bölgesini matlaştırıp yanaklara nem veren maske.</p>
@@ -161,7 +173,10 @@
                 </div>
 
                 <!-- Product 5 -->
-                <div class="product-card" data-skin-type="normal" data-product-type="sunscreen">
+                <div class="product-card" data-skin-type="normal" data-product-type="sunscreen" data-product-id="5">
+                    <button class="add-favorite" onclick="toggleFavorite(5, this)">
+                        <i class="far fa-heart"></i>
+                    </button>
                     <div class="product-info">
                         <h3>Daily Defense SPF 50</h3>
                         <p class="product-description">Hafif dokulu, iz bırakmayan, geniş spektrumlu güneş koruyucu.</p>
@@ -177,7 +192,10 @@
                 </div>
 
                 <!-- Product 6 -->
-                <div class="product-card" data-skin-type="dry" data-product-type="serum">
+                <div class="product-card" data-skin-type="dry" data-product-type="serum" data-product-id="6">
+                    <button class="add-favorite" onclick="toggleFavorite(6, this)">
+                        <i class="far fa-heart"></i>
+                    </button>
                     <div class="product-info">
                         <h3>Hydra Intense Serum</h3>
                         <p class="product-description">Ceramide ve peptit kompleksi içeren yoğun nemlendirici serum.</p>
@@ -193,7 +211,10 @@
                 </div>
 
                 <!-- Sayfa 2 Ürünleri -->
-                <div class="product-card">
+                <div class="product-card" data-product-id="7">
+                    <button class="add-favorite" onclick="toggleFavorite(7, this)">
+                        <i class="far fa-heart"></i>
+                    </button>
                     <div class="product-info">
                         <h3>Hydra Boost Nemlendirici</h3>
                         <p class="product-type">Nemlendirici</p>
@@ -204,12 +225,15 @@
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star-half-alt"></i>
-                            <span>(128)</span>
+                            <span>4.5/5 (128 yorum)</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="product-card">
+                <div class="product-card" data-product-id="8">
+                    <button class="add-favorite" onclick="toggleFavorite(8, this)">
+                        <i class="far fa-heart"></i>
+                    </button>
                     <div class="product-info">
                         <h3>Pure Clean Yüz Temizleyici</h3>
                         <p class="product-type">Temizleyici</p>
@@ -220,12 +244,15 @@
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="far fa-star"></i>
-                            <span>(95)</span>
+                            <span>4.0/5 (95 yorum)</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="product-card">
+                <div class="product-card" data-product-id="9">
+                    <button class="add-favorite" onclick="toggleFavorite(9, this)">
+                        <i class="far fa-heart"></i>
+                    </button>
                     <div class="product-info">
                         <h3>Anti-Aging Serum</h3>
                         <p class="product-type">Serum</p>
@@ -236,7 +263,7 @@
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
-                            <span>(256)</span>
+                            <span>5.0/5 (256 yorum)</span>
                         </div>
                     </div>
                 </div>
@@ -602,5 +629,6 @@
 
     <script type="module" src="js/main.js"></script>
     <script type="module" src="js/pages/products.js"></script>
+    <script type="module" src="js/pages/reviews.js"></script>
 </body>
 </html>

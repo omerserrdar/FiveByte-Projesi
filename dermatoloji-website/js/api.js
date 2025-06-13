@@ -1,5 +1,5 @@
 // API temel URL'si
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'http://localhost:3000/api';
 
 // Token'ı localStorage'dan al
 const getToken = () => localStorage.getItem('token');

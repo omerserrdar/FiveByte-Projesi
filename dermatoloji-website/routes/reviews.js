@@ -8,117 +8,197 @@ const router = express.Router();
 // Ürüne yorum ekle
 router.post('/:productId', async (req, res) => {
     try {
-        const { rating, comment } = req.body;
+        const { rating, comment, userEmail, userName } = req.body;
         const productId = req.params.productId;
 
-        // Ürünü kontrol et
-        const product = await Product.findById(productId);
-        if (!product) {
-            return res.status(404).json({ success: false, message: 'Ürün bulunamadı' });
+        // Temel validasyon
+        if (!rating || !comment || !userEmail || !userName) {
+            return res.status(400).json({ 
+                success: false, 
+                message: 'Tüm alanlar zorunludur' 
+            });
         }
 
-        // Yorumu oluştur
+        // Rating kontrolü
+        if (rating < 1 || rating > 5) {
+            return res.status(400).json({ 
+                success: false, 
+                message: 'Puan 1-5 arasında olmalıdır' 
+            });
+        }
+
+        // Yorum uzunluğu kontrolü
+        if (comment.length < 3 || comment.length > 1000) {
+            return res.status(400).json({
+                success: false,
+                message: 'Yorum 3-1000 karakter arasında olmalıdır'
+            });
+        }
+
+        // Aynı kullanıcının aynı ürüne daha önce yorum yapıp yapmadığını kontrol et
+        const existingReview = await Review.findOne({ productId, userEmail });
+        if (existingReview) {
+            return res.status(400).json({
+                success: false,
+                message: 'Bu ürün için zaten bir yorumunuz var'
+            });
+        }
+
+        // Yeni yorum oluştur
         const review = new Review({
-            product: productId,
-            rating,
-            comment
+            productId,
+            userEmail,
+            userName,
+            rating: parseInt(rating),
+            comment: comment.trim()
         });
 
+        // Yorumu kaydet
         await review.save();
 
-        // Ürünün ortalama puanını güncelle
-        const reviews = await Review.find({ product: productId });
-        const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
-        product.rating = totalRating / reviews.length;
-        product.reviewCount = reviews.length;
-        await product.save();
+        // Başarılı yanıt
+        res.json({ 
+            success: true, 
+            data: review,
+            message: 'Yorum başarıyla eklendi!' 
+        });
 
-        res.json({ success: true, data: review });
     } catch (err) {
         console.error('Yorum ekleme hatası:', err);
-        res.status(500).json({ success: false, message: 'Sunucu hatası' });
+        
+        // MongoDB duplicate key hatası
+        if (err.code === 11000) {
+            return res.status(400).json({
+                success: false,
+                message: 'Bu ürün için zaten bir yorumunuz var'
+            });
+        }
+        
+        res.status(500).json({ 
+            success: false, 
+            message: 'Sunucu hatası' 
+        });
     }
 });
 
 // Ürün yorumlarını getir
 router.get('/:productId', async (req, res) => {
     try {
-        const reviews = await Review.find({ product: req.params.productId })
+        const productId = req.params.productId;
+        
+        // Yorumları getir (en yeniden en eskiye)
+        const reviews = await Review.find({ productId })
             .sort({ createdAt: -1 });
-        res.json({ success: true, data: reviews });
+        
+        res.json({ 
+            success: true, 
+            data: reviews 
+        });
     } catch (err) {
         console.error('Yorumları getirme hatası:', err);
-        res.status(500).json({ success: false, message: 'Sunucu hatası' });
+        res.status(500).json({ 
+            success: false, 
+            message: 'Sunucu hatası' 
+        });
     }
 });
 
 // Yorumu güncelle
-router.put('/:id', auth, async (req, res) => {
+router.put('/:reviewId', async (req, res) => {
     try {
         const { rating, comment } = req.body;
+        const reviewId = req.params.reviewId;
+        const userEmail = req.body.userEmail; // Kullanıcı emaili request'ten al
 
-        let review = await Review.findById(req.params.id);
+        // Yorumu bul
+        const review = await Review.findById(reviewId);
         if (!review) {
-            return res.status(404).json({ success: false, message: 'Yorum bulunamadı' });
+            return res.status(404).json({ 
+                success: false, 
+                message: 'Yorum bulunamadı' 
+            });
         }
 
-        // Kullanıcı kontrolü
-        if (review.user.toString() !== req.user.id) {
-            return res.status(401).json({ success: false, message: 'Yetkisiz işlem' });
+        // Yorum sahibi kontrolü
+        if (review.userEmail !== userEmail) {
+            return res.status(401).json({ 
+                success: false, 
+                message: 'Bu yorumu düzenleme yetkiniz yok' 
+            });
         }
 
-        review = await Review.findByIdAndUpdate(
-            req.params.id,
-            { rating, comment },
-            { new: true }
-        );
+        // Validasyonlar
+        if (rating && (rating < 1 || rating > 5)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Puan 1-5 arasında olmalıdır'
+            });
+        }
 
-        // Ürünün ortalama puanını güncelle
-        const reviews = await Review.find({ product: review.product });
-        const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
-        const averageRating = totalRating / reviews.length;
+        if (comment && (comment.length < 3 || comment.length > 1000)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Yorum 3-1000 karakter arasında olmalıdır'
+            });
+        }
 
-        await Product.findByIdAndUpdate(review.product, {
-            rating: averageRating,
-            reviewCount: reviews.length
+        // Yorumu güncelle
+        review.rating = rating || review.rating;
+        review.comment = comment ? comment.trim() : review.comment;
+        await review.save();
+
+        res.json({ 
+            success: true, 
+            data: review,
+            message: 'Yorum başarıyla güncellendi' 
         });
 
-        res.json(review);
     } catch (err) {
-        console.error(err.message);
-        res.status(500).json({ success: false, message: 'Sunucu hatası' });
+        console.error('Yorum güncelleme hatası:', err);
+        res.status(500).json({ 
+            success: false, 
+            message: 'Sunucu hatası' 
+        });
     }
 });
 
 // Yorumu sil
-router.delete('/:id', auth, async (req, res) => {
+router.delete('/:reviewId', async (req, res) => {
     try {
-        const review = await Review.findById(req.params.id);
+        const reviewId = req.params.reviewId;
+        const userEmail = req.body.userEmail; // Kullanıcı emaili request'ten al
+
+        // Yorumu bul
+        const review = await Review.findById(reviewId);
         if (!review) {
-            return res.status(404).json({ success: false, message: 'Yorum bulunamadı' });
+            return res.status(404).json({ 
+                success: false, 
+                message: 'Yorum bulunamadı' 
+            });
         }
 
-        // Kullanıcı kontrolü
-        if (review.user.toString() !== req.user.id) {
-            return res.status(401).json({ success: false, message: 'Yetkisiz işlem' });
+        // Yorum sahibi kontrolü
+        if (review.userEmail !== userEmail) {
+            return res.status(401).json({ 
+                success: false, 
+                message: 'Bu yorumu silme yetkiniz yok' 
+            });
         }
 
-        await review.remove();
+        // Yorumu sil
+        await review.deleteOne();
 
-        // Ürünün ortalama puanını güncelle
-        const reviews = await Review.find({ product: review.product });
-        const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
-        const averageRating = reviews.length > 0 ? totalRating / reviews.length : 0;
-
-        await Product.findByIdAndUpdate(review.product, {
-            rating: averageRating,
-            reviewCount: reviews.length
+        res.json({ 
+            success: true, 
+            message: 'Yorum başarıyla silindi' 
         });
 
-        res.json({ success: true, message: 'Yorum silindi' });
     } catch (err) {
-        console.error(err.message);
-        res.status(500).json({ success: false, message: 'Sunucu hatası' });
+        console.error('Yorum silme hatası:', err);
+        res.status(500).json({ 
+            success: false, 
+            message: 'Sunucu hatası' 
+        });
     }
 });
 
