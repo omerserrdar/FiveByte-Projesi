@@ -95,384 +95,367 @@
     <!-- Products Section -->
     <section class="products-section">
         <div class="container">
-            <div class="products-grid" id="products-container">
-                <!-- Product 1 -->
-                <div class="product-card" data-skin-type="dry" data-product-type="moisturizer" data-product-id="1">
-                    <button class="add-favorite" onclick="toggleFavorite(1, this)">
-                        <i class="far fa-heart"></i>
-                    </button>
-                    <div class="product-info">
-                        <h3>Hydra Boost Nemlendirici</h3>
-                        <p class="product-description">Hyaluronik asit içeren yoğun nemlendirici, 24 saat kalıcı nem sağlar.</p>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                            <span>4.5/5 (120 yorum)</span>
-                        </div>
+            <div class="products-grid">
+                <!-- Products will be loaded here dynamically from MongoDB -->
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card" data-skin-type="oily" data-product-type="cleanser" data-product-id="2">
+                <button class="add-favorite" onclick="toggleFavorite(2, this)">
+                    <i class="far fa-heart"></i>
+                </button>
+                <div class="product-info">
+                    <h3>Pure Clean Yüz Temizleyici</h3>
+                    <p class="product-description">Salisilik asit içeren jel formülü ile gözenekleri derinlemesine temizler.</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <span>4.0/5 (85 yorum)</span>
                     </div>
                 </div>
+            </div>
 
-                <!-- Product 2 -->
-                <div class="product-card" data-skin-type="oily" data-product-type="cleanser" data-product-id="2">
-                    <button class="add-favorite" onclick="toggleFavorite(2, this)">
-                        <i class="far fa-heart"></i>
-                    </button>
-                    <div class="product-info">
-                        <h3>Pure Clean Yüz Temizleyici</h3>
-                        <p class="product-description">Salisilik asit içeren jel formülü ile gözenekleri derinlemesine temizler.</p>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <span>4.0/5 (85 yorum)</span>
-                        </div>
+            <!-- Product 3 -->
+            <div class="product-card" data-skin-type="sensitive" data-product-type="serum" data-product-id="3">
+                <button class="add-favorite" onclick="toggleFavorite(3, this)">
+                    <i class="far fa-heart"></i>
+                </button>
+                <div class="product-info">
+                    <h3>Calm Skin Serumu</h3>
+                    <p class="product-description">Niacinamide ve panthenol içeren hassas ciltler için yatıştırıcı serum.</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>5.0/5 (42 yorum)</span>
                     </div>
                 </div>
+            </div>
 
-                <!-- Product 3 -->
-                <div class="product-card" data-skin-type="sensitive" data-product-type="serum" data-product-id="3">
-                    <button class="add-favorite" onclick="toggleFavorite(3, this)">
-                        <i class="far fa-heart"></i>
-                    </button>
-                    <div class="product-info">
-                        <h3>Calm Skin Serumu</h3>
-                        <p class="product-description">Niacinamide ve panthenol içeren hassas ciltler için yatıştırıcı serum.</p>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <span>5.0/5 (42 yorum)</span>
-                        </div>
+            <!-- Product 4 -->
+            <div class="product-card" data-skin-type="combination" data-product-type="mask" data-product-id="4">
+                <button class="add-favorite" onclick="toggleFavorite(4, this)">
+                    <i class="far fa-heart"></i>
+                </button>
+                <div class="product-info">
+                    <h3>Balance Clay Mask</h3>
+                    <p class="product-description">Kil ve aktif kömür içeren, T bölgesini matlaştırıp yanaklara nem veren maske.</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <span>4.2/5 (68 yorum)</span>
                     </div>
                 </div>
+            </div>
 
-                <!-- Product 4 -->
-                <div class="product-card" data-skin-type="combination" data-product-type="mask" data-product-id="4">
-                    <button class="add-favorite" onclick="toggleFavorite(4, this)">
-                        <i class="far fa-heart"></i>
-                    </button>
-                    <div class="product-info">
-                        <h3>Balance Clay Mask</h3>
-                        <p class="product-description">Kil ve aktif kömür içeren, T bölgesini matlaştırıp yanaklara nem veren maske.</p>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <span>4.2/5 (68 yorum)</span>
-                        </div>
+            <!-- Product 5 -->
+            <div class="product-card" data-skin-type="normal" data-product-type="sunscreen" data-product-id="5">
+                <button class="add-favorite" onclick="toggleFavorite(5, this)">
+                    <i class="far fa-heart"></i>
+                </button>
+                <div class="product-info">
+                    <h3>Daily Defense SPF 50</h3>
+                    <p class="product-description">Hafif dokulu, iz bırakmayan, geniş spektrumlu güneş koruyucu.</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span>4.7/5 (93 yorum)</span>
                     </div>
                 </div>
+            </div>
 
-                <!-- Product 5 -->
-                <div class="product-card" data-skin-type="normal" data-product-type="sunscreen" data-product-id="5">
-                    <button class="add-favorite" onclick="toggleFavorite(5, this)">
-                        <i class="far fa-heart"></i>
-                    </button>
-                    <div class="product-info">
-                        <h3>Daily Defense SPF 50</h3>
-                        <p class="product-description">Hafif dokulu, iz bırakmayan, geniş spektrumlu güneş koruyucu.</p>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                            <span>4.7/5 (93 yorum)</span>
-                        </div>
+            <!-- Product 6 -->
+            <div class="product-card" data-skin-type="dry" data-product-type="serum" data-product-id="6">
+                <button class="add-favorite" onclick="toggleFavorite(6, this)">
+                    <i class="far fa-heart"></i>
+                </button>
+                <div class="product-info">
+                    <h3>Hydra Intense Serum</h3>
+                    <p class="product-description">Ceramide ve peptit kompleksi içeren yoğun nemlendirici serum.</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <span>4.3/5 (56 yorum)</span>
                     </div>
                 </div>
+            </div>
 
-                <!-- Product 6 -->
-                <div class="product-card" data-skin-type="dry" data-product-type="serum" data-product-id="6">
-                    <button class="add-favorite" onclick="toggleFavorite(6, this)">
-                        <i class="far fa-heart"></i>
-                    </button>
-                    <div class="product-info">
-                        <h3>Hydra Intense Serum</h3>
-                        <p class="product-description">Ceramide ve peptit kompleksi içeren yoğun nemlendirici serum.</p>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <span>4.3/5 (56 yorum)</span>
-                        </div>
+            <!-- Sayfa 2 Ürünleri -->
+            <div class="product-card" data-product-id="7">
+                <button class="add-favorite" onclick="toggleFavorite(7, this)">
+                    <i class="far fa-heart"></i>
+                </button>
+                <div class="product-info">
+                    <h3>Hydra Boost Nemlendirici</h3>
+                    <p class="product-type">Nemlendirici</p>
+                    <p class="product-description">Kuru ciltler için yoğun nemlendirme sağlayan, hyaluronik asit içeren nemlendirici krem.</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span>4.5/5 (128 yorum)</span>
                     </div>
                 </div>
+            </div>
 
-                <!-- Sayfa 2 Ürünleri -->
-                <div class="product-card" data-product-id="7">
-                    <button class="add-favorite" onclick="toggleFavorite(7, this)">
-                        <i class="far fa-heart"></i>
-                    </button>
-                    <div class="product-info">
-                        <h3>Hydra Boost Nemlendirici</h3>
-                        <p class="product-type">Nemlendirici</p>
-                        <p class="product-description">Kuru ciltler için yoğun nemlendirme sağlayan, hyaluronik asit içeren nemlendirici krem.</p>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                            <span>4.5/5 (128 yorum)</span>
-                        </div>
+            <div class="product-card" data-product-id="8">
+                <button class="add-favorite" onclick="toggleFavorite(8, this)">
+                    <i class="far fa-heart"></i>
+                </button>
+                <div class="product-info">
+                    <h3>Pure Clean Yüz Temizleyici</h3>
+                    <p class="product-type">Temizleyici</p>
+                    <p class="product-description">Yağlı ve karma ciltler için özel olarak formüle edilmiş, yumuşak temizleyici jel.</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <span>4.0/5 (95 yorum)</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="product-card" data-product-id="8">
-                    <button class="add-favorite" onclick="toggleFavorite(8, this)">
-                        <i class="far fa-heart"></i>
-                    </button>
-                    <div class="product-info">
-                        <h3>Pure Clean Yüz Temizleyici</h3>
-                        <p class="product-type">Temizleyici</p>
-                        <p class="product-description">Yağlı ve karma ciltler için özel olarak formüle edilmiş, yumuşak temizleyici jel.</p>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <span>4.0/5 (95 yorum)</span>
-                        </div>
+            <div class="product-card" data-product-id="9">
+                <button class="add-favorite" onclick="toggleFavorite(9, this)">
+                    <i class="far fa-heart"></i>
+                </button>
+                <div class="product-info">
+                    <h3>Anti-Aging Serum</h3>
+                    <p class="product-type">Serum</p>
+                    <p class="product-description">Kırışıklık karşıtı etkili, retinol ve C vitamini içeren güçlü serum.</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>5.0/5 (256 yorum)</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="product-card" data-product-id="9">
-                    <button class="add-favorite" onclick="toggleFavorite(9, this)">
-                        <i class="far fa-heart"></i>
-                    </button>
-                    <div class="product-info">
-                        <h3>Anti-Aging Serum</h3>
-                        <p class="product-type">Serum</p>
-                        <p class="product-description">Kırışıklık karşıtı etkili, retinol ve C vitamini içeren güçlü serum.</p>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <span>5.0/5 (256 yorum)</span>
-                        </div>
+            <div class="product-card">
+                <div class="product-info">
+                    <h3>Güneş Koruyucu SPF 50+</h3>
+                    <p class="product-type">Koruyucu</p>
+                    <p class="product-description">Yüksek koruma faktörlü, hafif ve hızlı emilen güneş koruyucu krem.</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <span>(89)</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="product-card">
-                    <div class="product-info">
-                        <h3>Güneş Koruyucu SPF 50+</h3>
-                        <p class="product-type">Koruyucu</p>
-                        <p class="product-description">Yüksek koruma faktörlü, hafif ve hızlı emilen güneş koruyucu krem.</p>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <span>(89)</span>
-                        </div>
+            <div class="product-card">
+                <div class="product-info">
+                    <h3>Göz Çevresi Kremi</h3>
+                    <p class="product-type">Göz Kremi</p>
+                    <p class="product-description">Göz çevresindeki ince çizgileri ve koyu halkaları azaltan özel formül.</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span>(167)</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="product-card">
-                    <div class="product-info">
-                        <h3>Göz Çevresi Kremi</h3>
-                        <p class="product-type">Göz Kremi</p>
-                        <p class="product-description">Göz çevresindeki ince çizgileri ve koyu halkaları azaltan özel formül.</p>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                            <span>(167)</span>
-                        </div>
+            <div class="product-card">
+                <div class="product-info">
+                    <h3>Peeling Maskesi</h3>
+                    <p class="product-type">Maske</p>
+                    <p class="product-description">Cildi ölü hücrelerden arındıran, parlaklık veren peeling maskesi.</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <span>(112)</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="product-card">
-                    <div class="product-info">
-                        <h3>Peeling Maskesi</h3>
-                        <p class="product-type">Maske</p>
-                        <p class="product-description">Cildi ölü hücrelerden arındıran, parlaklık veren peeling maskesi.</p>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <span>(112)</span>
-                        </div>
+            <div class="product-card">
+                <div class="product-info">
+                    <h3>Hassas Cilt Toneri</h3>
+                    <p class="product-type">Toner</p>
+                    <p class="product-description">Hassas ciltler için yatıştırıcı ve pH dengeleyici toner.</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>(78)</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="product-card">
-                    <div class="product-info">
-                        <h3>Hassas Cilt Toneri</h3>
-                        <p class="product-type">Toner</p>
-                        <p class="product-description">Hassas ciltler için yatıştırıcı ve pH dengeleyici toner.</p>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <span>(78)</span>
-                        </div>
+            <div class="product-card">
+                <div class="product-info">
+                    <h3>Gece Bakım Kremi</h3>
+                    <p class="product-type">Gece Kremi</p>
+                    <p class="product-description">Cildi gece boyunca yenileyen ve besleyen yoğun bakım kremi.</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span>(143)</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="product-card">
-                    <div class="product-info">
-                        <h3>Gece Bakım Kremi</h3>
-                        <p class="product-type">Gece Kremi</p>
-                        <p class="product-description">Cildi gece boyunca yenileyen ve besleyen yoğun bakım kremi.</p>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                            <span>(143)</span>
-                        </div>
+            <div class="product-card">
+                <div class="product-info">
+                    <h3>Vitamin C Serum</h3>
+                    <p class="product-type">Serum</p>
+                    <p class="product-description">Cilt tonunu eşitleyen ve parlaklık veren %20 C vitamini içeren serum.</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>(189)</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="product-card">
-                    <div class="product-info">
-                        <h3>Vitamin C Serum</h3>
-                        <p class="product-type">Serum</p>
-                        <p class="product-description">Cilt tonunu eşitleyen ve parlaklık veren %20 C vitamini içeren serum.</p>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <span>(189)</span>
-                        </div>
+            <div class="product-card">
+                <div class="product-info">
+                    <h3>Yatıştırıcı Nemlendirici</h3>
+                    <p class="product-type">Nemlendirici</p>
+                    <p class="product-description">Hassas ve kızarık ciltler için yatıştırıcı ve nemlendirici krem.</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <span>(134)</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="product-card">
-                    <div class="product-info">
-                        <h3>Yatıştırıcı Nemlendirici</h3>
-                        <p class="product-type">Nemlendirici</p>
-                        <p class="product-description">Hassas ve kızarık ciltler için yatıştırıcı ve nemlendirici krem.</p>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <span>(134)</span>
-                        </div>
+            <div class="product-card">
+                <div class="product-info">
+                    <h3>Gözenek Sıkılaştırıcı Toner</h3>
+                    <p class="product-type">Toner</p>
+                    <p class="product-description">Gözenekleri sıkılaştıran ve yağ dengesini sağlayan toner.</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span>(98)</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="product-card">
-                    <div class="product-info">
-                        <h3>Gözenek Sıkılaştırıcı Toner</h3>
-                        <p class="product-type">Toner</p>
-                        <p class="product-description">Gözenekleri sıkılaştıran ve yağ dengesini sağlayan toner.</p>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                            <span>(98)</span>
-                        </div>
+            <div class="product-card">
+                <div class="product-info">
+                    <h3>Güneş Sonrası Bakım</h3>
+                    <p class="product-type">Bakım</p>
+                    <p class="product-description">Güneş sonrası cildi yatıştıran ve nemlendiren bakım kremi.</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <span>(76)</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="product-card">
-                    <div class="product-info">
-                        <h3>Güneş Sonrası Bakım</h3>
-                        <p class="product-type">Bakım</p>
-                        <p class="product-description">Güneş sonrası cildi yatıştıran ve nemlendiren bakım kremi.</p>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <span>(76)</span>
-                        </div>
+            <div class="product-card">
+                <div class="product-info">
+                    <h3>Detoks Maskesi</h3>
+                    <p class="product-type">Maske</p>
+                    <p class="product-description">Cildi toksinlerden arındıran ve yenileyen detoks maskesi.</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>(112)</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="product-card">
-                    <div class="product-info">
-                        <h3>Detoks Maskesi</h3>
-                        <p class="product-type">Maske</p>
-                        <p class="product-description">Cildi toksinlerden arındıran ve yenileyen detoks maskesi.</p>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <span>(112)</span>
-                        </div>
+            <div class="product-card">
+                <div class="product-info">
+                    <h3>Göz Altı Dolgu Kremi</h3>
+                    <p class="product-type">Göz Kremi</p>
+                    <p class="product-description">Göz altı çöküklüklerini dolduran ve canlandıran krem.</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span>(87)</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="product-card">
-                    <div class="product-info">
-                        <h3>Göz Altı Dolgu Kremi</h3>
-                        <p class="product-type">Göz Kremi</p>
-                        <p class="product-description">Göz altı çöküklüklerini dolduran ve canlandıran krem.</p>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                            <span>(87)</span>
-                        </div>
+            <div class="product-card">
+                <div class="product-info">
+                    <h3>Kırışıklık Karşıtı Serum</h3>
+                    <p class="product-type">Serum</p>
+                    <p class="product-description">İnce çizgileri ve kırışıklıkları azaltan peptid içerikli serum.</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <span>(156)</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="product-card">
-                    <div class="product-info">
-                        <h3>Kırışıklık Karşıtı Serum</h3>
-                        <p class="product-type">Serum</p>
-                        <p class="product-description">İnce çizgileri ve kırışıklıkları azaltan peptid içerikli serum.</p>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <span>(156)</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-info">
-                        <h3>Günlük Nemlendirici</h3>
-                        <p class="product-type">Nemlendirici</p>
-                        <p class="product-description">Tüm cilt tipleri için hafif ve hızlı emilen günlük nemlendirici.</p>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <span>(203)</span>
-                        </div>
+            <div class="product-card">
+                <div class="product-info">
+                    <h3>Günlük Nemlendirici</h3>
+                    <p class="product-type">Nemlendirici</p>
+                    <p class="product-description">Tüm cilt tipleri için hafif ve hızlı emilen günlük nemlendirici.</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>(203)</span>
                     </div>
                 </div>
             </div>
@@ -496,9 +479,7 @@
                                 <i class="fas fa-star-half-alt"></i>
                                 <span>4.5/5 (120 yorum)</span>
                             </div>
-                            <div class="product-price">
-                                <span class="price" id="modal-product-price">189.90 TL</span>
-                            </div>
+
                             <div class="product-description">
                                 <h3>Ürün Açıklaması</h3>
                                 <p id="modal-product-description">Ürün açıklaması burada yer alacak.</p>
@@ -550,7 +531,7 @@
                                     </div>
                                 </div>
                                 <div class="review-content">
-                                    <p>Ürün iyi ama biraz daha uygun fiyatlı olabilirdi. Yine de etkisinden memnunum.</p>
+                                    <p>Ürün kalitesi gerçekten iyi. Etkisinden çok memnunum, tavsiye ederim.</p>
                                 </div>
                             </div>
                         </div>
@@ -583,10 +564,7 @@
 
             <!-- Pagination -->
             <div class="pagination">
-                <button class="pagination-btn active">1</button>
-                <button class="pagination-btn">2</button>
-                <button class="pagination-btn">3</button>
-                <button class="pagination-btn next"><i class="fas fa-chevron-right"></i></button>
+                <!-- Pagination will be updated dynamically -->
             </div>
         </div>
     </section>

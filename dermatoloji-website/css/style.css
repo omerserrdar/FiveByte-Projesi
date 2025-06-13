@@ -78,12 +78,7 @@
     line-height: 1.5;
 }
 
-.product-price {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #2c3e50;
-    margin-bottom: 1rem;
-}
+
 
 .product-badge {
     position: absolute;

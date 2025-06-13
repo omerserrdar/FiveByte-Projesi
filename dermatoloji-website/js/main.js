@@ -510,14 +510,101 @@ function initShowMoreReviews() {
 
 // Sayfa yüklendiğinde ürünleri getir
 document.addEventListener('DOMContentLoaded', async () => {
-    try {
-        const products = await productAPI.getAllProducts();
-        // Ürünleri DOM'a ekle
-        updateProductCards(products);
-    } catch (error) {
-        console.error('Ürünler yüklenirken hata:', error);
+    // Ana sayfada sadece öne çıkan ürünleri göster
+    if (window.location.pathname === '/index.html' || window.location.pathname === '/') {
+        loadFeaturedProducts();
+    } else {
+        // Diğer sayfalarda tüm ürünleri göster
+        try {
+            const products = await productAPI.getAllProducts();
+            updateProductCards(products);
+        } catch (error) {
+            console.error('Ürünler yüklenirken hata:', error);
+        }
     }
 });
+
+// Öne çıkan ürünleri yükle
+async function loadFeaturedProducts() {
+    try {
+        const allProducts = await productAPI.getAllProducts();
+        // Öne çıkan ürünleri filtrele (featured=true olan veya badge="Öne Çıkan" olan)
+        const featuredProducts = allProducts.filter(product => 
+            product.featured === true || 
+            product.badge === "Öne Çıkan" ||
+            product.name === "Bepantol Cilt Bakım Kremi" // Bepantol'u öne çıkan olarak işaretle
+        ).slice(0, 6); // Maksimum 6 ürün göster
+        
+        updateFeaturedProductCards(featuredProducts);
+    } catch (error) {
+        console.error('Öne çıkan ürünler yüklenirken hata:', error);
+    }
+}
+
+// Öne çıkan ürün kartlarını güncelle
+function updateFeaturedProductCards(products) {
+    const productCards = document.getElementById('products-container');
+    if (!productCards) return;
+
+    // Önce mevcut ürünleri temizle
+    productCards.innerHTML = '';
+
+    products.forEach(product => {
+        const card = createFeaturedProductCard(product);
+        productCards.appendChild(card);
+    });
+    
+    // Kalp butonlarına event listener ekle
+    initializeFavoriteButtons();
+}
+
+// Öne çıkan ürün kartı oluştur
+function createFeaturedProductCard(product) {
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    card.dataset.productId = product._id;
+    card.dataset.productType = product.type;
+
+    const imageUrl = product.imageUrl || product.image || 'images/placeholder.png';
+    
+    card.innerHTML = `
+        <div class="product-badge">${product.badge || 'Öne Çıkan'}</div>
+        <button class="add-favorite" onclick="toggleFavorite('${product._id}', this)">
+            <i class="far fa-heart"></i>
+        </button>
+        <div class="product-image">
+            <img src="${imageUrl}" alt="${product.name}" onerror="this.onerror=null;this.src='images/placeholder.png';">
+        </div>
+        <div class="product-info">
+            <h3>${product.name}</h3>
+            ${product.type ? `<p class="product-type">${product.type}</p>` : ''}
+            ${product.description ? `<p class="product-description">${product.description}</p>` : ''}
+            <div class="product-rating">
+                ${createRatingStars(product.rating || 0)}
+                <span>(${product.reviewCount || 0} değerlendirme)</span>
+            </div>
+        </div>
+    `;
+
+    return card;
+}
+
+// Favori butonlarını initialize et
+function initializeFavoriteButtons() {
+    const favoriteButtons = document.querySelectorAll('.add-favorite');
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    
+    favoriteButtons.forEach(button => {
+        const productCard = button.closest('.product-card');
+        const productId = productCard.dataset.productId;
+        
+        if (favorites.includes(productId)) {
+            button.classList.add('favorited');
+            button.querySelector('i').classList.remove('far');
+            button.querySelector('i').classList.add('fas');
+        }
+    });
+}
 
 // Ürün kartlarını güncelle
 function updateProductCards(products) {

@@ -31,7 +31,7 @@ Herkes için doğru cilt bakım ürünlerini bulmayı kolaylaştırmak ve cilt s
 - Geniş cilt bakım ürünleri veritabanı
 - Ürün detayları ve kullanıcı yorumları
 - Favori ürünleri kaydetme
-- Fiyat karşılaştırması
+- Ürün kategorilere göre filtreleme
 
 ### 👤 **Kullanıcı Deneyimi**
 - Güvenli kullanıcı kayıt/giriş sistemi

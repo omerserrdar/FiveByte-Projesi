@@ -32,13 +32,12 @@ router.get('/:id', async (req, res) => {
 // Yeni ürün ekle (sadece admin)
 router.post('/', auth, async (req, res) => {
     try {
-        const { name, type, description, price, badge } = req.body;
+        const { name, type, description, badge } = req.body;
 
         const newProduct = new Product({
             name,
             type,
             description,
-            price,
             badge
         });
 
@@ -53,7 +52,7 @@ router.post('/', auth, async (req, res) => {
 // Ürün güncelle (sadece admin)
 router.put('/:id', auth, async (req, res) => {
     try {
-        const { name, type, description, price, badge } = req.body;
+        const { name, type, description, badge } = req.body;
 
         let product = await Product.findById(req.params.id);
         if (!product) {
@@ -62,7 +61,7 @@ router.put('/:id', auth, async (req, res) => {
 
         product = await Product.findByIdAndUpdate(
             req.params.id,
-            { name, type, description, price, badge },
+            { name, type, description, badge },
             { new: true }
         );
 

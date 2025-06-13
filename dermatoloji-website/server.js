@@ -22,7 +22,7 @@ const mongooseOptions = {
 };
 
 // MongoDB bağlantısı
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/dermaskin';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/skinai_db';
 mongoose.connect(MONGODB_URI, mongooseOptions)
     .then(() => {
         console.log('MongoDB bağlantısı başarılı');
