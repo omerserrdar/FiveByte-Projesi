@@ -22,6 +22,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if (document.querySelector('.faq-item')) {
         initFaqAccordions();
     }
+    
+    // Load featured products on homepage
+    if (document.querySelector('.featured-products')) {
+        loadFeaturedProducts();
+    }
 
     // Şikayet Modal İşlevselliği
     const complaintBtn = document.getElementById('complaintBtn');
@@ -516,7 +521,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     } else {
         // Diğer sayfalarda tüm ürünleri göster
         try {
-            const products = await productAPI.getAllProducts();
+            const response = await productAPI.getAllProducts();
+            const products = response.success && response.data ? response.data : [];
             updateProductCards(products);
         } catch (error) {
             console.error('Ürünler yüklenirken hata:', error);
@@ -527,12 +533,22 @@ document.addEventListener('DOMContentLoaded', async () => {
 // Öne çıkan ürünleri yükle
 async function loadFeaturedProducts() {
     try {
-        const allProducts = await productAPI.getAllProducts();
+        const response = await productAPI.getAllProducts();
+        
+        // API response format kontrolü
+        const allProducts = response.success && response.data ? response.data : [];
+        
+        if (allProducts.length === 0) {
+            console.warn('Ürün bulunamadı');
+            return;
+        }
+        
         // Öne çıkan ürünleri filtrele (featured=true olan veya badge="Öne Çıkan" olan)
         const featuredProducts = allProducts.filter(product => 
             product.featured === true || 
             product.badge === "Öne Çıkan" ||
-            product.name === "Bepantol Cilt Bakım Kremi" // Bepantol'u öne çıkan olarak işaretle
+            product.name === "Bepantol Cilt Bakım Kremi" || // Bepantol'u öne çıkan olarak işaretle
+            product.name.toLowerCase().includes('avene') // Avène ürünlerini de öne çıkan olarak işaretle
         ).slice(0, 6); // Maksimum 6 ürün göster
         
         updateFeaturedProductCards(featuredProducts);
@@ -565,16 +581,25 @@ function createFeaturedProductCard(product) {
     card.dataset.productId = product._id;
     card.dataset.productType = product.type;
 
-    const imageUrl = product.imageUrl || product.image || 'images/placeholder.png';
+    // Bepantol ve Avène için görsel göster
+    const shouldShowImage = product.imageUrl && (
+        product.name.toLowerCase().includes('bepantol') ||
+        product.name.toLowerCase().includes('avene') ||
+        product.name.toLowerCase().includes('avène')
+    );
     
+    const imageHTML = shouldShowImage 
+        ? `<div class="product-image">
+               <img src="${product.imageUrl}" alt="${product.name}" loading="lazy">
+           </div>` 
+        : '';
+
     card.innerHTML = `
         <div class="product-badge">${product.badge || 'Öne Çıkan'}</div>
         <button class="add-favorite" onclick="toggleFavorite('${product._id}', this)">
             <i class="far fa-heart"></i>
         </button>
-        <div class="product-image">
-            <img src="${imageUrl}" alt="${product.name}" onerror="this.onerror=null;this.src='images/placeholder.png';">
-        </div>
+        ${imageHTML}
         <div class="product-info">
             <h3>${product.name}</h3>
             ${product.type ? `<p class="product-type">${product.type}</p>` : ''}
@@ -582,6 +607,11 @@ function createFeaturedProductCard(product) {
             <div class="product-rating">
                 ${createRatingStars(product.rating || 0)}
                 <span>(${product.reviewCount || 0} değerlendirme)</span>
+            </div>
+            <div class="product-actions">
+                <button class="btn btn-outline view-reviews" onclick="showProductReviews('${product._id}', '${product.name}')">
+                    <i class="fas fa-comments"></i> Yorumlar
+                </button>
             </div>
         </div>
     `;
@@ -625,9 +655,6 @@ function createProductCard(product) {
 
     card.innerHTML = `
         <div class="product-badge">${product.badge || ''}</div>
-        <div class="product-image">
-            <img src="${product.image || 'https://via.placeholder.com/150'}" alt="${product.name || ''}" onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
-        </div>
         <div class="product-info">
             <h3>${product.name || ''}</h3>
             ${product.type ? `<p class="product-type">${product.type}</p>` : ''}
@@ -880,6 +907,358 @@ function getDisplayType(type) {
         'cream': 'Krem'
     };
     return typeMap[type] || 'Cilt Bakım Ürünü';
+}
+
+// ===== YORUM SİSTEMİ =====
+
+// Ürün yorumlarını göster modal'ı
+window.showProductReviews = async function(productId, productName) {
+    try {
+        // Modal var mı kontrol et, yoksa oluştur
+        let modal = document.getElementById('review-modal');
+        if (!modal) {
+            createReviewModal();
+            modal = document.getElementById('review-modal');
+        }
+
+        // Modal içeriğini güncelle
+        const modalTitle = modal.querySelector('.modal-title');
+        const reviewsContainer = modal.querySelector('.reviews-container');
+        
+        modalTitle.textContent = `${productName} - Yorumlar`;
+        reviewsContainer.innerHTML = '<div class="loading">Yorumlar yükleniyor...</div>';
+        
+        // Modal'ı göster
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        
+        // Yorumları yükle
+        await loadProductReviews(productId);
+        
+        // Yorum formunu başlat
+        initializeReviewForm(productId);
+        
+    } catch (error) {
+        console.error('Yorumlar yüklenirken hata:', error);
+        showNotification('Yorumlar yüklenirken bir hata oluştu.', 'error');
+    }
+};
+
+// Yorum modal'ını oluştur
+function createReviewModal() {
+    const modalHTML = `
+        <div id="review-modal" class="product-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Ürün Yorumları</h3>
+                    <span class="close-modal" onclick="closeReviewModal()">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="reviews-section">
+                        <div class="reviews-container">
+                            <!-- Yorumlar buraya yüklenecek -->
+                        </div>
+                    </div>
+                    
+                    <div class="add-review-section">
+                        <h4><i class="fas fa-edit"></i> Yorum Ekle</h4>
+                        <form id="review-form">
+                            <div class="form-group">
+                                <label><i class="fas fa-star"></i> Puanınız:</label>
+                                <div class="rating-input">
+                                    <span class="star" data-rating="1">★</span>
+                                    <span class="star" data-rating="2">★</span>
+                                    <span class="star" data-rating="3">★</span>
+                                    <span class="star" data-rating="4">★</span>
+                                    <span class="star" data-rating="5">★</span>
+                                </div>
+                                <small class="rating-text">Ürünü değerlendirin</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="review-comment"><i class="fas fa-comment"></i> Yorumunuz:</label>
+                                <textarea id="review-comment" rows="4" required placeholder="Bu ürün hakkında deneyiminizi paylaşın..." maxlength="500"></textarea>
+                                <div class="char-counter">
+                                    <span id="char-count">0</span>/500 karakter
+                                </div>
+                            </div>
+                            
+                            <div class="form-group name-section">
+                                <div class="anonymous-option">
+                                    <input type="checkbox" id="anonymous-check" checked>
+                                    <label for="anonymous-check">
+                                        <i class="fas fa-user-secret"></i> Anonim olarak yorum yap
+                                    </label>
+                                </div>
+                                <div class="name-input" style="display: none;">
+                                    <label for="user-name"><i class="fas fa-user"></i> Adınız:</label>
+                                    <input type="text" id="user-name" placeholder="Adınızı girin">
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i> Yorum Gönder
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+}
+
+// Yorum modal'ını kapat
+window.closeReviewModal = function() {
+    const modal = document.getElementById('review-modal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+};
+
+// Ürün yorumlarını yükle
+async function loadProductReviews(productId) {
+    try {
+        const response = await fetch(`http://localhost:3000/api/reviews/${productId}`);
+        const result = await response.json();
+        
+        const reviewsContainer = document.querySelector('#review-modal .reviews-container');
+        
+        if (result.success && result.data.length > 0) {
+            const reviewsHTML = result.data.map((review, index) => {
+                const displayName = review.isAnonymous || !review.userName || review.userName === 'Anonim Kullanıcı' 
+                    ? `🕵️ Anonim Kullanıcı #${result.data.length - index}` 
+                    : `👤 ${review.userName}`;
+                    
+                const timeAgo = getTimeAgo(new Date(review.createdAt));
+                
+                return `
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div class="reviewer-info">
+                                <span class="reviewer-name">${displayName}</span>
+                                <span class="review-date">${timeAgo}</span>
+                            </div>
+                            <div class="review-rating">
+                                ${createRatingStars(review.rating)}
+                                <span class="rating-text-small">${getRatingText(review.rating)}</span>
+                            </div>
+                        </div>
+                        <div class="review-content">
+                            <p>${review.comment}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            reviewsContainer.innerHTML = reviewsHTML;
+        } else {
+            reviewsContainer.innerHTML = '<div class="no-reviews">Henüz yorum yapılmamış. İlk yorumu siz yapın!</div>';
+        }
+        
+    } catch (error) {
+        console.error('Yorumlar yüklenirken hata:', error);
+        document.querySelector('#review-modal .reviews-container').innerHTML = 
+            '<div class="error-message">Yorumlar yüklenirken bir hata oluştu.</div>';
+    }
+}
+
+// Yorum formunu başlat
+function initializeReviewForm(productId) {
+    const form = document.getElementById('review-form');
+    const stars = document.querySelectorAll('.rating-input .star');
+    const commentTextarea = document.getElementById('review-comment');
+    const charCount = document.getElementById('char-count');
+    const ratingText = document.querySelector('.rating-text');
+    const anonymousCheck = document.getElementById('anonymous-check');
+    const nameInput = document.querySelector('.name-input');
+    let selectedRating = 0;
+    
+    // Character counter
+    if (commentTextarea && charCount) {
+        commentTextarea.addEventListener('input', () => {
+            const count = commentTextarea.value.length;
+            charCount.textContent = count;
+            
+            // Renk değişimi
+            if (count > 450) {
+                charCount.style.color = '#e74c3c';
+            } else if (count > 350) {
+                charCount.style.color = '#f39c12';
+            } else {
+                charCount.style.color = '#27ae60';
+            }
+        });
+    }
+    
+    // Anonim checkbox kontrolü
+    if (anonymousCheck && nameInput) {
+        anonymousCheck.addEventListener('change', () => {
+            if (anonymousCheck.checked) {
+                nameInput.style.display = 'none';
+                document.getElementById('user-name').required = false;
+            } else {
+                nameInput.style.display = 'block';
+                document.getElementById('user-name').required = true;
+            }
+        });
+    }
+    
+    // Yıldız rating sistemi
+    stars.forEach((star, index) => {
+        star.addEventListener('click', () => {
+            selectedRating = index + 1;
+            updateStarDisplay(stars, selectedRating);
+            updateRatingText(selectedRating);
+        });
+        
+        star.addEventListener('mouseenter', () => {
+            updateStarDisplay(stars, index + 1);
+            updateRatingText(index + 1);
+        });
+    });
+    
+    document.querySelector('.rating-input').addEventListener('mouseleave', () => {
+        updateStarDisplay(stars, selectedRating);
+        updateRatingText(selectedRating);
+    });
+    
+    // Form submit
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        if (selectedRating === 0) {
+            showNotification('Lütfen bir puan seçin!', 'error');
+            return;
+        }
+        
+        const comment = commentTextarea.value.trim();
+        if (!comment) {
+            showNotification('Lütfen yorumunuzu yazın!', 'error');
+            return;
+        }
+        
+        if (comment.length < 3) {
+            showNotification('Yorum en az 3 karakter olmalıdır!', 'error');
+            return;
+        }
+        
+        const isAnonymous = anonymousCheck.checked;
+        const userName = isAnonymous ? '' : document.getElementById('user-name').value.trim();
+        
+        if (!isAnonymous && !userName) {
+            showNotification('Lütfen adınızı girin veya anonim seçeneğini işaretleyin!', 'error');
+            return;
+        }
+        
+        const formData = {
+            rating: selectedRating,
+            comment: comment,
+            userName: userName,
+            isAnonymous: isAnonymous
+        };
+        
+        // Submit butonunu devre dışı bırak
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Gönderiliyor...';
+        
+        try {
+            const response = await fetch(`http://localhost:3000/api/reviews/${productId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                showNotification('Yorumunuz başarıyla eklendi! 🎉', 'success');
+                form.reset();
+                selectedRating = 0;
+                updateStarDisplay(stars, 0);
+                updateRatingText(0);
+                charCount.textContent = '0';
+                charCount.style.color = '#27ae60';
+                anonymousCheck.checked = true;
+                nameInput.style.display = 'none';
+                await loadProductReviews(productId); // Yorumları yeniden yükle
+            } else {
+                showNotification(result.message || 'Yorum eklenirken bir hata oluştu.', 'error');
+            }
+            
+        } catch (error) {
+            console.error('Yorum ekleme hatası:', error);
+            showNotification('Bağlantı hatası! Lütfen tekrar deneyin.', 'error');
+        } finally {
+            // Submit butonunu tekrar aktif et
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+        }
+    });
+}
+
+// Yıldız görünümünü güncelle
+function updateStarDisplay(stars, rating) {
+    stars.forEach((star, index) => {
+        if (index < rating) {
+            star.style.color = '#ffa500';
+        } else {
+            star.style.color = '#ddd';
+        }
+    });
+}
+
+// Rating text'ini güncelle
+function updateRatingText(rating) {
+    const ratingText = document.querySelector('.rating-text');
+    if (!ratingText) return;
+    
+    const ratingTexts = {
+        0: 'Ürünü değerlendirin',
+        1: '😞 Çok kötü',
+        2: '😐 Kötü', 
+        3: '😊 Orta',
+        4: '😍 İyi',
+        5: '🤩 Mükemmel'
+    };
+    
+    ratingText.textContent = ratingTexts[rating] || 'Ürünü değerlendirin';
+}
+
+// Rating text'i getir (kısa versiyon)
+function getRatingText(rating) {
+    const ratingTexts = {
+        1: 'Çok Kötü',
+        2: 'Kötü', 
+        3: 'Orta',
+        4: 'İyi',
+        5: 'Mükemmel'
+    };
+    return ratingTexts[rating] || '';
+}
+
+// Zaman farkını hesapla
+function getTimeAgo(date) {
+    const now = new Date();
+    const diffMs = now - date;
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+    const diffDays = Math.floor(diffMs / 86400000);
+    const diffWeeks = Math.floor(diffMs / 604800000);
+    
+    if (diffMins < 1) return 'Az önce';
+    if (diffMins < 60) return `${diffMins} dakika önce`;
+    if (diffHours < 24) return `${diffHours} saat önce`;
+    if (diffDays < 7) return `${diffDays} gün önce`;
+    if (diffWeeks < 4) return `${diffWeeks} hafta önce`;
+    
+    return date.toLocaleDateString('tr-TR');
 }
 
 // Make functions globally accessible

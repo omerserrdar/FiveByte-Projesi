@@ -5,10 +5,6 @@ const reviewSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    userEmail: {
-        type: String,
-        required: true
-    },
     userName: {
         type: String,
         required: true
@@ -23,7 +19,11 @@ const reviewSchema = new mongoose.Schema({
         type: String,
         required: true,
         minlength: 3,
-        maxlength: 1000
+        maxlength: 500
+    },
+    isAnonymous: {
+        type: Boolean,
+        default: false
     },
     createdAt: {
         type: Date,
@@ -31,8 +31,8 @@ const reviewSchema = new mongoose.Schema({
     }
 });
 
-// Aynı kullanıcının aynı ürüne birden fazla yorum yapmasını engelle
-reviewSchema.index({ productId: 1, userEmail: 1 }, { unique: true });
+// Index sadece productId üzerinden
+reviewSchema.index({ productId: 1, createdAt: -1 });
 
 const Review = mongoose.model('Review', reviewSchema);
 

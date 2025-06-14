@@ -28,6 +28,23 @@ const productSchema = new mongoose.Schema({
         type: String,
         default: null
     },
+    featured: {
+        type: Boolean,
+        default: false
+    },
+    category: {
+        type: String,
+        required: true
+    },
+    brand: {
+        type: String,
+        required: true
+    },
+    ingredients: [String],
+    skinTypes: [String],
+    benefits: [String],
+    usage: String,
+    warnings: [String],
     createdAt: {
         type: Date,
         default: Date.now

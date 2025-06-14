@@ -6,13 +6,15 @@
  */
 
 // API endpoint'leri
-const API_BASE_URL = 'http://localhost:5000/api/products';
+const API_BASE_URL = 'http://localhost:3000/api/products';
 
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize products functionality if on the products page
     if (document.querySelector('.products-section')) {
         initProductsPage();
+        // Ürünleri yükle
+        loadProductsFromAPI();
     }
 });
 
@@ -150,14 +152,12 @@ function initProductModal() {
         button.addEventListener('click', function() {
             // Get product data from parent card
             const productCard = this.closest('.product-card');
-            const productImage = productCard.querySelector('.product-image img').src;
             const productTitle = productCard.querySelector('h3').textContent;
             const productType = productCard.querySelector('.product-type').textContent;
             const productRating = productCard.querySelector('.product-rating').innerHTML;
             const productDescription = productCard.querySelector('.product-description').textContent;
             
             // Set modal content
-            document.getElementById('modal-product-image').src = productImage;
             document.getElementById('modal-product-title').textContent = productTitle;
             document.getElementById('modal-product-type').textContent = productType;
             document.getElementById('modal-product-rating').innerHTML = productRating;
@@ -332,6 +332,31 @@ function initFavorites() {
     });
 }
 
+// API'den ürünleri yükle
+async function loadProductsFromAPI() {
+    try {
+        const response = await fetch(API_BASE_URL);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const result = await response.json();
+        
+        if (result.success && result.data) {
+            displayAPIProducts(result.data);
+        } else {
+            throw new Error('API response format error');
+        }
+    } catch (error) {
+        console.error('Error loading products:', error);
+        // Hata durumunda kullanıcıya bilgi ver
+        const productsContainer = document.getElementById('products-container');
+        if (productsContainer) {
+            productsContainer.innerHTML = 
+                '<div class="error-message">Ürünler yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.</div>';
+        }
+    }
+}
+
 // Ürünleri getir
 async function fetchProducts(skinType = null, productType = null) {
     try {
@@ -358,6 +383,74 @@ async function fetchProducts(skinType = null, productType = null) {
     }
 }
 
+// API'den gelen ürünleri görüntüle
+function displayAPIProducts(products) {
+    const container = document.getElementById('products-container');
+    if (!container) return;
+    
+    // Mevcut ürünleri temizle
+    container.innerHTML = '';
+
+    if (products.length === 0) {
+        container.innerHTML = '<div class="no-products">Ürün bulunamadı.</div>';
+        return;
+    }
+
+    products.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.className = 'product-card';
+        productCard.setAttribute('data-product-id', product._id);
+        
+        // Cilt tipi ve ürün tipi için data attribute'lar
+        if (product.skinTypes && product.skinTypes.length > 0) {
+            productCard.setAttribute('data-skin-type', product.skinTypes[0].toLowerCase());
+        }
+        if (product.category) {
+            productCard.setAttribute('data-product-type', product.category.toLowerCase());
+        }
+        
+        // Bepantol ve Avène için görsel göster
+        const shouldShowImage = product.imageUrl && (
+            product.name.toLowerCase().includes('bepantol') ||
+            product.name.toLowerCase().includes('avene') ||
+            product.name.toLowerCase().includes('avène')
+        );
+        
+        const imageHTML = shouldShowImage 
+            ? `<div class="product-image">
+                   <img src="${product.imageUrl}" alt="${product.name}" loading="lazy">
+               </div>` 
+            : '';
+        
+        productCard.innerHTML = `
+            <button class="add-favorite" onclick="toggleFavorite('${product._id}', this)">
+                <i class="far fa-heart"></i>
+            </button>
+            ${imageHTML}
+            <div class="product-info">
+                <h3>${product.name || 'Ürün Adı'}</h3>
+                <p class="product-type">${product.category || 'Kategori'}</p>
+                <p class="product-description">${product.description || 'Açıklama bulunmuyor.'}</p>
+                <div class="product-rating">
+                    ${createRatingStars(product.rating || 0)}
+                    <span>${product.rating || 0}/5 (${product.reviewCount || 0} yorum)</span>
+                </div>
+                <div class="product-actions">
+                    <button class="btn btn-outline view-reviews" onclick="showProductReviews('${product._id}', '${product.name}')">
+                        <i class="fas fa-comments"></i> Yorumlar
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        container.appendChild(productCard);
+    });
+    
+    // Favoriler ve modal işlevlerini yeniden başlat
+    initFavorites();
+    initProductModal();
+}
+
 // Ürünleri görüntüle
 function displayProducts(products) {
     const container = document.getElementById('products-container');
@@ -371,7 +464,6 @@ function displayProducts(products) {
     products.forEach(product => {
         const productCard = `
             <div class="product-card">
-                <img src="${product.image || 'https://via.placeholder.com/150'}" alt="${product.name || ''}" onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
                 <h3>${product.name || ''}</h3>
                 ${product.type ? `<p class="product-type">${product.type}</p>` : ''}
                 ${product.description ? `<p class="description">${product.description}</p>` : ''}
@@ -395,9 +487,6 @@ function showProductDetails(product) {
     
     modalContent.innerHTML = `
         <div class="product-details">
-            <div class="product-image">
-                <img src="${product.image}" alt="${product.name}">
-            </div>
             <div class="product-info">
                 <h2>${product.name}</h2>
                 <p class="product-type">${product.type}</p>

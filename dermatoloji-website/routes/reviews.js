@@ -8,14 +8,14 @@ const router = express.Router();
 // Ürüne yorum ekle
 router.post('/:productId', async (req, res) => {
     try {
-        const { rating, comment, userEmail, userName } = req.body;
+        const { rating, comment, userName, isAnonymous } = req.body;
         const productId = req.params.productId;
 
         // Temel validasyon
-        if (!rating || !comment || !userEmail || !userName) {
+        if (!rating || !comment) {
             return res.status(400).json({ 
                 success: false, 
-                message: 'Tüm alanlar zorunludur' 
+                message: 'Puan ve yorum zorunludur' 
             });
         }
 
@@ -28,29 +28,34 @@ router.post('/:productId', async (req, res) => {
         }
 
         // Yorum uzunluğu kontrolü
-        if (comment.length < 3 || comment.length > 1000) {
+        if (comment.length < 3 || comment.length > 500) {
             return res.status(400).json({
                 success: false,
-                message: 'Yorum 3-1000 karakter arasında olmalıdır'
+                message: 'Yorum 3-500 karakter arasında olmalıdır'
             });
         }
 
-        // Aynı kullanıcının aynı ürüne daha önce yorum yapıp yapmadığını kontrol et
-        const existingReview = await Review.findOne({ productId, userEmail });
-        if (existingReview) {
+        // Kullanıcı adı kontrolü (anonim değilse zorunlu)
+        let finalUserName = 'Anonim Kullanıcı';
+        let anonymous = true;
+
+        if (userName && userName.trim()) {
+            finalUserName = userName.trim();
+            anonymous = false;
+        } else if (isAnonymous === false) {
             return res.status(400).json({
                 success: false,
-                message: 'Bu ürün için zaten bir yorumunuz var'
+                message: 'Kullanıcı adı gerekli'
             });
         }
 
         // Yeni yorum oluştur
         const review = new Review({
             productId,
-            userEmail,
-            userName,
+            userName: finalUserName,
             rating: parseInt(rating),
-            comment: comment.trim()
+            comment: comment.trim(),
+            isAnonymous: anonymous
         });
 
         // Yorumu kaydet
@@ -60,19 +65,11 @@ router.post('/:productId', async (req, res) => {
         res.json({ 
             success: true, 
             data: review,
-            message: 'Yorum başarıyla eklendi!' 
+            message: 'Yorumunuz başarıyla eklendi!' 
         });
 
     } catch (err) {
         console.error('Yorum ekleme hatası:', err);
-        
-        // MongoDB duplicate key hatası
-        if (err.code === 11000) {
-            return res.status(400).json({
-                success: false,
-                message: 'Bu ürün için zaten bir yorumunuz var'
-            });
-        }
         
         res.status(500).json({ 
             success: false, 
@@ -103,90 +100,19 @@ router.get('/:productId', async (req, res) => {
     }
 });
 
-// Yorumu güncelle
-router.put('/:reviewId', async (req, res) => {
-    try {
-        const { rating, comment } = req.body;
-        const reviewId = req.params.reviewId;
-        const userEmail = req.body.userEmail; // Kullanıcı emaili request'ten al
-
-        // Yorumu bul
-        const review = await Review.findById(reviewId);
-        if (!review) {
-            return res.status(404).json({ 
-                success: false, 
-                message: 'Yorum bulunamadı' 
-            });
-        }
-
-        // Yorum sahibi kontrolü
-        if (review.userEmail !== userEmail) {
-            return res.status(401).json({ 
-                success: false, 
-                message: 'Bu yorumu düzenleme yetkiniz yok' 
-            });
-        }
-
-        // Validasyonlar
-        if (rating && (rating < 1 || rating > 5)) {
-            return res.status(400).json({
-                success: false,
-                message: 'Puan 1-5 arasında olmalıdır'
-            });
-        }
-
-        if (comment && (comment.length < 3 || comment.length > 1000)) {
-            return res.status(400).json({
-                success: false,
-                message: 'Yorum 3-1000 karakter arasında olmalıdır'
-            });
-        }
-
-        // Yorumu güncelle
-        review.rating = rating || review.rating;
-        review.comment = comment ? comment.trim() : review.comment;
-        await review.save();
-
-        res.json({ 
-            success: true, 
-            data: review,
-            message: 'Yorum başarıyla güncellendi' 
-        });
-
-    } catch (err) {
-        console.error('Yorum güncelleme hatası:', err);
-        res.status(500).json({ 
-            success: false, 
-            message: 'Sunucu hatası' 
-        });
-    }
-});
-
-// Yorumu sil
+// Admin için yorum silme (isteğe bağlı)
 router.delete('/:reviewId', async (req, res) => {
     try {
         const reviewId = req.params.reviewId;
-        const userEmail = req.body.userEmail; // Kullanıcı emaili request'ten al
 
-        // Yorumu bul
-        const review = await Review.findById(reviewId);
+        // Yorumu bul ve sil
+        const review = await Review.findByIdAndDelete(reviewId);
         if (!review) {
             return res.status(404).json({ 
                 success: false, 
                 message: 'Yorum bulunamadı' 
             });
         }
-
-        // Yorum sahibi kontrolü
-        if (review.userEmail !== userEmail) {
-            return res.status(401).json({ 
-                success: false, 
-                message: 'Bu yorumu silme yetkiniz yok' 
-            });
-        }
-
-        // Yorumu sil
-        await review.deleteOne();
 
         res.json({ 
             success: true, 

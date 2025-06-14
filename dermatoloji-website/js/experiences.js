@@ -48,9 +48,9 @@ document.addEventListener('DOMContentLoaded', function() {
         showPage(1);
     }
 
-    productFilter.addEventListener('change', filterExperiences);
-    ratingFilter.addEventListener('change', filterExperiences);
-    dateFilter.addEventListener('change', filterExperiences);
+    if (productFilter) productFilter.addEventListener('change', filterExperiences);
+    if (ratingFilter) ratingFilter.addEventListener('change', filterExperiences);
+    if (dateFilter) dateFilter.addEventListener('change', filterExperiences);
 
     // Sayfalama fonksiyonları
     const experiencesPerPage = 4;

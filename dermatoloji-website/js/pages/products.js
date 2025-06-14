@@ -202,19 +202,12 @@ class ProductsPage {
                     <i class="far fa-heart"></i>
                 </button>
                 ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
-                <div class="product-image ${product.imageUrl ? '' : 'no-image'}">
-                    ${product.imageUrl ? 
-                        `<img src="${product.imageUrl}" 
-                             alt="${product.name}" 
-                             onerror="this.parentElement.classList.add('no-image'); this.style.display='none';">` 
-                        : ''
-                    }
-                </div>
+
                 <div class="product-info">
-                    <h3>${product.name}</h3>
-                    <p class="product-type">${product.type}</p>
-                    <p class="product-description">${product.description}</p>
-                    <div class="product-rating">
+                <h3>${product.name}</h3>
+                <p class="product-type">${product.type}</p>
+                <p class="product-description">${product.description}</p>
+                <div class="product-rating">
                         ${this.generateStars(product.rating || 0)}
                         <span>${(product.rating || 0).toFixed(1)}/5 (${product.reviewCount || 0} yorum)</span>
                     </div>
